@@ -1,0 +1,2 @@
+secretStoreName: vault-backend
+secretPath: secret

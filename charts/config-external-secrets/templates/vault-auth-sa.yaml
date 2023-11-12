@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.secretStore.sa.name }}
+  namespace: {{ .Values.secretStore.sa.namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Values.secretStore.sa.tokenreviewBinding }}
+  namespace: {{ .Values.secretStore.sa.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.secretStore.sa.name }}
+  namespace: {{ .Values.secretStore.sa.namespace }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.secretStore.sa.name }}
+  namespace: {{ .Values.secretStore.sa.namespace }}
+  annotations:
+    kubernetes.io/service-account.name: {{ .Values.secretStore.sa.name }}
+type: kubernetes.io/service-account-token

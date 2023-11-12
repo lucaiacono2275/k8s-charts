@@ -1,0 +1,14 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    replicas: {{ .Values.replicas }}
+    hostNetwork: {{ .Values.hostNetwork }}
+    logs:
+      general:
+        # By default, the level is set to ERROR.
+        # -- Alternative logging levels are DEBUG, PANIC, FATAL, ERROR, WARN, and INFO.
+        level: {{ .Values.logLevel }}

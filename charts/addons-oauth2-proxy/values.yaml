@@ -1,0 +1,16 @@
+secret:
+  name: oauth2-proxy
+  storeName: vault-backend
+  storeKind: ClusterSecretStore
+  # target: oauth-proxy
+  remoteSecret:
+    key: secret/data/oauth2/proxy/secret 
+  clientId: 
+    key: client-id
+    property: client-id
+  clientSecret:
+    key: client-secret
+    property: client-secret
+  cookieSecret:
+    key: cookie-secret
+    property: cookie-secret

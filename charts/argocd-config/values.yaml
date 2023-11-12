@@ -1,0 +1,29 @@
+secret:
+  storeName: vault-backend
+  storeKind: ClusterSecretStore
+projects:
+- name: dev
+  sourceRepos: 
+  - '*'
+  destinations: 
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  applications:
+    name: dev-applications
+    server: https://kubernetes.default.svc
+    path: environments/dev
+    repoURL: https://github.com/lucaiacono2275/k3s-home
+    targetRevision: HEAD
+  deploy:
+  - name: external-secrets
+    # labelName: # defaults to name
+    # path: # defaults to name
+    # namespace: # defauts to name
+    #syncPolicy:
+    #  automated: 
+    #    enabled: false
+    #    prune: true
+    #    selfHeal: true

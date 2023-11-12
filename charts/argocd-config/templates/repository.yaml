@@ -1,0 +1,30 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: private-k3s-home
+  namespace: argocd
+spec:
+  refreshInterval: "15s"
+  secretStoreRef:
+    name: {{ .Values.secret.storeName }}
+    kind: {{ .Values.secret.storeKind }}
+  target:
+    name: private-k3s-home
+    template:
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: repository
+  data:
+  - secretKey: url
+    remoteRef:
+      key: secret/data/argocd/repository/private-k3s-home
+      property: url
+  - secretKey: username
+    remoteRef:
+      key: secret/data/argocd/repository/private-k3s-home
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: secret/data/argocd/repository/private-k3s-home
+      property: password
+

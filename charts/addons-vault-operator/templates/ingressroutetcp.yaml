@@ -1,0 +1,31 @@
+{{- if .Values.cr.ingress.traefik }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: HostSNI(`{{ .Values.cr.ingress.hostname }}`)
+    priority: 1
+    kind: Rule
+    services:
+    - name: {{ .Values.cr.ingress.serviceName }}
+      namespace: vault
+      port: 8200
+  tls:
+    #passthrough: true
+    secretName: {{ .Values.cr.ingress.tls.secretName }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: securevault
+  namespace: vault
+
+spec:
+  serverName: vault
+  insecureSkipVerify: true         
+{{- end }}

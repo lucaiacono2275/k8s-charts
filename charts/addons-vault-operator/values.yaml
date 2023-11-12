@@ -1,0 +1,60 @@
+
+pv:
+  enabled: false
+  name: vault-data
+  server: 192.168.1.6
+  path: "/nfs/vaultdata"
+  storageClassName: nfs-sc-vault-data
+
+
+cr:
+  label: vault-dev
+  name: vault-dev
+  vaultImage: hashicorp/vault:1.15.1
+  size: 1
+  #bankVaultsImage: ghcr.io/banzaicloud/bank-vaults:1.20.3
+  vaultAnnotations: "vault-dev"
+  vaultConfigurerAnnotations: "vaultconfigurer-dev"
+
+  ingress:
+    enabled: false
+    annotations: {}
+    traefik: false
+    ingressClassName: nginx
+    hostname: vault.local
+    serviceName: vault
+    tls:
+      enabled: true
+      secretName: vault-tls
+
+  claim:
+    name: vault-raft
+    path: /vault/data
+
+  veleroEnabled: false
+  
+  externalConfig:
+    policies:
+    - name: allow_secrets
+      rules: path "secret/*" { capabilities = ["create", "read", "update", "delete", "list"] }
+    auth:
+    - type: kubernetes
+      roles:
+        - name: externalsecrets 
+          bound_service_account_names: ["vault-auth"]
+          bound_service_account_namespaces: ["*"] 
+          policies: allow_secrets
+          ttl: 1h
+
+    secrets:
+      - path: secret
+        type: kv
+        description: Secrets for prod env.
+        options:
+          version: 2
+
+
+rbac: 
+  serviceAccountName: vault
+  roleName: vault
+  roleBindingName: vault

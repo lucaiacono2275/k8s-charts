@@ -1,0 +1,13 @@
+secretStore:
+  name: vault-backend
+  server: "https://vault.vault.svc.cluster.local:8200"
+  secretPath: secret
+  caProvider:
+    secretName: vault-tls
+    namespace: vault
+  auth:
+    role: "externalsecrets"
+  sa:
+    name: vault-auth
+    namespace: vault
+    tokenreviewBinding: role-tokenreview-binding

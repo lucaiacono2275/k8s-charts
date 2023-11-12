@@ -1,0 +1,8 @@
+ingress:
+  traefik: true
+  hostname: 'argocd.example.com'
+  secretName: tls-secret
+secret:
+  name: argocd-secret
+  storeName: vault-backend
+  storeKind: ClusterSecretStore

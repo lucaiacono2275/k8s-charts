@@ -1,0 +1,41 @@
+{{- if .Values.pv.enabled -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv-{{ .Values.pv.name }}
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteMany
+  - ReadWriteOnce
+  nfs:
+    server: "{{ .Values.pv.server }}"
+    path: "{{ .Values.pv.path }}"
+  mountOptions:
+    - rw
+    - nolock
+    - noatime
+    - tcp    
+  storageClassName: "{{ .Values.pv.storageClassName }}"
+{{- end }}
+---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: nfs-pv-vault-audit
+#spec:
+#  capacity:
+#    storage: 1Gi
+#  accessModes:
+#  - ReadWriteMany
+#  - ReadWriteOnce
+#  nfs:
+#    server: 192.168.1.6
+#    path: /nfs/vaultaudit
+#  mountOptions:
+#    - rw
+#    - nolock
+#    - noatime
+#    - tcp    
+#  storageClassName: nfs-sc-vault-audit

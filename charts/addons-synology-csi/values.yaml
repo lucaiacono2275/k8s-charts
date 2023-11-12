@@ -1,0 +1,4 @@
+secret:
+  name: client-info-secret
+  storeName: vault-backend
+  storeKind: ClusterSecretStore

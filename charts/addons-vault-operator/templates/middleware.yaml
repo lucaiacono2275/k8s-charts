@@ -1,0 +1,10 @@
+{{- if .Values.cr.ingress.traefik }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: internal-ipwhitelist
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 192.168.1.1/24
+{{- end }}

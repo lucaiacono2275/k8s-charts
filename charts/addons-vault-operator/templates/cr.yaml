@@ -1,0 +1,208 @@
+{{- $saName := .Values.rbac.serviceAccountName | default .Release.Name -}}
+{{- $crName := .Values.cr.name | default .Release.Name -}}
+apiVersion: "vault.banzaicloud.com/v1alpha1"
+kind: "Vault"
+metadata:
+  name: {{ $crName }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    vault_cr: {{ .Values.cr.label }}
+spec:
+  size: {{ .Values.cr.size }}
+  image: {{ .Values.cr.vaultImage }}
+  # specify a custom bank-vaults image with bankVaultsImage:
+  #bankVaultsImage: { { .Values.cr.bankVaultsImage }}
+  # Common annotations for all created resources
+  annotations:
+    common/annotation: "true"
+
+  # Vault Pods , Services and TLS Secret annotations
+  vaultAnnotations:
+    type/instance: {{ .Values.cr.vaultAnnotations }}
+
+  # Vault Configurer Pods and Services annotations
+  vaultConfigurerAnnotations:
+    type/instance: {{ .Values.cr.vaultConfigurerAnnotations }}
+
+  # Vault Pods , Services and TLS Secret labels
+  vaultLabels:
+    example.com/log-format: "json"
+
+  # Vault Configurer Pods and Services labels
+  vaultConfigurerLabels:
+    example.com/log-format: "string"
+
+  # Support for affinity Rules
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key : "node-role.kubernetes.io/your_role"
+  #           operator: In
+  #           values: ["true"]
+
+  # Support for pod nodeSelector rules to control which nodes can be chosen to run
+  # the given pods
+  # nodeSelector:
+  #   "node-role.kubernetes.io/your_role": "true"
+
+  # Support for node tolerations that work together with node taints to control
+  # the pods that can like on a node
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: node-role.kubernetes.io/your_role
+  #   operator: Equal
+  #   value: "true"
+
+  # Specify the ServiceAccount where the Vault Pod and the Bank-Vaults configurer/unsealer is running
+  serviceAccount: {{ $saName }}
+
+  # Specify the Service's type where the Vault Service is exposed
+  # Please note that some Ingress controllers like https://github.com/kubernetes/ingress-gce
+  # forces you to expose your Service on a NodePort
+  serviceType: ClusterIP
+
+  # Request an Ingress controller with the default configuration
+  {{- if .Values.cr.ingress.enabled }}
+  ingress:
+    # Specify Ingress object annotations here, if TLS is enabled (which is by default)
+    # the operator will add NGINX, Traefik and HAProxy Ingress compatible annotations
+    # to support TLS backends
+    {{- if .Values.cr.ingress.annotations }}
+    annotations: 
+      {{ .Values.cr.ingress.annotations | toYaml | nindent 6 }}
+    # Override the default Ingress specification here
+    # This follows the same format as the standard Kubernetes Ingress
+    # See: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#ingressspec-v1beta1-extensions
+    {{- end }}
+    spec: 
+      ingressClassName: {{ .Values.cr.ingress.ingressClassName }}
+      rules:
+        - host: {{ .Values.cr.ingress.hostname }}
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: {{ .Values.cr.ingress.serviceName }}
+                    port:
+                      number: 8200
+                path: /
+                pathType: ImplementationSpecific
+      {{- if .Values.cr.ingress.tls.enabled }}
+      tls:
+        - hosts:
+            - {{ .Values.cr.ingress.hostname }}
+          secretName: {{ .Values.cr.ingress.tls.secretName }}
+      {{- end }}
+  {{- end }}
+
+
+
+  # In some cases, you have to set permissions for the raft directory.
+  # For example in the case of using a local kind cluster, uncomment the lines below.
+  # vaultInitContainers:
+  #   - name: raft-permission
+  #     image: busybox
+  #     command:
+  #       - /bin/sh
+  #       - -c
+  #       - |
+  #         chown -R 100:1000 /vault/file
+  #     volumeMounts:
+  #       - name: vault-raft
+  #         mountPath: /vault/file
+
+  # Use local disk to store Vault raft data, see config section.
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.cr.claim.name }}
+      spec:
+        # https://kubernetes.io/docs/concepts/storage/persistent-volumes/#class-1
+        storageClassName: {{ .Values.pv.storageClassName }}
+        accessModes:
+          - ReadWriteOnce
+        volumeMode: Filesystem
+        resources:
+          requests:
+            storage: 1Gi
+
+  volumeMounts:
+    - name: {{ .Values.cr.claim.name }}
+      mountPath: {{ .Values.cr.claim.path }}
+
+  # Add Velero fsfreeze sidecar container and supporting hook annotations to Vault Pods:
+  # https://velero.io/docs/v1.2.0/hooks/
+  veleroEnabled: {{ .Values.cr.veleroEnabled }}
+
+  # Support for distributing the generated CA certificate Secret to other namespaces.
+  # Define a list of namespaces or use ["*"] for all namespaces.
+  caNamespaces:
+    - "vswh"
+
+  # Describe where you would like to store the Vault unseal keys and root token.
+  unsealConfig:
+    options:
+      # The preFlightChecks flag enables unseal and root token storage tests
+      # This is true by default
+      preFlightChecks: true
+      # The storeRootToken flag enables storing of root token in chosen storage
+      # This is true by default
+      storeRootToken: true
+    kubernetes:
+      secretNamespace: {{ .Release.Namespace }}
+    # google:
+    #   kmsKeyRing: "vault"
+    #   kmsCryptoKey: "vault-unsealer"
+    #   kmsLocation: "global"
+    #   kmsProject: "continual-air-196513"
+    #   storageBucket: "vault-ha"
+
+  # A YAML representation of a final vault config file.
+  # See https://www.vaultproject.io/docs/configuration/ for more information.
+  config:
+    storage:
+      raft:
+        path: {{ .Values.cr.claim.path }}
+        #retry_join: 
+        #  leader_api_addr: "https://vault.{{ .Release.Namespace }}:8200"
+        
+        #autopilot:
+        #  cleanup_dead_servers: "true"
+        #  last_contact_threshold: "200ms"
+        #  last_contact_failure_threshold: "10m"
+        #  max_trailing_logs:  250000
+        #  min_quorum: 1
+        #  server_stabilization_time: "10s"
+    listener:
+      tcp:
+        address: "0.0.0.0:8200"
+        tls_cert_file: /vault/tls/server.crt
+        tls_key_file: /vault/tls/server.key
+    api_addr: https://{{ $crName }}.{{ .Release.Namespace }}:8200
+    cluster_addr: "https://${.Env.POD_NAME}:8201"
+    ui: true
+
+  statsdDisabled: true
+
+  serviceRegistrationEnabled: true
+
+  resources:
+    # A YAML representation of resource ResourceRequirements for vault container
+    # Detail can reference: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
+    vault:
+      limits:
+        memory: "512Mi"
+        cpu: "200m"
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+
+  # See: https://banzaicloud.com/docs/bank-vaults/cli-tool/#example-external-vault-configuration
+  # The repository also contains a lot examples in the deploy/ and operator/deploy directories.
+  externalConfig:
+  {{ .Values.cr.externalConfig | toYaml | nindent 4 }}
+
+  vaultEnvsConfig:
+    - name: VAULT_LOG_LEVEL
+      value: debug

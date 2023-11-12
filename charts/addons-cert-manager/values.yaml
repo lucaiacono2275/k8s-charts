@@ -1,0 +1,67 @@
+email: luca.iacono@gmail.com
+gcpProject: ihsws-335710
+secret:
+  storeName: vault-backend
+  storeKind: ClusterSecretStore
+  name: clouddns-dns01-solver-svc-acct
+  key: key.json
+# target: default to name
+  remoteKey: secret/data/clouddns/dns01/solver/svc/acct
+  remoteProperty: key.json
+clusterissuers:
+- name: letsencrypt-dns01-prod
+  server: https://acme-v02.api.letsencrypt.org/directory
+- name: letsencrypt-dns01-staging
+  server: https://acme-staging-v02.api.letsencrypt.org/directory
+certificates:
+- name: tls-ihsws-it-p
+  namespace: cert-manager
+  issuerRef: letsencrypt-dns01-prod
+  dnsNames: 
+  - '*.ihsws.it'
+  reflector:
+    allowed: "*"
+    auto: "*"   
+- name: tls-ihsws-it-s
+  namespace: cert-manager
+  issuerRef: letsencrypt-dns01-staging
+  dnsNames: 
+  - '*.ihsws.it'
+  reflector:
+    allowed: "*"
+    auto: "*"   
+- name: tls-preview-ihsws-it-p
+  namespace: cert-manager
+  issuerRef: letsencrypt-dns01-prod
+  dnsNames: 
+  - '*.preview.ihsws.it'
+  reflector:
+    allowed: "pre-*"
+    auto: "pre-*"   
+- name: tls-preview-ihsws-it-s
+  namespace: cert-manager
+  issuerRef: letsencrypt-dns01-staging
+  dnsNames: 
+  - '*.preview.ihsws.it'
+  reflector:
+    allowed: "pre-*"
+    auto: "pre-*"   
+- name: tls-dev-ihsws-it-p
+  namespace: cert-manager
+  issuerRef: letsencrypt-dns01-prod
+  dnsNames: 
+  - '*.dev.ihsws.it'
+  reflector:
+    allowed: "dev-*"
+    auto: "dev-*"   
+- name: tls-dev-ihsws-it-s
+  namespace: cert-manager
+  issuerRef: letsencrypt-dns01-staging
+  dnsNames: 
+  - '*.dev.ihsws.it'
+  reflector:
+    allowed: "dev-*"
+    auto: "dev-*"   
+
+
+
