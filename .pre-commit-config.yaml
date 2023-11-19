@@ -1,0 +1,5 @@
+repos:
+  - repo: https://github.com/lucaiacono2275/k8s-charts
+    rev: v0.0.1
+    hooks:
+    - id: helm-docs
