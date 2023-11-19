@@ -1,5 +1,14 @@
 apiVersion: v1
 description: Helm chart for addon resources
 name: addons-cert-manager
-version: 0.1.0
-appVersion: 0.0.1
+version: 0.1.1
+dependencies:
+  - name: external-secrets
+    repository: https://charts.external-secrets.io
+    version: 0.9.7
+  - name: cert-manager
+    repository: https://charts.jetstack.io
+    version: v1.13.1
+  - name: reflector
+    repository: https://emberstack.github.io/helm-charts
+    version: 7.1.216  

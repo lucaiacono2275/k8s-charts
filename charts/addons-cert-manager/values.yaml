@@ -1,24 +1,34 @@
+# -- email for the certificate request
 email: luca.iacono@gmail.com
-gcpProject: ihsws-335710
+# -- GCP project name
+gcpProject: test
 secret:
+  # -- name of the vault store
   storeName: vault-backend
+  # -- type of the vault store
   storeKind: ClusterSecretStore
+  # -- name of the secret
   name: clouddns-dns01-solver-svc-acct
+  # -- key of the secret
   key: key.json
 # target: default to name
+  # -- name of the remote key
   remoteKey: secret/data/clouddns/dns01/solver/svc/acct
+  # -- name of the remote property
   remoteProperty: key.json
+# -- list of the cluster issuers to be created
 clusterissuers:
 - name: letsencrypt-dns01-prod
   server: https://acme-v02.api.letsencrypt.org/directory
 - name: letsencrypt-dns01-staging
   server: https://acme-staging-v02.api.letsencrypt.org/directory
+# -- list of certificates to be created
 certificates:
 - name: tls-ihsws-it-p
   namespace: cert-manager
   issuerRef: letsencrypt-dns01-prod
   dnsNames: 
-  - '*.ihsws.it'
+  - '*.example.org'
   reflector:
     allowed: "*"
     auto: "*"   
@@ -26,42 +36,11 @@ certificates:
   namespace: cert-manager
   issuerRef: letsencrypt-dns01-staging
   dnsNames: 
-  - '*.ihsws.it'
+  - '*.example.org'
   reflector:
     allowed: "*"
     auto: "*"   
-- name: tls-preview-ihsws-it-p
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-prod
-  dnsNames: 
-  - '*.preview.ihsws.it'
-  reflector:
-    allowed: "pre-*"
-    auto: "pre-*"   
-- name: tls-preview-ihsws-it-s
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-staging
-  dnsNames: 
-  - '*.preview.ihsws.it'
-  reflector:
-    allowed: "pre-*"
-    auto: "pre-*"   
-- name: tls-dev-ihsws-it-p
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-prod
-  dnsNames: 
-  - '*.dev.ihsws.it'
-  reflector:
-    allowed: "dev-*"
-    auto: "dev-*"   
-- name: tls-dev-ihsws-it-s
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-staging
-  dnsNames: 
-  - '*.dev.ihsws.it'
-  reflector:
-    allowed: "dev-*"
-    auto: "dev-*"   
+
 
 
 

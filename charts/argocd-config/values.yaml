@@ -1,6 +1,9 @@
 secret:
+  # -- name of the secret store
   storeName: vault-backend
+  # -- type fo the secret store
   storeKind: ClusterSecretStore
+# -- list of projects
 projects:
 - name: dev
   sourceRepos: 

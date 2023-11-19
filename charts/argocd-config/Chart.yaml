@@ -1,5 +1,11 @@
 apiVersion: v1
 description: Helm chart for config resources
 name: argocd-config
-version: 0.1.1
-appVersion: 0.0.1
+version: 0.1.2
+dependencies:
+  - name: external-secrets
+    repository: https://charts.external-secrets.io
+    version: 0.9.7
+  - name: argo-cd
+    repository: https://argoproj.github.io/argo-helm
+    version: 5.46.8

@@ -1,5 +1,9 @@
 ingress:
+  # -- ingress annotations
   annotations: {}
+  # -- ingress class name
   ingressClassName: nginx
+  # -- hostname
   hostname: local
+  # -- TLS config
   tls: {}

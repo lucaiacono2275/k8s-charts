@@ -1,13 +1,22 @@
 secretStore:
+  # -- Secret store name
   name: vault-backend
+  # -- Vault secret store server
   server: "https://vault.vault.svc.cluster.local:8200"
+  # -- secret path
   secretPath: secret
   caProvider:
+    # -- CA provider secret name
     secretName: vault-tls
+    # -- CA provider namespace
     namespace: vault
   auth:
+    # -- Auth role
     role: "externalsecrets"
   sa:
+    # -- Service accpunt name
     name: vault-auth
+    # -- Service account namespace
     namespace: vault
+    # -- token review binding
     tokenreviewBinding: role-tokenreview-binding

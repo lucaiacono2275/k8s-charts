@@ -1,38 +1,62 @@
 
 pv:
+  # -- enable PV
   enabled: false
+  # -- name  of the PV
   name: vault-data
+  # -- server for PV in case of nfs
   server: 192.168.1.6
+  # -- path for PV in case of nfs
   path: "/nfs/vaultdata"
+  # -- storage class name 
   storageClassName: nfs-sc-vault-data
 
 
 cr:
-  label: vault-dev
-  name: vault-dev
+  # -- label for the vault 
+  label: vault
+  # -- name of the vault
+  name: vault
+  # -- image of the vault
   vaultImage: hashicorp/vault:1.15.1
+  # -- number of instances of vault
   size: 1
-  #bankVaultsImage: ghcr.io/banzaicloud/bank-vaults:1.20.3
-  vaultAnnotations: "vault-dev"
+  # -- image of bank-vaults
+  # bankVaultsImage: ghcr.io/banzaicloud/bank-vaults:1.20.3
+  # -- annotation for the vault pod
+  vaultAnnotations: "vault"
+  # -- annotation for the vault configurer pod
   vaultConfigurerAnnotations: "vaultconfigurer-dev"
 
   ingress:
+    # -- enable the ingress
     enabled: false
+    # -- annnotation for the ingress
     annotations: {}
+    # -- enable conmfiguration for traefik
     traefik: false
+    # -- ingress class name
     ingressClassName: nginx
+    # -- hostname
     hostname: vault.local
+    # -- service name
     serviceName: vault
     tls:
+      # -- enable TLS for the ingress
       enabled: true
+      # -- secret for TLS
       secretName: vault-tls
 
   claim:
+    # -- name of the PVC
     name: vault-raft
+    # -- path of the PVC
     path: /vault/data
 
+  # -- enable velero config
   veleroEnabled: false
   
+  # -- External config for the vault
   externalConfig:
     policies:
     - name: allow_secrets
@@ -55,6 +79,9 @@ cr:
 
 
 rbac: 
+  # -- SA name
   serviceAccountName: vault
+  # -- role name
   roleName: vault
+  # -- name of the role binding
   roleBindingName: vault
