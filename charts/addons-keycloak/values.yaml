@@ -1,2 +1,4 @@
+# -- name of the secret store
 secretStoreName: vault-backend
+# -- type of the secret store
 secretPath: secret

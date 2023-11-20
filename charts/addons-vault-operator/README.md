@@ -1,50 +1,39 @@
-# addons-bank-vault
+# addons-vault-operator
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square)
 
-Helm chart for addon resources
+Helm chart for addon resources for vault operator
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| cr.claim.name | string | `"vault-raft"` |  |
-| cr.claim.path | string | `"/vault/data"` |  |
-| cr.externalConfig.auth[0].roles[0].bound_service_account_names[0] | string | `"vault-auth"` |  |
-| cr.externalConfig.auth[0].roles[0].bound_service_account_namespaces[0] | string | `"*"` |  |
-| cr.externalConfig.auth[0].roles[0].name | string | `"externalsecrets"` |  |
-| cr.externalConfig.auth[0].roles[0].policies | string | `"allow_secrets"` |  |
-| cr.externalConfig.auth[0].roles[0].ttl | string | `"1h"` |  |
-| cr.externalConfig.auth[0].type | string | `"kubernetes"` |  |
-| cr.externalConfig.policies[0].name | string | `"allow_secrets"` |  |
-| cr.externalConfig.policies[0].rules | string | `"path \"secret/*\" { capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"] }"` |  |
-| cr.externalConfig.secrets[0].description | string | `"Secrets for prod env."` |  |
-| cr.externalConfig.secrets[0].options.version | int | `2` |  |
-| cr.externalConfig.secrets[0].path | string | `"secret"` |  |
-| cr.externalConfig.secrets[0].type | string | `"kv"` |  |
-| cr.ingress.annotations | object | `{}` |  |
-| cr.ingress.enabled | bool | `false` |  |
-| cr.ingress.hostname | string | `"vault.local"` |  |
-| cr.ingress.ingressClassName | string | `"nginx"` |  |
-| cr.ingress.serviceName | string | `"vault"` |  |
-| cr.ingress.tls.enabled | bool | `true` |  |
-| cr.ingress.tls.secretName | string | `"vault-tls"` |  |
-| cr.ingress.traefik | bool | `false` |  |
-| cr.label | string | `"vault-dev"` |  |
-| cr.name | string | `"vault-dev"` |  |
-| cr.size | int | `1` |  |
-| cr.vaultAnnotations | string | `"vault-dev"` |  |
-| cr.vaultConfigurerAnnotations | string | `"vaultconfigurer-dev"` |  |
-| cr.vaultImage | string | `"hashicorp/vault:1.15.1"` |  |
-| cr.veleroEnabled | bool | `false` |  |
-| pv.enabled | bool | `false` |  |
-| pv.name | string | `"vault-data"` |  |
-| pv.path | string | `"/nfs/vaultdata"` |  |
-| pv.server | string | `"192.168.1.6"` |  |
-| pv.storageClassName | string | `"nfs-sc-vault-data"` |  |
-| rbac.roleBindingName | string | `"vault"` |  |
-| rbac.roleName | string | `"vault"` |  |
-| rbac.serviceAccountName | string | `"vault"` |  |
+| cr.claim.name | string | `"vault-raft"` | name of the PVC |
+| cr.claim.path | string | `"/vault/data"` | path of the PVC |
+| cr.externalConfig | object | `{"auth":[{"roles":[{"bound_service_account_names":["vault-auth"],"bound_service_account_namespaces":["*"],"name":"externalsecrets","policies":"allow_secrets","ttl":"1h"}],"type":"kubernetes"}],"policies":[{"name":"allow_secrets","rules":"path \"secret/*\" { capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"] }"}],"secrets":[{"description":"Secrets for prod env.","options":{"version":2},"path":"secret","type":"kv"}]}` | External config for the vault |
+| cr.ingress.annotations | object | `{}` | annnotation for the ingress |
+| cr.ingress.enabled | bool | `false` | enable the ingress |
+| cr.ingress.hostname | string | `"vault.local"` | hostname |
+| cr.ingress.ingressClassName | string | `"nginx"` | ingress class name |
+| cr.ingress.serviceName | string | `"vault"` | service name |
+| cr.ingress.tls.enabled | bool | `true` | enable TLS for the ingress |
+| cr.ingress.tls.secretName | string | `"vault-tls"` | secret for TLS |
+| cr.ingress.traefik | bool | `false` | enable conmfiguration for traefik |
+| cr.label | string | `"vault"` | label for the vault  |
+| cr.name | string | `"vault"` | name of the vault |
+| cr.size | int | `1` | number of instances of vault |
+| cr.vaultAnnotations | string | `"vault"` | annotation for the vault pod |
+| cr.vaultConfigurerAnnotations | string | `"vaultconfigurer-dev"` | annotation for the vault configurer pod |
+| cr.vaultImage | string | `"hashicorp/vault:1.15.1"` | image of the vault |
+| cr.veleroEnabled | bool | `false` | enable velero config |
+| pv.enabled | bool | `false` | enable PV |
+| pv.name | string | `"vault-data"` | name  of the PV |
+| pv.path | string | `"/nfs/vaultdata"` | path for PV in case of nfs |
+| pv.server | string | `"192.168.1.6"` | server for PV in case of nfs |
+| pv.storageClassName | string | `"nfs-sc-vault-data"` | storage class name  |
+| rbac.roleBindingName | string | `"vault"` | name of the role binding |
+| rbac.roleName | string | `"vault"` | role name |
+| rbac.serviceAccountName | string | `"vault"` | SA name |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.3](https://github.com/norwoodj/helm-docs/releases/v1.11.3)
