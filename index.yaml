@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   addons-argocd:
   - apiVersion: v1
+    created: "2023-11-26T16:00:15.38005463Z"
+    description: Helm chart for addon resources of ArgoCD installation
+    digest: d91fa60063ede95be3fe9d91db899dc8b70f34f8482e31fee50df24dd0a599c8
+    name: addons-argocd
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-argocd-0.0.4/addons-argocd-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v1
     appVersion: 0.0.1
     created: "2023-11-17T21:17:34.446007838Z"
     description: Helm chart for addon resources of ArgoCD installation
@@ -10,4 +18,105 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-argocd-0.0.3/addons-argocd-0.0.3.tgz
     version: 0.0.3
-generated: "2023-11-17T21:17:34.446138733Z"
+  addons-cert-manager:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:15.587455593Z"
+    description: Helm chart for addon resources
+    digest: 958f9e4512d02c9d15bb27d963c75969cc0a5b1aa52e0104bb2b353a63abc6d7
+    name: addons-cert-manager
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-cert-manager-0.1.1/addons-cert-manager-0.1.1.tgz
+    version: 0.1.1
+  addons-keycloak:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:15.774371352Z"
+    description: Helm chart for addon resources for keycloak
+    digest: a01a7dbb4b18675345af3353fa27ed2291f14f8feb2ecc425ed59728907aaea6
+    name: addons-keycloak
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-keycloak-0.0.1/addons-keycloak-0.0.1.tgz
+    version: 0.0.1
+  addons-metallb:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:15.989389602Z"
+    description: Helm chart for addon resources for metallb
+    digest: ae57c3af16996ded10b708cd056da504d50db5aa560827bc11beac9fb4d932ee
+    name: addons-metallb
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-metallb-0.0.3/addons-metallb-0.0.3.tgz
+    version: 0.0.3
+  addons-oauth2-proxy:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:16.168533819Z"
+    description: Helm chart for addon resources
+    digest: 6fd5b42de49740f9245dd732771f80df951e302b1ecd86b7d42608e0a5a34803
+    name: addons-oauth2-proxy
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-oauth2-proxy-0.0.2/addons-oauth2-proxy-0.0.2.tgz
+    version: 0.0.2
+  addons-synology-csi:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:16.377435789Z"
+    description: Helm chart for addon resources for synology-csi
+    digest: 866d7a512c71bc45f3252fe681b375f436822d24631c9729c8fd09acda7ac74c
+    name: addons-synology-csi
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-synology-csi-0.0.2/addons-synology-csi-0.0.2.tgz
+    version: 0.0.2
+  addons-traefik:
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: "2023-11-26T16:00:16.632938756Z"
+    description: Helm chart for addon resources
+    digest: 56d25a09a117d9a56ae64b9fdc661c230c659816f828858437cecfe1271cc728
+    name: addons-traefik
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-traefik-0.0.1/addons-traefik-0.0.1.tgz
+    version: 0.0.1
+  addons-vault-operator:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:16.829109186Z"
+    description: Helm chart for addon resources for vault operator
+    digest: 8f5e3f398d33113a19dc09ca4ce2a0a3b470bdb69de90aeb1f854edbb1058457
+    name: addons-vault-operator
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-vault-operator-0.0.4/addons-vault-operator-0.0.4.tgz
+    version: 0.0.4
+  addons-velero:
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: "2023-11-26T16:00:17.043647816Z"
+    description: Helm chart for addon resources
+    digest: 27e25f1ba903d2d078e80219b18e6fc284983b0b488e734eb55607cd9382f77b
+    name: addons-velero
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-velero-0.0.1/addons-velero-0.0.1.tgz
+    version: 0.0.1
+  argocd-config:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:17.275405954Z"
+    description: Helm chart for config resources
+    digest: f148a8ae233777a024159806480b770829aa4bbc441bb7800d70030be32d52e0
+    name: argocd-config
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/argocd-config-0.1.2/argocd-config-0.1.2.tgz
+    version: 0.1.2
+  config-external-secrets:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:17.465790935Z"
+    description: Helm chart for addon resources for external-secrets
+    digest: 083b31bf31d30f41f4d2fd35a7cab90919544a3b6dc569586f3c6342fd348a8b
+    name: config-external-secrets
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/config-external-secrets-0.0.2/config-external-secrets-0.0.2.tgz
+    version: 0.0.2
+  tekton-dashboard:
+  - apiVersion: v1
+    created: "2023-11-26T16:00:17.734765306Z"
+    description: Helm chart for Tekton dashboard
+    digest: cf87af5aa95c2f04051e8e5e117ab73dcd10ba3e06daf6957e28f225c4e09932
+    name: tekton-dashboard
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
+    version: 0.0.2
+generated: "2023-11-26T16:00:17.734782798Z"
