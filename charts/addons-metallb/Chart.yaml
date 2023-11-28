@@ -1,8 +1,4 @@
 apiVersion: v1
 description: Helm chart for addon resources for metallb
 name: addons-metallb
-version: 0.0.3
-dependencies:
-  - name: metallb
-    repository: https://metallb.github.io/metallb
-    version: 0.13.12
+version: 0.0.4
