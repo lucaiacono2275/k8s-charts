@@ -20,6 +20,14 @@ entries:
     version: 0.0.3
   addons-cert-manager:
   - apiVersion: v1
+    created: "2023-11-28T11:57:05.956866727Z"
+    description: Helm chart for addon resources
+    digest: 43f194d760c362dad4d1ad90fd685feda34e5157a22221bb6c71a5688a0e498c
+    name: addons-cert-manager
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-cert-manager-0.1.2/addons-cert-manager-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
     created: "2023-11-26T16:00:15.587455593Z"
     description: Helm chart for addon resources
     digest: 958f9e4512d02c9d15bb27d963c75969cc0a5b1aa52e0104bb2b353a63abc6d7
@@ -28,6 +36,14 @@ entries:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-cert-manager-0.1.1/addons-cert-manager-0.1.1.tgz
     version: 0.1.1
   addons-keycloak:
+  - apiVersion: v1
+    created: "2023-11-28T11:57:06.06657849Z"
+    description: Helm chart for addon resources for keycloak
+    digest: 38c5526384438352a16fc36639ece9b4bce08f0a513d0bb9834f7906dfd2151e
+    name: addons-keycloak
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-keycloak-0.0.2/addons-keycloak-0.0.2.tgz
+    version: 0.0.2
   - apiVersion: v1
     created: "2023-11-26T16:00:15.774371352Z"
     description: Helm chart for addon resources for keycloak
@@ -38,6 +54,14 @@ entries:
     version: 0.0.1
   addons-metallb:
   - apiVersion: v1
+    created: "2023-11-28T11:57:06.169201397Z"
+    description: Helm chart for addon resources for metallb
+    digest: 1b0383b8d49305f8520b58935b9cb2712209af7e91b5153baee6cbd19b1ca8b5
+    name: addons-metallb
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-metallb-0.0.4/addons-metallb-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v1
     created: "2023-11-26T16:00:15.989389602Z"
     description: Helm chart for addon resources for metallb
     digest: ae57c3af16996ded10b708cd056da504d50db5aa560827bc11beac9fb4d932ee
@@ -47,6 +71,14 @@ entries:
     version: 0.0.3
   addons-oauth2-proxy:
   - apiVersion: v1
+    created: "2023-11-28T11:57:06.291170889Z"
+    description: Helm chart for addon resources
+    digest: 36219f98d6849072e81df45b2dd584966d46e2f3b0c6a8b688091d43e41d60b8
+    name: addons-oauth2-proxy
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-oauth2-proxy-0.0.3/addons-oauth2-proxy-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v1
     created: "2023-11-26T16:00:16.168533819Z"
     description: Helm chart for addon resources
     digest: 6fd5b42de49740f9245dd732771f80df951e302b1ecd86b7d42608e0a5a34803
@@ -55,6 +87,14 @@ entries:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-oauth2-proxy-0.0.2/addons-oauth2-proxy-0.0.2.tgz
     version: 0.0.2
   addons-synology-csi:
+  - apiVersion: v1
+    created: "2023-11-28T11:57:06.410961663Z"
+    description: Helm chart for addon resources for synology-csi
+    digest: 76e859b6c77c026066cd70ced3dfbeb6d1a920267e48ccd725214247aafd6c4a
+    name: addons-synology-csi
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-synology-csi-0.0.3/addons-synology-csi-0.0.3.tgz
+    version: 0.0.3
   - apiVersion: v1
     created: "2023-11-26T16:00:16.377435789Z"
     description: Helm chart for addon resources for synology-csi
@@ -94,6 +134,14 @@ entries:
     version: 0.0.1
   argocd-config:
   - apiVersion: v1
+    created: "2023-11-28T11:57:06.887922138Z"
+    description: Helm chart for config resources
+    digest: deb3af0c8be83f368d62c2f167e14862dcf21271397eff74c4bcf4e72bbfff44
+    name: argocd-config
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/argocd-config-0.1.3/argocd-config-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
     created: "2023-11-26T16:00:17.275405954Z"
     description: Helm chart for config resources
     digest: f148a8ae233777a024159806480b770829aa4bbc441bb7800d70030be32d52e0
@@ -127,4 +175,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2023-11-28T11:52:01.657427586Z"
+generated: "2023-11-28T11:57:07.035577493Z"
