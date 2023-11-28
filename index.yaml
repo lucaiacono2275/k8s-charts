@@ -103,6 +103,14 @@ entries:
     version: 0.1.2
   config-external-secrets:
   - apiVersion: v1
+    created: "2023-11-28T11:52:01.657409262Z"
+    description: Helm chart for addon resources for external-secrets
+    digest: 5b4c55cf1085b10481e8b6f06a840c9e17369cbae94a2c17733cd4e089def44b
+    name: config-external-secrets
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/config-external-secrets-0.0.3/config-external-secrets-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v1
     created: "2023-11-26T16:00:17.465790935Z"
     description: Helm chart for addon resources for external-secrets
     digest: 083b31bf31d30f41f4d2fd35a7cab90919544a3b6dc569586f3c6342fd348a8b
@@ -119,4 +127,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2023-11-26T16:00:17.734782798Z"
+generated: "2023-11-28T11:52:01.657427586Z"
