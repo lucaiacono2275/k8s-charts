@@ -5,12 +5,3 @@ ingress:
   hostname: 'argocd.example.com'
   # -- Name of the tls secret in the ingressRoute of traefik
   secretName: tls-secret
-secret:
-  # -- Name of the external secret - default to secret.name
-  # extName: 
-  # -- Name of the secret 
-  name: argocd-secret
-  # -- Name of the secret store
-  storeName: vault-backend
-  # -- Type of secret store
-  storeKind: ClusterSecretStore

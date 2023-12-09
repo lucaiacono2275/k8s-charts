@@ -1,0 +1,23 @@
+{{- range .Values.certificates}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .name }}
+  namespace: {{ .namespace }}
+spec:
+  secretName: {{ .name }}
+  issuerRef:
+    name: {{ .issuerRef }}
+    kind: ClusterIssuer
+  dnsNames:
+  {{- range .dnsNames }}
+  - {{ . | quote }}
+  {{- end }}
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"  
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "{{ .reflector.allowed }}"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true" # Auto create reflection for matching namespaces
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "{{ .reflector.auto }}" # Control auto-reflection namespaces    
+---
+{{- end}}

@@ -1,0 +1,47 @@
+# -- name of the secret store
+storeName: vault-backend
+# -- type of the secret store
+storeKind: ClusterSecretStore
+# -- refresh interval
+refreshInterval: "15s"
+# -- determines if it uses a path for the externalKey
+hasPath: true
+# -- secret path
+secretPath: "secret/data"
+
+# -- list of secrets to be instantiated
+secrets:
+  # -- name of the secret
+- name: oauth2-proxy
+  # -- namespace of the secret
+  # namespace: default
+  # -- specific name of the secret store
+  # storeName: vault-backend
+  # -- specific type of the secret store
+  # storeKind: ClusterSecretStore
+  # -- specific refresh interval
+  # refreshInterval: "15s"
+  # -- determines if it uses a path for the specific externalKey
+  # hasPath: true
+  # -- specific secret path
+  # secretPath: "secret/data"
+  # -- target secret name
+  # target: secret
+  # -- target secret creation policy
+  # creationPolicy: Merge
+  # -- target secret template
+  targetTemplate: {}
+  # -- remote key for the entire secret
+  # remoteKey: remoteKey
+  # -- items in the secret
+  items:
+    # -- secret key 
+  - secretKey: secretKey
+    # -- remote Path
+    # remotePath: "secret/data"
+    # -- remote Key
+    remoteKey: remoteKey
+    # -- remote property - default: secretKey
+    remoteProperty: remoteProperty
+
+
