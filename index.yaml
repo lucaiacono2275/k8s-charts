@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   addons-argocd:
   - apiVersion: v1
+    created: "2023-12-09T13:43:56.168387807Z"
+    description: Helm chart for addon resources of ArgoCD installation
+    digest: 88ff54a56eb283d2de97a1d8bd900d8d2975b6c648ff5ce74e6339216d5bec28
+    name: addons-argocd
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-argocd-0.1.0/addons-argocd-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v1
     created: "2023-11-26T16:00:15.38005463Z"
     description: Helm chart for addon resources of ArgoCD installation
     digest: d91fa60063ede95be3fe9d91db899dc8b70f34f8482e31fee50df24dd0a599c8
@@ -134,6 +142,14 @@ entries:
     version: 0.0.1
   argocd-config:
   - apiVersion: v1
+    created: "2023-12-09T13:43:57.075903139Z"
+    description: Helm chart for config resources
+    digest: 69c737cb1821498c25e5eaafc6abd1f8e9497965ab4f401158ca1bbee4173894
+    name: argocd-config
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/argocd-config-0.2.0/argocd-config-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
     created: "2023-11-28T11:57:06.887922138Z"
     description: Helm chart for config resources
     digest: deb3af0c8be83f368d62c2f167e14862dcf21271397eff74c4bcf4e72bbfff44
@@ -149,6 +165,15 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/argocd-config-0.1.2/argocd-config-0.1.2.tgz
     version: 0.1.2
+  config-cert-manager:
+  - apiVersion: v1
+    created: "2023-12-09T13:43:57.187006857Z"
+    description: Helm chart for config for cert-manager
+    digest: 63a3a463f72fcbd82eb7e7a320d146fb15b78b82d37fc033b66dbcf55d3fd39c
+    name: config-cert-manager
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/config-cert-manager-0.0.1/config-cert-manager-0.0.1.tgz
+    version: 0.0.1
   config-external-secrets:
   - apiVersion: v1
     created: "2023-11-28T11:52:01.657409262Z"
@@ -166,6 +191,15 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/config-external-secrets-0.0.2/config-external-secrets-0.0.2.tgz
     version: 0.0.2
+  external-secret-instance:
+  - apiVersion: v1
+    created: "2023-12-09T13:43:57.485148004Z"
+    description: Helm chart for adding external secrets instances
+    digest: 8691480783026b0b11287e71b09282a5067bfea72889a79b9eb276e33680bce6
+    name: external-secret-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-secret-instance-0.0.1/external-secret-instance-0.0.1.tgz
+    version: 0.0.1
   tekton-dashboard:
   - apiVersion: v1
     created: "2023-11-26T16:00:17.734765306Z"
@@ -175,4 +209,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2023-11-28T11:57:07.035577493Z"
+generated: "2023-12-09T13:43:57.485214047Z"
