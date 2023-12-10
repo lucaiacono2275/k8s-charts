@@ -35,7 +35,7 @@ secrets:
   # remoteKey: remoteKey
   # -- items in the secret
   items:
-    # -- secret key 
+    # -- secret key
   - secretKey: secretKey
     # -- remote Path
     # remotePath: "secret/data"
@@ -43,7 +43,6 @@ secrets:
     remoteKey: remoteKey
     # -- remote property - default: secretKey
     remoteProperty: remoteProperty
-
 # testing:
   # -- Installs dependecies charts for testing purposes
   # enabled: false
