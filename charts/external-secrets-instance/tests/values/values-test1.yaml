@@ -1,0 +1,11 @@
+storeName: vault-backend
+storeKind: ClusterSecretStore
+secretPath: secret
+
+secrets:
+  - creationPolicy: Merge
+    items:
+    - remoteKey: argocd/oidc/secret
+      secretKey: oidc.keycloak.clientSecret
+    name: argocd-secret
+

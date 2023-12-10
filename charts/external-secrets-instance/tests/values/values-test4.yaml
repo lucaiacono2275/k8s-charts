@@ -1,0 +1,19 @@
+storeName: vault-backend
+storeKind: ClusterSecretStore
+secretPath: secret
+
+secrets:
+  - items:
+    - secretKey: admin-password
+    - secretKey: management-password
+    - secretKey: tls-keystore-password
+    - secretKey: tls-truestore-password
+    name: keycloak-secret
+    remoteKey: keycloak/secret
+  - items:
+    - remoteProperty: postgresql-password
+      secretKey: password
+    - remoteProperty: postgresql-postgres-password
+      secretKey: postgres-password
+    name: keycloak-postgresql-secret
+    remoteKey: keycloak/postgresql/secret

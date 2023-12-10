@@ -1,0 +1,15 @@
+storeName: vault-backend
+storeKind: ClusterSecretStore
+secretPath: secret
+
+secrets:
+  - items:
+    - secretKey: url
+    - secretKey: username
+    - secretKey: password
+    name: private-k3s-home
+    remoteKey: argocd/repository/private-k3s-home
+    targetTemplate:
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: repository

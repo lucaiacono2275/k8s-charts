@@ -44,4 +44,6 @@ secrets:
     # -- remote property - default: secretKey
     remoteProperty: remoteProperty
 
-
+# testing:
+  # -- Installs dependecies charts for testing purposes
+  # enabled: false

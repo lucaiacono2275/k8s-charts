@@ -1,0 +1,9 @@
+storeName: vault-backend
+storeKind: ClusterSecretStore
+secretPath: secret
+
+secrets:
+  - items:
+    - secretKey: key.json
+    name: clouddns-dns01-solver-svc-acct
+    remoteKey: clouddns/dns01/solver/svc/acct
