@@ -33,6 +33,9 @@ jobs:
         env:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install kuebctl
+        uses: azure/setup-kubectl@v3
+
       - name: Install python
         uses: actions/setup-python@v4
         with:
@@ -62,6 +65,10 @@ jobs:
       - name: Create kind cluster
         if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.8.0
+
+      - name: Installs CRDs
+        if: steps.list-changed.outputs.changed == 'true'
+        run: kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml 
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
