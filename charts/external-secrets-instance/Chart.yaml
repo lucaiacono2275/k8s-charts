@@ -7,3 +7,6 @@ version: 0.0.2
 #    repository: https://charts.external-secrets.io
 #    version: ~0.9.7
 #    condition: testing.enabled
+maintainers:
+  - name: Luca Iacono
+    email: luca.iacono@gmail.com
