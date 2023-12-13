@@ -1,0 +1,46 @@
+suite: cluster issuers test suite
+templates:
+  - dns01-clusterissuers.yaml
+tests:
+  - it: should pass
+    values: 
+      - ./values/values-test1.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: metadata.name
+          value: letsencrypt-dns01-prod
+        documentIndex: 0
+      - equal:
+          path: spec.acme.email
+          value: myemail@mail.com
+        documentIndex: 0
+      - equal:
+          path: spec.acme.privateKeySecretRef.name
+          value: letsencrypt-dns01-prod
+        documentIndex: 0
+      - equal:
+          path: spec.acme.solvers[0].dns01.cloudDNS.project
+          value: test
+        documentIndex: 0
+      - lengthEqual:
+          path: spec.acme.solvers
+          count: 1
+        documentIndex: 0
+      - equal:
+          path: spec.acme.solvers[0].dns01.cloudDNS.serviceAccountSecretRef.name
+          value: name2
+        documentIndex: 0
+      - equal:
+          path: spec.acme.solvers[0].dns01.cloudDNS.serviceAccountSecretRef.key
+          value: key2.json
+        documentIndex: 0
+      - equal:
+          path: spec.acme.solvers[0].dns01.cloudDNS.serviceAccountSecretRef.name
+          value: clouddns-dns01-solver-svc-acct
+        documentIndex: 1
+      - equal:
+          path: spec.acme.solvers[0].dns01.cloudDNS.serviceAccountSecretRef.key
+          value: key.json
+        documentIndex: 1

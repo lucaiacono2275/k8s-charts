@@ -2,10 +2,19 @@
 email: luca.iacono@gmail.com
 # -- GCP project name
 gcpProject: test
+serviceAccountSecret:
+  # -- key of the secret for cluster issuer
+  key: key.json
+  # -- name of the secret for the cluster issuer
+  name: clouddns-dns01-solver-svc-acct
 # -- list of the cluster issuers to be created
 clusterissuers:
 - name: letsencrypt-dns01-prod
   server: https://acme-v02.api.letsencrypt.org/directory
+  # -- specific key of the secret for cluster issuer
+  # saSecretKey: key.json
+  # -- specific name of the secret for the cluster issuer
+  # saSecretName: clouddns-dns01-solver-svc-acct
 - name: letsencrypt-dns01-staging
   server: https://acme-staging-v02.api.letsencrypt.org/directory
 # -- list of certificates to be created

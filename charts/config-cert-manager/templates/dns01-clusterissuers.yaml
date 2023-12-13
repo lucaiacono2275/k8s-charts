@@ -1,6 +1,6 @@
 {{ $email := .Values.email}}
 {{ $gcpProject := .Values.gcpProject }}
-{{ $secret := .Values.secret }}
+{{ $secret := .Values.serviceAccountSecret }}
 {{- range .Values.clusterissuers }}
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -21,7 +21,7 @@ spec:
           project: {{ $gcpProject }}
           # This is the secret used to access the service account
           serviceAccountSecretRef:
-            name: {{ $secret.name }}
-            key: {{ $secret.key }}
+            name: {{ .saSecretName | default $secret.name }}
+            key: {{ .saSecretKey | default $secret.key }}
 ---
 {{- end }}

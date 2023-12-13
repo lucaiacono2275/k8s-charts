@@ -1,0 +1,17 @@
+email: myemail@mail.com
+gcpProject: test
+serviceAccountSecret:
+  key: key.json
+  name: clouddns-dns01-solver-svc-acct
+clusterissuers:
+- name: letsencrypt-dns01-prod
+  server: https://acme-v02.api.letsencrypt.org/directory
+  saSecretKey: key2.json
+  saSecretName: name2
+- name: letsencrypt-dns01-staging
+  server: https://acme-staging-v02.api.letsencrypt.org/directory
+ 
+
+
+
+
