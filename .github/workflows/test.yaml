@@ -68,7 +68,10 @@ jobs:
 
       - name: Installs CRDs
         if: steps.list-changed.outputs.changed == 'true'
-        run: kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml 
+        run: |
+          kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml 
+          kubectl apply -f https://raw.githubusercontent.com/cert-manager/cert-manager/master/deploy/crds/crd-clusterissuers.yaml
+          kubectl apply -f https://raw.githubusercontent.com/cert-manager/cert-manager/master/deploy/crds/crd-certificates.yaml
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
