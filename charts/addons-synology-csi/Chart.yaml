@@ -2,3 +2,4 @@ apiVersion: v1
 description: Helm chart for addon resources for synology-csi
 name: addons-synology-csi
 version: 0.0.3
+deprecated: true
