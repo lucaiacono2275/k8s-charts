@@ -97,6 +97,7 @@ jobs:
         if: steps.argocd-changed.outputs.argocd == 'true'
         run: |
           kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$ARGOCD_VERSION"
+          kubectl create namespace argocd
 
       - name: Installs other CRDs
         if: steps.list-changed.outputs.changed == 'true'
