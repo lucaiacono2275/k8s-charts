@@ -8,6 +8,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ARGOCD_VERSION: 5.6.48
 
 
 jobs:
@@ -57,6 +58,18 @@ jobs:
           if [[ -n "$changed" ]]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+          argocd=$(echo $changed | grep argocd)
+          if [[ -n "$argocd" ]]; then
+            echo "argocd=true" >> "$GITHUB_OUTPUT"
+          fi
+          certmanager=$(echo $changed | grep cert-manager)
+          if [[ -n "$certmanager" ]]; then
+            echo "certmanager=true" >> "$GITHUB_OUTPUT"
+          fi
+          extsecrets=$(echo $changed | grep external-secrets)
+          if [[ -n "$extsecrets" ]]; then
+            echo "extsecrets=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
@@ -66,12 +79,21 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.8.0
 
-      - name: Installs CRDs
-        if: steps.list-changed.outputs.changed == 'true'
+      - name: Installs external-secrets CRDs
+        if: steps.list-changed.outputs.extsecrets == 'true'
         run: |
           kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml 
+
+      - name: Installs cert-manager CRDs
+        if: steps.list-changed.outputs.certmanager == 'true'
+        run: |
           kubectl apply -f https://raw.githubusercontent.com/cert-manager/cert-manager/master/deploy/crds/crd-clusterissuers.yaml
           kubectl apply -f https://raw.githubusercontent.com/cert-manager/cert-manager/master/deploy/crds/crd-certificates.yaml
+
+      - name: Installs argocd CRDs
+        if: steps.list-changed.outputs.argocd == 'true'
+        run: |
+          kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$ARGOCD_VERSION"
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
