@@ -1,22 +1,22 @@
 # -- list of projects
 projects:
 # -- list of projects
-- 
+-
   # -- name of the project
   name: dev
   # list of allowed source repos
-  sourceRepos: 
+  sourceRepos:
   - '*'
   # -- destinations
-  destinations: 
-  - 
+  destinations:
+  -
     # -- list of allowed namespaces
     namespace: '*'
     # -- list of allowed clusters
     server: '*'
   # -- whie list for resources
   clusterResourceWhitelist:
-  - 
+  -
     #  -- group
     group: '*'
     # -- kind
@@ -44,8 +44,8 @@ projects:
     # skipPlugin: true
     # -- sync policy
     # syncPolicy:
-      # automated: 
-        # -- enable automated sync   
+      # automated:
+        # -- enable automated sync
         # enabled: false
         # -- prune on automated sync
         # prune: true
