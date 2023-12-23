@@ -45,6 +45,15 @@ entries:
     version: 0.1.1
   addons-keycloak:
   - apiVersion: v1
+    created: "2023-12-23T21:05:27.577789474Z"
+    deprecated: true
+    description: Helm chart for addon resources for keycloak
+    digest: 352cf50d6ff9c9f51f09ca41576e5e23eba16ebd697babdd5fe3866e1e449d47
+    name: addons-keycloak
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-keycloak-0.0.3/addons-keycloak-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v1
     created: "2023-11-28T11:57:06.06657849Z"
     description: Helm chart for addon resources for keycloak
     digest: 38c5526384438352a16fc36639ece9b4bce08f0a513d0bb9834f7906dfd2151e
@@ -79,6 +88,15 @@ entries:
     version: 0.0.3
   addons-oauth2-proxy:
   - apiVersion: v1
+    created: "2023-12-23T21:05:28.018626103Z"
+    deprecated: true
+    description: Helm chart for addon resources
+    digest: 9a984cf2c1b654437273635f2d31eb23c2a1afd148e582dfabf45773737da53e
+    name: addons-oauth2-proxy
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-oauth2-proxy-0.0.4/addons-oauth2-proxy-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v1
     created: "2023-11-28T11:57:06.291170889Z"
     description: Helm chart for addon resources
     digest: 36219f98d6849072e81df45b2dd584966d46e2f3b0c6a8b688091d43e41d60b8
@@ -95,6 +113,15 @@ entries:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-oauth2-proxy-0.0.2/addons-oauth2-proxy-0.0.2.tgz
     version: 0.0.2
   addons-synology-csi:
+  - apiVersion: v1
+    created: "2023-12-23T21:05:28.205277444Z"
+    deprecated: true
+    description: Helm chart for addon resources for synology-csi
+    digest: c981db03ec7551ce8df9275cf8da689c9daefe442e147f0f6c942941a3308774
+    name: addons-synology-csi
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-synology-csi-0.0.4/addons-synology-csi-0.0.4.tgz
+    version: 0.0.4
   - apiVersion: v1
     created: "2023-11-28T11:57:06.410961663Z"
     description: Helm chart for addon resources for synology-csi
@@ -141,6 +168,17 @@ entries:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-velero-0.0.1/addons-velero-0.0.1.tgz
     version: 0.0.1
   argocd-config:
+  - apiVersion: v1
+    created: "2023-12-23T21:05:29.001602369Z"
+    description: Helm chart for config resources
+    digest: fc0994fa2e076a479f60581720979e5ad28942fe552c532d1d15811b9bcd3a4f
+    maintainers:
+    - email: luca.iacono@gmail.com
+      name: lucaiacono2275
+    name: argocd-config
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/argocd-config-0.3.0/argocd-config-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v1
     created: "2023-12-09T13:43:57.075903139Z"
     description: Helm chart for config resources
@@ -241,4 +279,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2023-12-13T21:15:42.207439929Z"
+generated: "2023-12-23T21:05:29.403523329Z"
