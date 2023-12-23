@@ -1,27 +1,53 @@
 # -- list of projects
 projects:
-- name: dev
+# -- list of projects
+- 
+  # -- name of the project
+  name: dev
+  # list of allowed source repos
   sourceRepos: 
   - '*'
+  # -- destinations
   destinations: 
-  - namespace: '*'
+  - 
+    # -- list of allowed namespaces
+    namespace: '*'
+    # -- list of allowed clusters
     server: '*'
+  # -- whie list for resources
   clusterResourceWhitelist:
-  - group: '*'
+  - 
+    #  -- group
+    group: '*'
+    # -- kind
     kind: '*'
   applications:
+    # -- default application name
     name: dev-applications
+    # -- default server address
     server: https://kubernetes.default.svc
+    # -- default path in the repo
     path: environments/dev
+    # -- default repo URL
     repoURL: https://github.com/lucaiacono2275/k3s-home
+    # -- default repo revision
     targetRevision: HEAD
   deploy:
   - name: external-secrets
-    # labelName: # defaults to name
-    # path: # defaults to name
+    # -- label name - defaults to name
+    # labelName: name
+    # -- path - defaults to name
+    # path: path
+    # -- namespace - defauts to name
     # namespace: # defauts to name
-    #syncPolicy:
-    #  automated: 
-    #    enabled: false
-    #    prune: true
-    #    selfHeal: true
+    # -- skip plugin for specific application
+    # skipPlugin: true
+    # -- sync policy
+    # syncPolicy:
+      # automated: 
+        # -- enable automated sync   
+        # enabled: false
+        # -- prune on automated sync
+        # prune: true
+        # -- enable self heal
+        # selfHeal: true

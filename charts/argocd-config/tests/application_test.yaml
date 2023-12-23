@@ -1,0 +1,79 @@
+suite: argocd-config test suite
+templates:
+  - applications.yaml
+tests:
+  - it: should create 1 project and 1 application
+    values: 
+      - ./values/values-1.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: AppProject
+          apiVersion: argoproj.io/v1alpha1
+          name: dev
+          namespace: argocd
+        documentIndex: 0
+      - containsDocument:
+          kind: Application
+          apiVersion: argoproj.io/v1alpha1
+          name: dev-external-secrets
+          namespace: argocd
+        documentIndex: 1
+      - equal:
+          path: metadata.labels.name
+          value: external-secrets
+        documentIndex: 1
+      - equal:
+          path: spec.project
+          value: dev
+        documentIndex: 1
+      - exists:
+          path: spec.source.plugin
+        documentIndex: 1
+  - it: should create 1 project and 2 applications
+    values: 
+      - ./values/values-2.yaml
+    asserts:
+      - hasDocuments:
+          count: 3
+      - containsDocument:
+          kind: AppProject
+          apiVersion: argoproj.io/v1alpha1
+          name: dev
+          namespace: argocd
+        documentIndex: 0
+      - containsDocument:
+          kind: Application
+          apiVersion: argoproj.io/v1alpha1
+          name: dev-external-secrets
+          namespace: argocd
+        documentIndex: 1
+      - containsDocument:
+          kind: Application
+          apiVersion: argoproj.io/v1alpha1
+          name: dev-CRDs
+          namespace: argocd          
+        documentIndex: 2
+      - equal:
+          path: metadata.labels.name
+          value: external-secrets
+        documentIndex: 1
+      - equal:
+          path: spec.project
+          value: dev
+        documentIndex: 1
+      - exists:
+          path: spec.source.plugin
+        documentIndex: 1
+      - equal:
+          path: metadata.labels.name
+          value: CRDs
+        documentIndex: 2
+      - equal:
+          path: spec.project
+          value: dev
+        documentIndex: 2
+      - notExists:
+          path: spec.source.plugin
+        documentIndex: 2        

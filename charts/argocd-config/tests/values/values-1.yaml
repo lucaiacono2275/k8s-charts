@@ -1,0 +1,18 @@
+projects:
+- name: dev
+  sourceRepos: 
+  - '*'
+  destinations: 
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  applications:
+    name: dev-applications
+    server: https://kubernetes.default.svc
+    path: environments/dev
+    repoURL: https://github.com/lucaiacono2275/k3s-home
+    targetRevision: HEAD
+  deploy:
+  - name: external-secrets

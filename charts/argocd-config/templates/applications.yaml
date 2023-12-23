@@ -47,7 +47,7 @@ spec:
     repoURL: {{ $repoURL }}
     targetRevision: {{ $targetRevision }} # For Helm, this refers to the chart version.
     path: "{{ $appPath }}/{{ .path | default .name }}"  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
-
+{{- if not .skipPlugin }}
     # plugin specific config
     plugin:
       # Only set the plugin name if the plugin is defined in argocd-cm.
@@ -61,7 +61,7 @@ spec:
       #  - HELMFILE_TEMPLATE_OPTIONS: # pass-through options for the templating operation helmfile template --help
       #  - name: FOO
       #    value: bar
-
+{{- end }}
   # Destination cluster and namespace to deploy the application
   destination:
     server: {{ $server }}
