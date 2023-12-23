@@ -9,8 +9,8 @@ secret:
 
   remoteSecret:
     # -- remote secret key
-    key: secret/data/oauth2/proxy/secret 
-  clientId: 
+    key: secret/data/oauth2/proxy/secret
+  clientId:
     # -- remote secret key for clientId
     key: client-id
     # -- remote secret propoerty for clientId
