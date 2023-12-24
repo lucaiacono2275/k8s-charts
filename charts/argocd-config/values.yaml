@@ -32,6 +32,8 @@ projects:
     repoURL: https://github.com/lucaiacono2275/k3s-home
     # -- default repo revision
     targetRevision: HEAD
+    # -- default plugin
+    type: helmfile
   deploy:
   - name: external-secrets
     # -- label name - defaults to name

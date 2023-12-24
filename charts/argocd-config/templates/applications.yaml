@@ -25,6 +25,7 @@ spec:
 {{ $targetRevision := .applications.targetRevision }}
 {{ $appPath := .applications.path }}
 {{ $server := .applications.server }}
+{{ $appType := .applications.type | default "helmfile" }}
 {{- range .deploy }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -47,13 +48,14 @@ spec:
     repoURL: {{ $repoURL }}
     targetRevision: {{ $targetRevision }} # For Helm, this refers to the chart version.
     path: "{{ $appPath }}/{{ .path | default .name }}"  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
-{{- if not .skipPlugin }}
+{{ $type := .type | default $appType }}
+{{- if eq $type "helmfile" }}
     # plugin specific config
     plugin:
       # Only set the plugin name if the plugin is defined in argocd-cm.
       # If the plugin is defined as a sidecar, omit the name. The plugin will be automatically matched with the
       # Application according to the plugin's discovery rules.
-      #name: helmfile
+      name: helmfile
       # environment variables passed to the plugin
       env:
        - name: HELMFILE_GLOBAL_OPTIONS # pass-through options for all helmfile operations helmfile --help
@@ -61,6 +63,32 @@ spec:
       #  - HELMFILE_TEMPLATE_OPTIONS: # pass-through options for the templating operation helmfile template --help
       #  - name: FOO
       #    value: bar
+{{- end }}
+{{- if eq $type "directory" }}
+    directory:
+      recurse: true
+      # jsonnet:
+        # A list of Jsonnet External Variables
+        # extVars:
+        # - name: foo
+        #   value: bar
+        # You can use "code to determine if the value is either string (false, the default) or Jsonnet code (if code is true).
+        # - code: true
+        #   name: baz
+        #   value: "true"
+        # A list of Jsonnet Top-level Arguments
+        # tlas:
+        # - code: false
+        #   name: foo
+        #   value: bar
+      # Exclude contains a glob pattern to match paths against that should be explicitly excluded from being used during
+      # manifest generation. This takes precedence over the `include` field.
+      # To match multiple patterns, wrap the patterns in {} and separate them with commas. For example: '{config.yaml,env-use2/*}'
+      # exclude: 'config.yaml'
+      # Include contains a glob pattern to match paths against that should be explicitly included during manifest
+      # generation. If this field is set, only matching manifests will be included.
+      # To match multiple patterns, wrap the patterns in {} and separate them with commas. For example: '{*.yml,*.yaml}'
+      # include: '*.yaml'
 {{- end }}
   # Destination cluster and namespace to deploy the application
   destination:
@@ -76,11 +104,11 @@ spec:
     #   selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
   #     allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
 {{- if .syncPolicy }}
-{{- if .syncPolicy.automated.enabled }}
+  {{- if .syncPolicy.automated.enabled }}
     automated: 
       prune: {{ .syncPolicy.automated.prune }}
       selfHeal: {{ .syncPolicy.automated.selfHeal }}
-{{- end }}
+  {{- end }}
 {{- end }}
     syncOptions:     # Sync options which modifies sync behavior
   #  - Validate=false # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
@@ -106,7 +134,9 @@ spec:
 
   # Will ignore differences between live and desired states during the diff. Note that these configurations are not
   # used during the sync process.
-  # ignoreDifferences:
+
+{{- if .ignoreDifferences }}
+  ignoreDifferences: {{ .ignoreDifferences | toYaml | nindent 4 }}
   # for the specified json pointers
   # - group: apps
   #   kind: Deployment
@@ -117,7 +147,7 @@ spec:
   #   kind: "*"
   #   managedFieldsManagers:
   #   - kube-controller-manager
-
+{{- end }}
   # RevisionHistoryLimit limits the number of items kept in the application's revision history, which is used for
   # informational purposes as well as for rollbacks to previous versions. This should only be changed in exceptional
   # circumstances. Setting to zero will store no history. This will reduce storage used. Increasing will increase the

@@ -17,4 +17,4 @@ projects:
   deploy:
   - name: external-secrets
   - name: CRDs
-    skipPlugin: true
+    type: "directory"

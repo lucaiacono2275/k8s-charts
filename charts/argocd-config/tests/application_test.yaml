@@ -77,3 +77,53 @@ tests:
       - notExists:
           path: spec.source.plugin
         documentIndex: 2        
+      - exists:
+          path: spec.source.directory
+        documentIndex: 2        
+  - it: should render ignoreDifference
+    values: 
+      - ./values/values-3.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: AppProject
+          apiVersion: argoproj.io/v1alpha1
+          name: dev
+          namespace: argocd
+        documentIndex: 0
+      - containsDocument:
+          kind: Application
+          apiVersion: argoproj.io/v1alpha1
+          name: dev-external-secrets
+          namespace: argocd
+        documentIndex: 1
+      - equal:
+          path: metadata.labels.name
+          value: external-secrets
+        documentIndex: 1
+      - equal:
+          path: spec.project
+          value: dev
+        documentIndex: 1
+      - exists:
+          path: spec.ignoreDifferences
+        documentIndex: 1
+      - contains:
+          path: spec.ignoreDifferences
+          content: 
+            name: bgppeers.metallb.io
+            group: "apiextensions.k8s.io"
+            kind: CustomResourceDefinition
+            jsonPointers:
+            - /spec/conversion/webhook/clientConfig/caBundle
+        documentIndex: 1
+      - contains:
+          path: spec.ignoreDifferences
+          content: 
+            name: addresspools.metallb.io
+            group: "apiextensions.k8s.io"
+            kind: CustomResourceDefinition
+            jsonPointers:
+            - /spec/conversion/webhook/clientConfig/caBundle
+        documentIndex: 1        
