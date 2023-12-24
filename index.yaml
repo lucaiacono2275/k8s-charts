@@ -169,6 +169,17 @@ entries:
     version: 0.0.1
   argocd-config:
   - apiVersion: v1
+    created: "2023-12-24T19:15:15.560756519Z"
+    description: Helm chart for config resources
+    digest: ce9849fd90a3e641ca9ddc4fbab34c5d60f4d34c8cb6253055e7b97b3871d975
+    maintainers:
+    - email: luca.iacono@gmail.com
+      name: lucaiacono2275
+    name: argocd-config
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/argocd-config-0.4.0/argocd-config-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
     created: "2023-12-23T21:05:29.001602369Z"
     description: Helm chart for config resources
     digest: fc0994fa2e076a479f60581720979e5ad28942fe552c532d1d15811b9bcd3a4f
@@ -279,4 +290,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2023-12-23T21:05:29.403523329Z"
+generated: "2023-12-24T19:15:15.771797231Z"
