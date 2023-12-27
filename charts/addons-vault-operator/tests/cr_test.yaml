@@ -1,0 +1,33 @@
+suite: argocd-config test suite
+templates:
+  - cr.yaml
+tests:
+  - it: should create 1 vault
+    values: 
+      - ./values/values-test1.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Vault
+          apiVersion: vault.banzaicloud.com/v1alpha1
+          name: vault
+        documentIndex: 0
+  - it: should set PV to 100Mi
+    values: 
+      - ./values/values-test2.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Vault
+          apiVersion: vault.banzaicloud.com/v1alpha1
+          name: vault
+      - lengthEqual:
+          path: spec.volumeClaimTemplates
+          count: 1
+      - equal:
+          path: spec.volumeClaimTemplates[0].spec.resources.requests.storage
+          value: 100Mi
+        
+

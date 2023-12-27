@@ -10,8 +10,6 @@ metadata:
 spec:
   size: {{ .Values.cr.size }}
   image: {{ .Values.cr.vaultImage }}
-  # specify a custom bank-vaults image with bankVaultsImage:
-  #bankVaultsImage: { { .Values.cr.bankVaultsImage }}
   # Common annotations for all created resources
   annotations:
     common/annotation: "true"
@@ -125,7 +123,7 @@ spec:
         volumeMode: Filesystem
         resources:
           requests:
-            storage: 1Gi
+            storage: {{ .Values.cr.claim.storage }}
 
   volumeMounts:
     - name: {{ .Values.cr.claim.name }}

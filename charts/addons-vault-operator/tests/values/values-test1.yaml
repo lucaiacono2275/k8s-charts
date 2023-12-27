@@ -1,3 +1,4 @@
+
 pv:
   # -- enable PV
   enabled: false
@@ -7,11 +8,12 @@ pv:
   server: 192.168.1.6
   # -- path for PV in case of nfs
   path: "/nfs/vaultdata"
-  # -- storage class name
+  # -- storage class name 
   storageClassName: nfs-sc-vault-data
 
+
 cr:
-  # -- label for the vault
+  # -- label for the vault 
   label: vault
   # -- name of the vault
   name: vault
@@ -55,7 +57,7 @@ cr:
 
   # -- enable velero config
   veleroEnabled: false
-
+  
   # -- External config for the vault
   externalConfig:
     policies:
@@ -64,9 +66,9 @@ cr:
     auth:
     - type: kubernetes
       roles:
-        - name: externalsecrets
+        - name: externalsecrets 
           bound_service_account_names: ["vault-auth"]
-          bound_service_account_namespaces: ["*"]
+          bound_service_account_namespaces: ["*"] 
           policies: allow_secrets
           ttl: 1h
 
@@ -78,7 +80,7 @@ cr:
           version: 2
 
 
-rbac:
+rbac: 
   # -- SA name
   serviceAccountName: vault
   # -- role name
