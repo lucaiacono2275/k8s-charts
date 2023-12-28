@@ -64,36 +64,44 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         id: argocd-changed
         run: |
+          echo "Checking for argocd changes..."
           argocd=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep argocd || true )
           if [[ -n "$argocd" ]]; then
             echo "argocd=true" >> "$GITHUB_OUTPUT"
+            echo "Found argocd changes."
           fi
 
       - name: Check external-secrets in the list of changes
         if: steps.list-changed.outputs.changed == 'true'
         id: extsecrets-changed
         run: |
+          echo "Checking for external-secrets changes..."
           extsecrets=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "external-secrets" || true )
           if [[ -n "$extsecrets" ]]; then
             echo "extsecrets=true" >> "$GITHUB_OUTPUT"
+            echo "Found external-secrets changes."
           fi
 
       - name: Check cert-manager in the list of changes
         if: steps.list-changed.outputs.changed == 'true'
         id: certmanager-changed
         run: |
+          echo "Checking for cert-manager changes..."
           certmanager=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "cert-manager" || true)
           if [[ -n "$certmanager" ]]; then
             echo "certmanager=true" >> "$GITHUB_OUTPUT"
+            echo "Found cert-manager changes."
           fi
 
-      - name: Check vault in the list of changes
+      - name: Check vault operator in the list of changes
         if: steps.list-changed.outputs.changed == 'true'
         id: vault-changed
         run: |
-          vault=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "vault" || true)
+          echo "Checking for vault-operator changes..."
+          vault=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "vault-operator" || true)
           if [[ -n "$vault" ]]; then
             echo "vault=true" >> "$GITHUB_OUTPUT"
+            echo "Found vaulkt-operator changes."
           fi
 
       - name: Run chart-testing (lint)
