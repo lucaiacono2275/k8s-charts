@@ -61,9 +61,11 @@ jobs:
           fi
 
       - name: Check argocd in the list of changes
+        if: steps.list-changed.outputs.changed == 'true'
         id: argocd-changed
         run: |
-          argocd=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep argocd)
+          echo "$changed"
+          argocd=$(echo "$changed" | grep "argocd")
           if [[ -n "$argocd" ]]; then
             echo "argocd=true" >> "$GITHUB_OUTPUT"
           fi
