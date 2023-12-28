@@ -67,7 +67,7 @@ jobs:
           echo "Checking for argocd changes..."
           argocd=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep argocd || true )
           if [[ -n "$argocd" ]]; then
-            echo "argocd=true" >> "$GITHUB_OUTPUT"
+            echo "install=true" >> "$GITHUB_OUTPUT"
             echo "Found argocd changes."
           fi
 
@@ -78,7 +78,7 @@ jobs:
           echo "Checking for external-secrets changes..."
           extsecrets=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "external-secrets" || true )
           if [[ -n "$extsecrets" ]]; then
-            echo "extsecrets=true" >> "$GITHUB_OUTPUT"
+            echo "install=true" >> "$GITHUB_OUTPUT"
             echo "Found external-secrets changes."
           fi
 
@@ -89,7 +89,7 @@ jobs:
           echo "Checking for cert-manager changes..."
           certmanager=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "cert-manager" || true)
           if [[ -n "$certmanager" ]]; then
-            echo "certmanager=true" >> "$GITHUB_OUTPUT"
+            echo "install=true" >> "$GITHUB_OUTPUT"
             echo "Found cert-manager changes."
           fi
 
@@ -100,8 +100,8 @@ jobs:
           echo "Checking for vault-operator changes..."
           vault=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "vault-operator" || true)
           if [[ -n "$vault" ]]; then
-            echo "vault=true" >> "$GITHUB_OUTPUT"
-            echo "Found vaulkt-operator changes."
+            echo "install=true" >> "$GITHUB_OUTPUT"
+            echo "Found vault-operator changes."
           fi
 
       - name: Run chart-testing (lint)
@@ -113,23 +113,23 @@ jobs:
         uses: helm/kind-action@v1.8.0
 
       - name: Installs argocd CRDs
-        if: steps.argocd-changed.outputs.argocd == 'true'
+        if: steps.argocd-changed.outputs.install == 'true'
         run: |
           kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$ARGOCD_VERSION"
           kubectl create namespace argocd
 
       - name: Installs external-secrets CRDs
-        if: steps.list-changed.outputs.extsecrets == 'true'
+        if: steps.extsecrets-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml 
 
       - name: Installs cert-manager CRDs
-        if: steps.list-changed.outputs.certmanager == 'true'
+        if: steps.certmanager-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/$CERTMANAGER_VERSION/cert-manager.crds.yaml
 
       - name: Installs vault operator CRDs
-        if: steps.list-changed.outputs.vault == 'true'
+        if: steps.vault-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://raw.githubusercontent.com/bank-vaults/vault-operator/main/deploy/charts/vault-operator/crds/crd.yaml
 
