@@ -35,7 +35,7 @@ jobs:
         env:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install kuebctl
+      - name: Install kubectl
         uses: azure/setup-kubectl@v3
 
       - name: Install python
