@@ -64,8 +64,9 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         id: argocd-changed
         run: |
-          echo "$changed"
+          echo "changed=" "$changed"
           argocd=$(echo "$changed" | grep "argocd")
+          echo "argocd=" "$argocd"
           if [[ -n "$argocd" ]]; then
             echo "argocd=true" >> "$GITHUB_OUTPUT"
           fi
