@@ -45,8 +45,8 @@ spec:
 
   # Source of the application manifests
   source:
-    repoURL: {{ $repoURL }}
-    targetRevision: {{ $targetRevision }} # For Helm, this refers to the chart version.
+    repoURL: {{ .repoURL | default $repoURL }}
+    targetRevision: {{ .targetRevision | default $targetRevision }} # For Helm, this refers to the chart version.
     path: "{{ $appPath }}/{{ .path | default .name }}"  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
 {{ $type := .type | default $appType }}
 {{- if eq $type "helmfile" }}

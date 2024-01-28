@@ -127,3 +127,37 @@ tests:
             jsonPointers:
             - /spec/conversion/webhook/clientConfig/caBundle
         documentIndex: 1        
+  - it: should use specific repo URL and revision
+    values: 
+      - ./values/values-4.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: AppProject
+          apiVersion: argoproj.io/v1alpha1
+          name: dev
+          namespace: argocd
+        documentIndex: 0
+      - containsDocument:
+          kind: Application
+          apiVersion: argoproj.io/v1alpha1
+          name: dev-external-secrets
+          namespace: argocd
+        documentIndex: 1
+      - equal:
+          path: metadata.labels.name
+          value: external-secrets
+        documentIndex: 1
+      - equal:
+          path: spec.project
+          value: dev
+        documentIndex: 1
+      - equal:
+          path: spec.source.repoURL
+          value: https://github.com/lucaiacono2275/k3s-different-url
+        documentIndex: 1  
+      - equal:
+          path: spec.source.targetRevision
+          value: feature/new-feature
+        documentIndex: 1  

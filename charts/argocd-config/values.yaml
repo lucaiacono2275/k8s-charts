@@ -38,6 +38,10 @@ projects:
   - name: external-secrets
     # -- label name - defaults to name
     # labelName: name
+    # -- repoURL - specific repo URL for the deploy
+    # repoURL: https://github.com/lucaiacono2275/k3s-home
+    # -- targetRevision  - specific targetRevision for the deploy
+    # targetRevision: HEAD
     # -- path - defaults to name
     # path: path
     # -- namespace - defauts to name
