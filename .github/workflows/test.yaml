@@ -127,6 +127,7 @@ jobs:
         if: steps.certmanager-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/$CERTMANAGER_VERSION/cert-manager.crds.yaml
+          kubectl create namespace cert-manager
 
       - name: Installs vault operator CRDs
         if: steps.vault-changed.outputs.install == 'true'
