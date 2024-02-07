@@ -33,20 +33,16 @@ certificates:
 - name: tls-ihsws-it-p
   namespace: cert-manager
   issuerRef: letsencrypt-dns01-prod
-  dnsNames: 
+  dnsNames:
   - '*.example.org'
   reflector:
     allowed: "*"
-    auto: "*"   
+    auto: "*"
 - name: tls-ihsws-it-s
   namespace: cert-manager
   issuerRef: letsencrypt-dns01-staging
-  dnsNames: 
+  dnsNames:
   - '*.example.org'
   reflector:
     allowed: "*"
-    auto: "*"   
-
-
-
-
+    auto: "*"
