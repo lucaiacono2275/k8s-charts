@@ -2,6 +2,8 @@
 email: luca.iacono@gmail.com
 # -- GCP project name
 gcpProject: test
+serviceAccountName: vault-issuer
+clusterResourceNamespace: cert-manager
 serviceAccountSecret:
   # -- key of the secret for cluster issuer
   key: key.json
@@ -15,9 +17,18 @@ clusterissuers:
   # saSecretKey: key.json
   # -- specific name of the secret for the cluster issuer
   # saSecretName: clouddns-dns01-solver-svc-acct
+  # -- type of cluster issuer (acme|vault)
+  type: acme
 - name: letsencrypt-dns01-staging
   server: https://acme-staging-v02.api.letsencrypt.org/directory
+  type: acme
 # -- list of certificates to be created
+- name: vault
+  type: vault
+  path: pki_int/sign/example-dot-com
+  server: https://vault.local
+  role: my-app-1
+  mountPath: /v1/auth/kubernetes
 certificates:
 - name: tls-ihsws-it-p
   namespace: cert-manager

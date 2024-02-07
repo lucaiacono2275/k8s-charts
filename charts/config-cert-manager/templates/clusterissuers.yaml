@@ -5,8 +5,10 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: {{ .name }}
+  name: {{ required "The name of the cluster issuer is required" .name }}
 spec:
+{{- $type := required "The type of cluster issuer is required" .type }}
+{{- if eq $type "acme" }}
   acme:
     # The ACME server URL
     server: {{ .server }}
@@ -23,5 +25,17 @@ spec:
           serviceAccountSecretRef:
             name: {{ .saSecretName | default $secret.name }}
             key: {{ .saSecretKey | default $secret.key }}
+{{- end }}
+{{- if eq $type "vault" }}
+  vault:
+    path: {{ .path }}
+    server: {{ .server }}
+    auth:
+      kubernetes:
+        role: {{ .role }}
+        mountPath: {{ .mountPath }}
+        serviceAccountRef:
+          name: vault-issuer
+{{- end }}
 ---
 {{- end }}

@@ -12,6 +12,13 @@ clusterissuers:
 - name: letsencrypt-dns01-staging
   server: https://acme-staging-v02.api.letsencrypt.org/directory
   type: acme
+- name: vault
+  type: vault
+  path: pki_int/sign/example-dot-com
+  server: https://vault.local
+  role: my-app-1
+  mountPath: /v1/auth/kubernetes  
+
  
 
 
