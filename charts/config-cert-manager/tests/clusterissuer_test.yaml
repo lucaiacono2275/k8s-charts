@@ -102,3 +102,13 @@ tests:
           path: spec.vault.auth.kubernetes.mountPath
           value: /v1/auth/kubernetes
         documentIndex: 2
+  - it: should use the right SA name
+    values: 
+      - ./values/values-test3.yaml
+    asserts:
+      - hasDocuments:
+          count: 3
+      - equal:
+          path: spec.vault.auth.kubernetes.serviceAccountRef.name
+          value: sa-name
+        documentIndex: 2

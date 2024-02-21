@@ -35,7 +35,7 @@ spec:
         role: {{ .role }}
         mountPath: {{ .mountPath }}
         serviceAccountRef:
-          name: vault-issuer
+          name: {{ $.Values.serviceAccountName }}
 {{- end }}
 ---
 {{- end }}
