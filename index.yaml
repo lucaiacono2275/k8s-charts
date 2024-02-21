@@ -238,6 +238,16 @@ entries:
     version: 0.1.2
   config-cert-manager:
   - apiVersion: v1
+    created: "2024-02-21T20:07:26.125880834Z"
+    description: Helm chart for config for cert-manager
+    digest: 05b78b71e7ecafde621254e673826ca66185d5628cc36c2d5e42970933c435b9
+    maintainers:
+    - name: lucaiacono2275
+    name: config-cert-manager
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/config-cert-manager-0.2.1/config-cert-manager-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
     created: "2024-02-07T20:52:42.304006928Z"
     description: Helm chart for config for cert-manager
     digest: c0962e81cf27cee19333de9d0e331acd0639a5d04e44fd3f3f2e36ed658e7ece
@@ -322,4 +332,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-02-07T20:52:42.427361505Z"
+generated: "2024-02-21T20:07:26.264947746Z"
