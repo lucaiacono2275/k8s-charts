@@ -3,6 +3,7 @@ email: luca.iacono@gmail.com
 # -- GCP project name
 gcpProject: test
 serviceAccountName: vault-issuer
+certManagerServiceAccount: cert-manager
 clusterResourceNamespace: cert-manager
 serviceAccountSecret:
   # -- key of the secret for cluster issuer
