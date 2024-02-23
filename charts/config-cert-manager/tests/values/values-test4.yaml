@@ -11,6 +11,9 @@ clusterissuers:
   server: https://vault.local
   role: my-app-1
   mountPath: /v1/auth/kubernetes  
+  optionalProperties:
+    caBundle: ASDFASFDAV
+    skipTLSVerify: true
 
  
 

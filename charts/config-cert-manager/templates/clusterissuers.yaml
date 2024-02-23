@@ -30,6 +30,9 @@ spec:
   vault:
     path: {{ .path }}
     server: {{ .server }}
+    {{- if .optionalProperties }}
+    {{- .optionalProperties | toYaml | nindent 4 }}
+    {{- end }}
     auth:
       kubernetes:
         role: {{ .role }}

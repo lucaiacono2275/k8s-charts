@@ -30,6 +30,12 @@ clusterissuers:
   server: https://vault.local
   role: my-app-1
   mountPath: /v1/auth/kubernetes
+  ## -- optional properties to be added to the issuer
+  # optionalProperties:
+    # -- caBundle used to SSL connect to the issuer
+    # caBundle: ASDFASFDAV
+    # -- skip TLS verify in the issuer connection
+    # skipTLSVerify: true
 certificates:
 - name: tls-ihsws-it-p
   namespace: cert-manager

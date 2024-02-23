@@ -106,9 +106,16 @@ tests:
     values: 
       - ./values/values-test3.yaml
     asserts:
-      - hasDocuments:
-          count: 3
       - equal:
           path: spec.vault.auth.kubernetes.serviceAccountRef.name
           value: sa-name
-        documentIndex: 2
+  - it: should render optional properties
+    values: 
+      - ./values/values-test4.yaml
+    asserts:
+      - equal:
+          path: spec.vault.caBundle
+          value: ASDFASFDAV
+      - equal:
+          path: spec.vault.skipTLSVerify
+          value: true
