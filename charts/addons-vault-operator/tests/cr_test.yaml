@@ -29,5 +29,46 @@ tests:
       - equal:
           path: spec.volumeClaimTemplates[0].spec.resources.requests.storage
           value: 100Mi
+  - it: should set caNamespaces
+    values: 
+      - ./values/values-test3.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Vault
+          apiVersion: vault.banzaicloud.com/v1alpha1
+          name: vault
+      - lengthEqual:
+          path: spec.caNamespaces
+          count: 2
+      - equal:
+          path: spec.caNamespaces[0]
+          value: "vault"
+      - equal:
+          path: spec.caNamespaces[1]
+          value: "cert-manager"
+  - it: should render config properly
+    values: 
+      - ./values/values-test4.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Vault
+          apiVersion: vault.banzaicloud.com/v1alpha1
+          name: vault
+      - equal:
+          path: spec.config.storage.raft.path
+          value: /vault/data
+      - equal:
+          path: spec.config.listener.tcp.address
+          value: "0.0.0.0:8300"
+      - equal:
+          path: spec.vaultEnvsConfig[0].name
+          value: "VAULT_LOG_LEVEL"
+      - equal:
+          path: spec.vaultEnvsConfig[0].value
+          value: "debug"
         
 
