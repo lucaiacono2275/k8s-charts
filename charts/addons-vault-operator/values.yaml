@@ -52,8 +52,8 @@ cr:
     storage:
       raft:
         path: /vault/data
-        retry_join:
-          leader_api_addr: "https://vault-0.vault:8200"
+        # retry_join:
+        #   leader_api_addr: "https://vault-0.vault:8200"
         # autopilot:
         #  cleanup_dead_servers: "true"
         #  last_contact_threshold: "200ms"
@@ -74,7 +74,7 @@ cr:
     # -- path of the PVC
     path: /vault/data
     # -- storage
-    storage: 100Mi
+    storage: 1Gi
 
   # -- enable velero config
   veleroEnabled: false
