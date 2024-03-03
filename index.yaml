@@ -150,6 +150,17 @@ entries:
     version: 0.0.1
   addons-vault-operator:
   - apiVersion: v1
+    created: "2024-03-03T18:39:24.885517282Z"
+    description: Helm chart for addon resources for vault operator
+    digest: 95594c66930c96a2f3b9de740f5acc6838a8ba1034cd8a9a32b881f230700713
+    maintainers:
+    - email: luca.iacono@gmail.com
+      name: lucaiacono2275
+    name: addons-vault-operator
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/addons-vault-operator-0.1.0/addons-vault-operator-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v1
     created: "2023-12-29T13:19:15.493621348Z"
     description: Helm chart for addon resources for vault operator
     digest: 64d128aa026249a26d387be83054b38a811c47291730b496354e6e32820ccf3a
@@ -352,4 +363,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-02-23T13:48:20.010724831Z"
+generated: "2024-03-03T18:39:25.256512065Z"
