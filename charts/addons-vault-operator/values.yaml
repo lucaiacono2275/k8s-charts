@@ -26,7 +26,7 @@ cr:
   # -- annotation for the vault configurer pod
   vaultConfigurerAnnotations: "vaultconfigurer"
 
-  caNamespaces: 
+  caNamespaces:
     - "*"
 
   ingress:
@@ -52,16 +52,16 @@ cr:
     storage:
       raft:
         path: /vault/data
-        retry_join: 
+        retry_join:
           leader_api_addr: "https://vault-0.vault:8200"
-        #autopilot:
+        # autopilot:
         #  cleanup_dead_servers: "true"
         #  last_contact_threshold: "200ms"
         #  last_contact_failure_threshold: "10m"
         #  max_trailing_logs:  250000
         #  min_quorum: 1
         #  server_stabilization_time: "10s"
-    listener: 
+    listener:
       tcp:
         address: "0.0.0.0:8200"
         tls_cert_file: /vault/tls/server.crt
@@ -101,7 +101,7 @@ cr:
           version: 2
   vaultEnvsConfig:
     - name: VAULT_LOG_LEVEL
-      value: debug  
+      value: debug
 
 rbac:
   # -- SA name
