@@ -10,8 +10,7 @@ metadata:
   {{- end }}
 spec:
   selector:
-    matchLabels:
-      app: {{ include "lldap.matchLabels" . | nindent 8 }}
+    matchLabels: {{ include "lldap.matchLabels" . | nindent 8 }}
   revisionHistoryLimit: {{ default 5 .Values.pod.revisionHistoryLimit }}
   {{- if or (eq "StatefulSet" $kind) (eq "Deployment" $kind) }}
   replicas: {{ include "lldap.replicas" . }}

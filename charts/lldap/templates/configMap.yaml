@@ -15,12 +15,12 @@ data:
     {{- $configs := unset $configs  "jwt_secret" }}
     {{- $configs := unset $configs  "key_seed" }}
     {{- range $key, $val := $configs }}
-      {{ printf "LLDAP_%s" (upper $key) }}: {{ $val }}
+  {{ printf "LLDAP_%s" (upper $key) }}: {{ $val | quote }}
     {{- end }}
   {{- end }}
   {{- if .Values.ldaps -}}
     {{- range $key, $val := .Values.ldaps }}
-      {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val }}
+  {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val | quote }}
     {{- end }}
   {{- end }}
   {{- if .Values.smtp -}}
@@ -28,7 +28,7 @@ data:
     {{- $smtp := unset $smtp  "password" }}
     {{- $smtp := unset $smtp  "enabledSecret" }}
     {{- range $key, $val := $smtp }}
-      {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val }}
+  {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val | quote }}
     {{- end }}
   {{- end }}
 {{- end -}}
