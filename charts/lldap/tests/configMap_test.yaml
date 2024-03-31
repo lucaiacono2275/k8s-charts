@@ -39,7 +39,7 @@ tests:
           value: myvalue
       - equal:
           path: data.LLDAP_SMTP_OPTIONS_ENABLED
-          value: false
+          value: "false"
       - notExists:
           path: data.LLDAP_SMTP_OPTIONS_ENABLEDSECRET
   - it: should generate a configMap with empty data
