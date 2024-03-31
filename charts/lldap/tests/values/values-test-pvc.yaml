@@ -1,0 +1,36 @@
+annotations:
+  myannotation: myvalue
+
+## Useful in scenarios where you need persistent storage.
+## Auth Provider Use Case: file; we recommend you use the ldap provider instead.
+## Storage Provider Use Case: local; we recommend you use the mysql/mariadb or postgres provider instead.
+## Configuration Use Case: when you want to manually configure the configuration entirely (set configMap.enabled = false).
+##
+persistence:
+  enabled: true
+
+  annotations: 
+    myPVCAnnotation: myPVCValue
+
+  labels: 
+    myPVCLabel: myPVCValue
+
+  readOnly: false
+  subPath: ""
+
+  existingClaim: ""
+  # existingClaim: my-claim-name
+
+  storageClass: myStorageClass
+
+  ## Persistent Volume Name
+  ## Useful if Persistent Volumes have been provisioned in advance and you want to use a specific one
+  ##
+  volumeName: ""
+
+  accessModes:
+  - ReadWriteOnce
+
+  size: 100Mi
+
+  selector: {}

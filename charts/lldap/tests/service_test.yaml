@@ -1,0 +1,53 @@
+suite: service test suite
+templates:
+  - service.yaml
+tests:
+  - it: should generate a service
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-service.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap-service"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myServiceAnnotation
+          value: myServiceValue
+      - equal:
+          path: metadata.labels.myServiceLabel
+          value: myServiceValue
+      - contains:
+          path: spec.ports
+          content:
+            name: ldap
+            protocol: TCP
+            port: 389
+            targetPort: 3890
+      - contains:
+          path: spec.ports
+          content:
+            name: ldaps
+            protocol: TCP
+            port: 636
+            targetPort: 6360
+      - contains:
+          path: spec.ports
+          content:
+            name: web
+            protocol: TCP
+            port: 80
+            targetPort: 17170
+
+          

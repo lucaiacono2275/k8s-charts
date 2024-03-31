@@ -1,0 +1,140 @@
+{{- $kind := (include "lldap.pod.kind" .) }}
+---
+apiVersion: {{ include "capabilities.apiVersion.kind" (merge (dict "Kind" $kind) .) }}
+kind: {{ $kind }}
+metadata:
+  name: {{ include "lldap.name" . }}
+  labels: {{ include "lldap.labels" (merge (dict "Labels" .Values.pod.labels) .) | nindent 4 }}
+  {{- with $annotations := include "lldap.annotations" (merge (dict "Annotations" .Values.pod.annotations) .) }}
+  annotations: {{ $annotations | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "lldap.matchLabels" . | nindent 8 }}
+  revisionHistoryLimit: {{ default 5 .Values.pod.revisionHistoryLimit }}
+  {{- if or (eq "StatefulSet" $kind) (eq "Deployment" $kind) }}
+  replicas: {{ include "lldap.replicas" . }}
+  {{- end }}
+  {{- if or (eq "Deployment" $kind) (eq "DaemonSet" $kind) }}
+  minReadySeconds: {{ default 0 .Values.pod.minReadySeconds }}
+  {{- end }}
+  {{- if (eq "Deployment" $kind)}}
+  {{- $type := include "lldap.deploymentStrategy" . }}
+  strategy:
+    type: {{ $type }}
+    {{- if eq "RollingUpdate" $type }}
+    rollingUpdate: {{ (include "lldap.rollingUpdate" .) | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- if (or (eq "DaemonSet" $kind) (eq "StatefulSet" $kind)) }}
+  {{- $type := include "lldap.deploymentStrategy" . }}
+  updateStrategy:
+    type: {{ $type }}
+    {{- if eq "RollingUpdate" $type }}
+    rollingUpdate: {{ (include "lldap.rollingUpdate" .) | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- if eq "StatefulSet" $kind }}
+  podManagementPolicy: {{ include "lldap.podManagementPolicy" . }}
+  serviceName: {{ default (include "lldap.name" .) .Values.pod.serviceName }}
+  {{- end }}
+  {{- if eq "Deployment" $kind }}
+  {{- end }}  
+  template:
+    metadata:
+      labels: {{ include "lldap.labels" (merge (dict "Labels" .Values.pod.labels) .) | nindent 8 }}    
+      annotations:
+        {{- with $annotations := include "lldap.annotations" (merge (dict "Annotations" .Values.pod.annotations) .) }}
+        {{- $annotations | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with $tolerations := .Values.pod.tolerations }}
+      tolerations: {{ toYaml $tolerations | nindent 8 }}
+      {{- end }}
+      {{- if (include "lldap.pod.priorityClassName.enabled" .) }}
+      priorityClassName: {{ .Values.pod.priorityClassName }}
+      {{- end }}
+      {{- with $nodeName := .Values.pod.selectors.nodeName }}
+      nodeName: {{ $nodeName }}
+      {{- end }}
+      {{- with $selector := .Values.pod.selectors.nodeSelector }}
+      nodeSelector: {{ toYaml $selector | nindent 8 }}
+      {{- end }}
+      {{- with $affinity := .Values.pod.selectors.affinity }}
+      affinity: {{ toYaml $affinity | nindent 8 }}
+      {{- end }}
+      {{- with $context := .Values.pod.securityContext.container }}
+      securityContext: {{ toYaml $context | nindent 8 }}
+      {{- end }}
+      {{- if .Values.rbac.enabled }}
+      serviceAccountName: {{ default (include "lldap.name" .) .Values.rbac.serviceAccountName }}
+      {{- end }}
+      {{- if .Values.pod.enableServiceLinks }}
+      enableServiceLinks: true
+      {{- else }}
+      enableServiceLinks: false
+      {{- end }}
+      containers:
+      - name: lldap
+        image: {{ include "lldap.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+        {{- if .Values.secret.enabled }}
+        securityContext:
+          runAsUser: 1001
+          allowPrivilegeEscalation: false
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "lldap.name" . }}-cm
+        - secretRef:
+            name: {{ include "lldap.name" . }}-secret
+        {{- with $env := .Values.pod.env }}{{ toYaml $env | nindent 8 }}{{- end }}
+        {{- with $probe := include "lldap.merge.probe" (merge (dict "Type" "startup" "Method" .Values.pod.probes.method "Probe" .Values.pod.probes.startup) .) }}
+        {{- $probe | nindent 8 }}
+        {{- end }}
+        {{- with $probe := include "lldap.merge.probe" (merge (dict "Type" "liveness" "Method" .Values.pod.probes.method "Probe" .Values.pod.probes.liveness) .) }}
+        {{- $probe | nindent 8 }}
+        {{- end }}
+        {{- with $probe := include "lldap.merge.probe" (merge (dict "Type" "readiness" "Method" .Values.pod.probes.method "Probe" .Values.pod.probes.readiness) .) }}
+        {{- $probe | nindent 8 }}
+        {{- end }}
+        ports:
+        - name: ldap
+          containerPort: {{ default 3890 .Values.config.ldap_port }}
+          protocol: TCP
+        {{- if .Values.ldaps -}}
+        - name: ldaps
+          containerPort: {{ default 6360 .Values.ldaps.port }}
+          protocol: TCP
+        {{- end }}
+        - name: web
+          containerPort: {{ default 17170 .Values.http_port }}
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: lldap-data
+        {{- if (include "lldap.enabled.configMap" .) }}
+        {{- end }}
+        {{- with $mounts := .Values.pod.extraVolumeMounts }}
+          {{- toYaml $mounts | nindent 8 }}
+        {{- end }}
+      {{- with $context := .Values.pod.securityContext.pod }}
+        securityContext: {{ toYaml $context | nindent 10 }}
+      {{- end }}
+      {{- with $pullSecrets := .Values.image.pullSecrets }}
+      imagePullSecrets: {{- range $k, $secretName := $pullSecrets }}
+      - name: {{ $secretName }}
+      {{- end }}
+      {{- end }}
+      volumes:
+      {{- if (include "lldap.enabled.persistentVolumeClaim" .) }}
+      - name: lldap-data
+        persistentVolumeClaim:
+          claimName: {{ default (include "lldap.name" .) .Values.persistence.existingClaim }}
+      {{- end }}
+      {{- with .Values.pod.extraVolumes }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      restartPolicy: Always
+

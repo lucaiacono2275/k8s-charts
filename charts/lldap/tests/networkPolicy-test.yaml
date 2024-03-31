@@ -1,0 +1,40 @@
+suite: networkPolicy test suite
+templates:
+  - networkPolicy.yaml
+tests:
+  - it: should not generate networkPolicy
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should generate networkPolicy
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-networkPolicy.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.annotations.myNPAnnotation
+          value: myNPValue
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.labels.myNPLabel
+          value: myNPValue

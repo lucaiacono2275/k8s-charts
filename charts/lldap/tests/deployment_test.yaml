@@ -1,0 +1,130 @@
+suite: deployment test suite
+templates:
+  - deployment.yaml
+tests:
+  - it: should generate a deployment
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-deployment.yaml
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myDAnnotation
+          value: myDValue
+      - equal:
+          path: metadata.labels.myDLabel
+          value: myDValue
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: lldap
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: ldap
+            protocol: TCP
+            containerPort: 3890
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: web
+            protocol: TCP
+            containerPort: 17170
+  - it: should generate a daemonset
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-daemonset.yaml
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+          name: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myDAnnotation
+          value: myDValue
+      - equal:
+          path: metadata.labels.myDLabel
+          value: myDValue
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: lldap
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: ldap
+            protocol: TCP
+            containerPort: 3890
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: web
+            protocol: TCP
+            containerPort: 17170
+  - it: should generate a statefulset
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-statefulset.yaml
+    asserts:
+      - containsDocument:
+          kind: StatefulSet
+          apiVersion: apps/v1
+          name: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myDAnnotation
+          value: myDValue
+      - equal:
+          path: metadata.labels.myDLabel
+          value: myDValue
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: lldap
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: ldap
+            protocol: TCP
+            containerPort: 3890
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: web
+            protocol: TCP
+            containerPort: 17170                        

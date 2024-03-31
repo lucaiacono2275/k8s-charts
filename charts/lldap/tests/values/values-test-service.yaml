@@ -1,0 +1,18 @@
+annotations:
+  myannotation: myvalue
+
+service:
+  type: "ClusterIP"
+  annotations: 
+    myServiceAnnotation: myServiceValue
+
+  labels: 
+    myServiceLabel: myServiceValue
+
+  port: 80
+  ldapPort: 389
+  ldapsPort: 636
+  nodePort: 30091
+  clusterIP: {}
+  externalIPs: {}
+

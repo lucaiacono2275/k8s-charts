@@ -1,0 +1,69 @@
+suite: configmap test suite
+templates:
+  - configMap.yaml
+tests:
+  - it: should not generate configMap
+    values: 
+      - ./values/values-test-cm-disabled.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not generate configMap
+    values: 
+      - ./values/values-test-cm-existing.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should generate a configMap
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-cm.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap-cm"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: data.LLDAP_SMTP_OPTIONS_ENABLED
+          value: false
+      - notExists:
+          path: data.LLDAP_SMTP_OPTIONS_ENABLEDSECRET
+  - it: should generate a configMap with empty data
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-cm-empty.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap-cm"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - isNullOrEmpty:
+          path: data

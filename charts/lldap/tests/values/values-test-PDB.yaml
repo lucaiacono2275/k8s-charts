@@ -1,0 +1,17 @@
+annotations:
+  myannotation: myvalue
+
+##
+## Kubernetes Pod Disruption Budget
+##
+podDisruptionBudget:
+  enabled: true
+
+  annotations:
+    myPDBAnnotation: myPDBValue
+
+  labels: 
+    myPDBLabel: myPDBValue
+
+  minAvailable: 0
+  maxUnavailable: 0

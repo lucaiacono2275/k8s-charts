@@ -1,0 +1,42 @@
+{{- if (include "lldap.enabled.ingress.ingress" .) }}
+---
+{{- $apiVersion := (include "capabilities.apiVersion.ingress" .) }}
+apiVersion: {{ $apiVersion }}
+kind: Ingress
+metadata:
+  name: {{ include "lldap.name" . }}
+  labels: {{ include "lldap.labels" (merge (dict "Labels" .Values.ingress.labels) .) | nindent 4 }}
+  {{- with $annotations := (include "lldap.ingress.annotations" .) }}
+  annotations: {{ $annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if eq $apiVersion "networking.k8s.io/v1" }}
+  {{- with $className := .Values.ingress.className }}
+  ingressClassName: {{ $className }}
+  {{- end }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.hostname }}
+      http:
+        paths:
+          - path: "/"
+            {{- if eq $apiVersion "networking.k8s.io/v1" }}
+            pathType: Prefix
+            {{- end }}
+            backend:
+              {{- if eq $apiVersion "networking.k8s.io/v1" }}
+              service:
+                name: {{ include "lldap.name" . }}
+                port:
+                  number: {{ include "lldap.service.port" . }}
+            {{- else }}
+              serviceName: {{ include "lldap.name" . }}
+              servicePort: {{ include "lldap.service.port" . }}
+  {{- end }}
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ default .Values.ingress.hostname .Values.ingress.tls.hostNameOverride }}
+      secretName: {{ default "lldap-tls" .Values.ingress.tls.secret }}
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,51 @@
+suite: pvc test suite
+templates:
+  - pvc.yaml
+tests:
+  - it: should not generate pvc
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not generate pvc because of existing claim
+    set:
+      persistence:
+        enabled: true
+        existingClaim: myClaim
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should generate pvc
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-pvc.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.annotations.myPVCAnnotation
+          value: myPVCValue
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.labels.myPVCLabel
+          value: myPVCValue
+      - equal:
+          path: spec.storageClassName
+          value: myStorageClass

@@ -1,0 +1,13 @@
+annotations:
+  myannotation: myvalue
+
+ingress:
+  enabled: true
+  annotations:
+    myingressannotation: myingressvalue
+  labels:
+    myingresslabel: myingressvalue
+  
+  tls:
+    enabled: true
+    

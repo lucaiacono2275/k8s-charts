@@ -1,0 +1,9 @@
+##
+## Config Map Generator
+##
+configMap:
+
+  # Enable the configMap source for the config.
+  # If this is false you need to provide a volumeMount via PV/PVC or other means that mounts to /config.
+  enabled: false
+

@@ -1,0 +1,93 @@
+annotations:
+  myannotation: myvalue
+
+pod:
+  # Must be Deployment, DaemonSet, or StatefulSet.
+  kind: StatefulSet
+
+  annotations: 
+    myDAnnotation: myDValue
+
+  labels: 
+    myDLabel: myDValue
+
+  replicas: 1
+  revisionHistoryLimit: 5
+  priorityClassName: ""
+
+  strategy:
+    type: RollingUpdate
+    # rollingUpdate:
+    #   partition: 1
+    #   maxSurge: 25%
+    #   maxUnavailable: 25%
+
+  securityContext:
+    container: {}
+    # container:
+    #   runAsUser: 2000
+    #   runAsGroup: 2000
+    #   fsGroup: 2000
+    pod: {}
+    # pod:
+    #   readOnlyRootFilesystem: true
+    #   allowPrivilegeEscalation: false
+    #   privileged: false
+
+  tolerations: []
+  # tolerations:
+  # - key: key1
+  #   operator: Equal
+  #   value: value1
+  #   effect: NoSchedule
+  #   tolerationSeconds: 3600
+
+  selectors:
+  #   nodeName: worker-1
+
+    nodeSelector: {}
+    # nodeSelector:
+    #   disktype: ssd
+    #   kubernetes.io/hostname: worker-1
+
+    affinity:
+      nodeAffinity: {}
+      # nodeAffinity:
+      #   requiredDuringSchedulingIgnoredDuringExecution:
+      #     nodeSelectorTerms:
+      #     - matchExpressions:
+      #       - key: kubernetes.io/hostname
+      #         operator: In
+      #         values:
+      #         - worker-1
+      #         - worker-2
+      #   preferredDuringSchedulingIgnoredDuringExecution:
+      #   - weight: 1
+      #     preference:
+      #       matchExpressions:
+      #       - key: node-label-key
+      #         operator: NotIn
+      #         values:
+      #         - not-this
+      podAffinity: {}
+      # podAffinity:
+      #   requiredDuringSchedulingIgnoredDuringExecution:
+      #   - labelSelector:
+      #       matchExpressions:
+      #       - key: security
+      #         operator: In
+      #         values:
+      #         - S1
+      #     topologyKey: topology.kubernetes.io/zone
+      podAntiAffinity: {}
+      # podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - weight: 100
+      #       podAffinityTerm:
+      #         labelSelector:
+      #           matchExpressions:
+      #           - key: security
+      #             operator: In
+      #             values:
+      #             - S2
+      #         topologyKey: topology.kubernetes.io/zone

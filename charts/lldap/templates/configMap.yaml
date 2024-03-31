@@ -1,0 +1,34 @@
+{{- if (include "lldap.generate.configMap" .) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "lldap.name" . }}-cm
+  labels: {{ include "lldap.labels" (merge (dict "Labels" .Values.configMap.labels) .) | nindent 4 }}
+  {{- with $annotations := include "lldap.annotations" (merge (dict "Annotations" .Values.configMap.annotations) .) }}
+  annotations: {{ $annotations | nindent 4 }}
+  {{- end }}
+data:
+  {{- if .Values.config -}}
+    {{- $configs := deepCopy .Values.config }}
+    {{- $configs := unset $configs  "ldap_user_pass" }}
+    {{- $configs := unset $configs  "jwt_secret" }}
+    {{- $configs := unset $configs  "key_seed" }}
+    {{- range $key, $val := $configs }}
+      {{ printf "LLDAP_%s" (upper $key) }}: {{ $val }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.ldaps -}}
+    {{- range $key, $val := .Values.ldaps }}
+      {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.smtp -}}
+    {{- $smtp := deepCopy .Values.smtp }}
+    {{- $smtp := unset $smtp  "password" }}
+    {{- $smtp := unset $smtp  "enabledSecret" }}
+    {{- range $key, $val := $smtp }}
+      {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val }}
+    {{- end }}
+  {{- end }}
+{{- end -}}

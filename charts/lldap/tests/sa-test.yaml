@@ -1,0 +1,43 @@
+suite: serviceaccount test suite
+templates:
+  - serviceaccount.yaml
+tests:
+  - it: should not generate serviceaccount
+    set:
+      rbac:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should generate serviceaccount
+    release:
+      name: myrelease  
+    values: 
+      - ./values/values-test-serviceaccount.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.annotations.mySAAnnotation
+          value: mySAValue
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.labels.mySALabel
+          value: mySAValue

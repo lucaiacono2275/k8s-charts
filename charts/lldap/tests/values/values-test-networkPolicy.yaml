@@ -1,0 +1,28 @@
+annotations:
+  myannotation: myvalue
+
+##
+## Kubernetes Network Policy
+##
+networkPolicy:
+  enabled: true
+
+  annotations: 
+    myNPAnnotation: myNPValue
+
+  labels: 
+     myNPLabel: myNPValue
+
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          lldap/network-policy: namespace
+    - podSelector:
+        matchLabels:
+          lldap/network-policy: pod
+    ports:
+    - protocol: TCP
+      port: 9091

@@ -1,0 +1,40 @@
+suite: Pod Disruption Budget test suite
+templates:
+  - podDisruptionBudget.yaml
+tests:
+  - it: should not generate PDB
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should generate PDB
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-PDB.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.annotations.myPDBAnnotation
+          value: myPDBValue
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.labels.myPDBLabel
+          value: myPDBValue

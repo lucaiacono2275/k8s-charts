@@ -1,0 +1,75 @@
+suite: ingress test suite
+templates:
+  - ingress.yaml
+tests:
+  - it: should not generate ingress
+    set:
+      ingress:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should generate ingress
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-ingress.yaml    
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "myrelease-lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: "lldap"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: "myrelease"
+      - equal:
+          path: metadata.labels["app.kubernetes.io/version"]
+          value: "v0.5.0"
+      - equal:
+          path: metadata.annotations.myannotation
+          value: myvalue
+      - equal:
+          path: metadata.annotations.myingressannotation
+          value: myingressvalue
+      - equal:
+          path: metadata.labels.myingresslabel
+          value: myingressvalue
+      - equal:
+          path: spec.rules[0].host
+          value: lldap.example.com
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: myrelease-lldap
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 80
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+      - notExists:
+          path: spec.tls
+  - it: should generate ingress with tls
+    release:
+      name: myrelease
+    values: 
+      - ./values/values-test-ingress-tls.yaml    
+    asserts:
+      - hasDocuments:
+          count: 1
+      - exists:
+          path: spec.tls
+      - contains:
+          path: spec.tls[0].hosts
+          content: lldap.example.com
+      - equal:
+          path: spec.tls[0].secretName
+          value: lldap-tls
+
+
+
+
+

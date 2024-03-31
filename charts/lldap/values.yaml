@@ -1,0 +1,585 @@
+## Version Override allows changing some chart characteristics that render only on specific versions.
+## This does NOT affect the image used, please see the below image section instead for this.
+## If this value is not specified, it's assumed the appVersion of the chart is the version.
+## The format of this value  is x.x.x, for example 4.100.0.
+##
+## Important Points:
+##   - No guarantees of support for prior versions is given. The chart is intended to be used with the AppVersion.
+##   - Does not and will not support any version prior to 4.30.0 due to a significant refactor of the configuration
+##     system.
+versionOverride: ""
+
+## Kubernetes Version Override allows forcibly overriding the detected KubeVersion for fallback capabilities assessment.
+## The fallback capabilities assessment only occurs if the APIVersions Capabilities list does not include a known
+## APIVersion for a manifest which occurs with some CI/CD tooling. This value will completely override the value
+## detected by helm.
+kubeVersionOverride: ""
+
+## Image Parameters
+##
+image:
+  # registry: docker.io -- registry
+  # repository: lldap/lldap -- repository
+  tag: "stable"
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  # pullSecrets:
+  #   - myPullSecretName
+
+# nameOverride: lldap-deployment-name
+# appNameOverride: lldap
+
+##
+## extra labels/annotations applied to all resources
+##
+annotations: {}
+# annotations:
+#   myAnnotation: myValue
+
+labels: {}
+# labels:
+#   myLabel: myValue
+
+##
+## RBAC Configuration.
+##
+rbac:
+
+  ## Enable RBAC. Turning this on associates LLDAP with a service account.
+  enabled: false
+
+  annotations: {}
+  labels: {}
+
+  serviceAccountName: lldap
+
+
+service:
+  type: "ClusterIP"
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  port: 80
+  ldapPort: 389
+  ldapsPort: 636
+  nodePort: 30091
+  clusterIP: {}
+  externalIPs: {}
+
+
+ingress:
+  enabled: false
+  hostname: lldap.example.com
+
+  annotations: {}
+  # annotations:
+  #   kubernetes.io/ingress.class: nginx
+  #   kubernetes.io/tls-acme: "true"
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  ## The Ingress Class Name.
+  className: nginx
+
+  tls:
+    enabled: true
+    secret: lldap-tls
+
+    # hostNameOverride:
+
+pod:
+  # Must be Deployment, DaemonSet, or StatefulSet.
+  kind: DaemonSet
+
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  replicas: 1
+  revisionHistoryLimit: 5
+  priorityClassName: ""
+
+  strategy:
+    type: RollingUpdate
+    # rollingUpdate:
+    #   partition: 1
+    #   maxSurge: 25%
+    #   maxUnavailable: 25%
+
+  securityContext:
+    container: {}
+    # container:
+    #   runAsUser: 2000
+    #   runAsGroup: 2000
+    #   fsGroup: 2000
+    pod: {}
+    # pod:
+    #   readOnlyRootFilesystem: true
+    #   allowPrivilegeEscalation: false
+    #   privileged: false
+
+  tolerations: []
+  # tolerations:
+  # - key: key1
+  #   operator: Equal
+  #   value: value1
+  #   effect: NoSchedule
+  #   tolerationSeconds: 3600
+
+  selectors:
+  #   nodeName: worker-1
+
+    nodeSelector: {}
+    # nodeSelector:
+    #   disktype: ssd
+    #   kubernetes.io/hostname: worker-1
+
+    affinity:
+      nodeAffinity: {}
+      # nodeAffinity:
+      #   requiredDuringSchedulingIgnoredDuringExecution:
+      #     nodeSelectorTerms:
+      #     - matchExpressions:
+      #       - key: kubernetes.io/hostname
+      #         operator: In
+      #         values:
+      #         - worker-1
+      #         - worker-2
+      #   preferredDuringSchedulingIgnoredDuringExecution:
+      #   - weight: 1
+      #     preference:
+      #       matchExpressions:
+      #       - key: node-label-key
+      #         operator: NotIn
+      #         values:
+      #         - not-this
+      podAffinity: {}
+      # podAffinity:
+      #   requiredDuringSchedulingIgnoredDuringExecution:
+      #   - labelSelector:
+      #       matchExpressions:
+      #       - key: security
+      #         operator: In
+      #         values:
+      #         - S1
+      #     topologyKey: topology.kubernetes.io/zone
+      podAntiAffinity: {}
+      # podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - weight: 100
+      #       podAffinityTerm:
+      #         labelSelector:
+      #           matchExpressions:
+      #           - key: security
+      #             operator: In
+      #             values:
+      #             - S2
+      #         topologyKey: topology.kubernetes.io/zone
+
+  env: []
+  # env:
+  # - name: TZ
+  #   value: Europre/Rome
+
+  resources:
+    limits: {}
+    # limits:
+    #   cpu: "4.00"
+    #   memory: 125Mi
+    requests: {}
+    # requests:
+    #   cpu: "0.25"
+    #   memory: 50Mi
+
+  probes:
+    method:
+      httpGet:
+        path: /
+        port: http
+        scheme: HTTP
+
+    liveness:
+      initialDelaySeconds: 0
+      periodSeconds: 30
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+
+    readiness:
+      initialDelaySeconds: 0
+      periodSeconds: 5
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+
+    ## Note: Startup Probes are a Kubernetes feature gate which must be manually enabled pre-1.18.
+    ## Ref: https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/
+    startup:
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 6
+
+  extraVolumeMounts: []
+  extraVolumes: []
+
+##
+## Kubernetes Pod Disruption Budget
+##
+podDisruptionBudget:
+  enabled: false
+
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  minAvailable: 0
+  maxUnavailable: 0
+
+##
+## Kubernetes Network Policy
+##
+networkPolicy:
+  enabled: false
+
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          lldap/network-policy: namespace
+    - podSelector:
+        matchLabels:
+          lldap/network-policy: pod
+    ports:
+    - protocol: TCP
+      port: 9091
+
+config: {}
+
+  ## Tune the logging to be more verbose by setting this to be true.
+  ## You can set it with the LLDAP_VERBOSE environment variable.
+  # verbose: false
+
+  ## The host address that the LDAP server will be bound to.
+  ## To enable IPv6 support, simply switch "ldap_host" to "::":
+  ## To only allow connections from localhost (if you want to restrict to local self-hosted services),
+  ## change it to "127.0.0.1" ("::1" in case of IPv6).
+  ## If LLDAP server is running in docker, set it to "0.0.0.0" ("::" for IPv6) to allow connections
+  ## originating from outside the container.
+  # ldap_host: "0.0.0.0"
+
+  ## The port on which to have the LDAP server.
+  # ldap_port: 3890
+
+  ## The host address that the HTTP server will be bound to.
+  ## To enable IPv6 support, simply switch "http_host" to "::".
+  ## To only allow connections from localhost (if you want to restrict to local self-hosted services),
+  ## change it to "127.0.0.1" ("::1" in case of IPv6).
+  ## If LLDAP server is running in docker, set it to "0.0.0.0" ("::" for IPv6) to allow connections
+  ## originating from outside the container.
+  # http_host: "0.0.0.0"
+
+  ## The port on which to have the HTTP server, for user login and
+  ## administration.
+  # http_port: 17170
+
+  ## The public URL of the server, for password reset links.
+  # http_url: "http://localhost"
+
+  ## Random secret for JWT signature.
+  ## This secret should be random, and should be shared with application
+  ## servers that need to consume the JWTs.
+  ## Changing this secret will invalidate all user sessions and require
+  ## them to re-login.
+  ## You should probably set it through the LLDAP_JWT_SECRET environment
+  ## variable from a secret ".env" file.
+  ## This can also be set from a file's contents by specifying the file path
+  ## in the LLDAP_JWT_SECRET_FILE environment variable
+  ## You can generate it with (on linux):
+  ## LC_ALL=C tr -dc 'A-Za-z0-9!#%&'\''()*+,-./:;<=>?@[\]^_{|}~' </dev/urandom | head -c 32; echo ''
+  #jwt_secret = "REPLACE_WITH_RANDOM"
+
+  ## Base DN for LDAP.
+  ## This is usually your domain name, and is used as a
+  ## namespace for your users. The choice is arbitrary, but will be needed
+  ## to configure the LDAP integration with other services.
+  ## The sample value is for "example.com", but you can extend it with as
+  ## many "dc" as you want, and you don't actually need to own the domain
+  ## name.
+  # ldap_base_dn: "dc=example,dc=com"
+
+  ## Admin username.
+  ## For the LDAP interface, a value of "admin" here will create the LDAP
+  ## user "cn=admin,ou=people,dc=example,dc=com" (with the base DN above).
+  ## For the administration interface, this is the username.
+  # ldap_user_dn: "admin"
+
+  ## Admin email.
+  ## Email for the admin account. It is only used when initially creating
+  ## the admin user, and can safely be omitted.
+  # ldap_user_email: "admin@example.com"
+
+  ## Admin password.
+  ## Password for the admin account, both for the LDAP bind and for the
+  ## administration interface. It is only used when initially creating
+  ## the admin user.
+  ## It should be minimum 8 characters long.
+  ## You can set it with the LLDAP_LDAP_USER_PASS environment variable.
+  ## This can also be set from a file's contents by specifying the file path
+  ## in the LLDAP_LDAP_USER_PASS_FILE environment variable
+  ## Note: you can create another admin user for user administration, this
+  ## is just the default one.
+  # ldap_user_pass: "REPLACE_WITH_PASSWORD"
+
+  ## Force reset of the admin password.
+  ## Break glass in case of emergency: if you lost the admin password, you
+  ## can set this to true to force a reset of the admin password to the value
+  ## of ldap_user_pass above.
+  # force_reset_admin_password: false
+
+  ## Private key file.
+  ## Not recommended, use key_seed instead.
+  ## Contains the secret private key used to store the passwords safely.
+  ## Note that even with a database dump and the private key, an attacker
+  ## would still have to perform an (expensive) brute force attack to find
+  ## each password.
+  ## Randomly generated on first run if it doesn't exist.
+  ## Env variable: LLDAP_KEY_FILE
+  # key_file: "/data/private_key"
+
+  ## Seed to generate the server private key, see key_file above.
+  ## This can be any random string, the recommendation is that it's at least 12
+  ## characters long.
+  ## Env variable: LLDAP_KEY_SEED
+  # key_seed: "RanD0m STR1ng"
+
+  ## Ignored attributes.
+  ## Some services will request attributes that are not present in LLDAP. When it
+  ## is the case, LLDAP will warn about the attribute being unknown. If you want
+  ## to ignore the attribute and the service works without, you can add it to this
+  ## list to silence the warning.
+  #ignored_user_attributes: [ "sAMAccountName" ]
+  #ignored_group_attributes: [ "mail", "userPrincipalName" ]
+
+ldaps: {}
+  ## Options to configure LDAPS.
+  ## To set these options from environment variables, use the following format
+  ## (example with "port"): LLDAP_LDAPS_OPTIONS__PORT
+  #[ldaps_options]
+  ## Whether to enable LDAPS.
+  # enabled: true
+  ## Port on which to listen.
+  # port: 6360
+  ## Certificate file.
+  # cert_file: "/data/cert.pem"
+  ## Certificate key file.
+  # key_file: "/data/key.pem"  
+
+##
+## Config Map Generator
+##
+configMap:
+
+  # Enable the configMap source for the config.
+  # If this is false you need to provide a volumeMount via PV/PVC or other means that mounts to /config.
+  enabled: true
+
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  key: configuration.yaml
+
+  existingConfigMap: ""
+
+
+## Database URL.
+## This encodes the type of database (SQlite, MySQL, or PostgreSQL)
+## , the path, the user, password, and sometimes the mode (when
+## relevant).
+## Note: SQlite should come with "?mode=rwc" to create the DB
+## if not present.
+## Example URLs:
+##  - "postgres://postgres-user:password@postgres-server/my-database"
+##  - "mysql://mysql-user:password@mysql-server/my-database"
+##
+## This can be overridden with the LLDAP_DATABASE_URL env variable.
+## database_url = "sqlite:///data/users.db?mode=rwc"
+database:
+  ##
+  ## Local
+  ##
+  ## This stores the data in a SQLite3 Database.
+  ## This is only recommended for lightweight non-stateful installations.
+  ##
+  local:
+    enabled: false
+    path: /data/users.db
+
+  ##
+  ## MySQL
+  ##
+  ## Also supports MariaDB
+  ##
+  mysql:
+    #
+    # existingSecret:
+    enabled: false
+    host: mysql.databases.svc.cluster.local
+    port: 3306
+    database: lldap
+    username: lldap
+    password: password
+
+  ##
+  ## PostgreSQL
+  ##
+  postgres:
+    # existingSecret:
+    enabled: true
+    host: postgres.databases.svc.cluster.local
+    port: 5432
+    database: lldap
+    username: lldap
+    password: password
+
+## Options to configure SMTP parameters, to send password reset emails.
+## To set these options from environment variables, use the following format
+## (example with "password"): LLDAP_SMTP_OPTIONS__PASSWORD
+#[smtp_options]
+## Whether to enabled password reset via email, from LLDAP.
+# enable_password_reset: true
+## The SMTP server.
+# server: "smtp.gmail.com"
+## The SMTP port.
+# port: 587
+## How the connection is encrypted, either "NONE" (no encryption), "TLS" or "STARTTLS".
+# smtp_encryption: "TLS"
+## The SMTP user, usually your email address.
+# user: "sender@gmail.com"
+## The SMTP password.
+# password: "password"
+## The header field, optional: how the sender appears in the email. The first
+## is a free-form name, followed by an email between <>.
+# from: "LLDAP Admin <sender@gmail.com>"
+## Same for reply-to, optional.
+# reply_to: "Do not reply <noreply@localhost>"
+
+##
+## SMTP
+## Options to configure SMTP parameters, to send password reset emails.
+##
+smtp:
+  enabled: false
+  enabledSecret: false
+  ## Whether to enabled password reset via email, from LLDAP.
+  # enable_password_reset: true    
+  ## The SMTP server.
+  server: smtp.mail.svc.cluster.local
+  port: 587
+  ## How the connection is encrypted, either "NONE" (no encryption), "TLS" or "STARTTLS".
+  # smtp_encryption: "TLS"    
+  ## The SMTP user, usually your email address.
+  # user: "sender@gmail.com"    username: test
+  ## The SMTP password.
+  # password: "password"
+  ## The header field, optional: how the sender appears in the email. The first
+  ## is a free-form name, followed by an email between <>.
+  # from: "LLDAP Admin <sender@gmail.com>"
+  ## Same for reply-to, optional.
+  # reply_to: "Do not reply <noreply@localhost>"
+
+##
+## Secret Generator.
+##
+## If both the values and existingSecret are not defined, this chart randomly generates a new secret on each
+## install. It is recommended that you use something like sealed-secrets (https://github.com/bitnami-labs/sealed-secrets)
+## and use the existingSecrets. All secrets can be stored in a single k8s secret if desired using the key option.
+##
+secret:
+  existingSecret: ""
+  # existingSecret: lldap
+
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  mountPath: /data
+
+  excludeVolumeAndMounts: false
+
+
+
+##
+## Persistence Configuration.
+##
+## Useful in scenarios where you need persistent storage.
+## Auth Provider Use Case: file; we recommend you use the ldap provider instead.
+## Storage Provider Use Case: local; we recommend you use the mysql/mariadb or postgres provider instead.
+## Configuration Use Case: when you want to manually configure the configuration entirely (set configMap.enabled = false).
+##
+persistence:
+  enabled: false
+
+  annotations: {}
+  # annotations:
+  #   myAnnotation: myValue
+
+  labels: {}
+  # labels:
+  #   myLabel: myValue
+
+  readOnly: false
+  subPath: ""
+
+  existingClaim: ""
+  # existingClaim: my-claim-name
+
+  storageClass: ""
+  # storageClass: "my-storage-class"
+
+  ## Persistent Volume Name
+  ## Useful if Persistent Volumes have been provisioned in advance and you want to use a specific one
+  ##
+  volumeName: ""
+
+  accessModes:
+  - ReadWriteOnce
+
+  size: 100Mi
+
+  selector: {}
