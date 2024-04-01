@@ -130,7 +130,8 @@ spec:
         persistentVolumeClaim:
           claimName: {{ default (include "lldap.name" .) .Values.persistence.existingClaim }}
       {{- else }}
-        emptyDir: 100Mi
+        emptyDir: 
+          sizeLimit: {{ default "100Mi" .Values.persistence.size }}
       {{- end }}
       {{- with .Values.pod.extraVolumes }}
         {{- toYaml . | nindent 6 }}
