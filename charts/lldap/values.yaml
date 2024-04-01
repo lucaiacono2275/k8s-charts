@@ -246,8 +246,7 @@ pod:
     method:
       httpGet:
         path: /
-        port: http
-        scheme: HTTP
+        port: 17170
 
     liveness:
       initialDelaySeconds: 0
