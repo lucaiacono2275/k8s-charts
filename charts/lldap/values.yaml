@@ -18,24 +18,33 @@ kubeVersionOverride: ""
 ## Image Parameters
 ##
 image:
-  # registry: docker.io -- registry
-  # repository: lldap/lldap -- repository
+  ## -- registry
+  # registry: docker.io
+  ## -- repository
+  # repository: lldap/lldap
+  ## -- tag
   tag: "stable"
+  ## -- pull policy
   pullPolicy: IfNotPresent
+  ## -- pull secrets
   pullSecrets: []
   # pullSecrets:
   #   - myPullSecretName
 
+## -- name override
 # nameOverride: lldap-deployment-name
+## -- app name override
 # appNameOverride: lldap
 
 ##
 ## extra labels/annotations applied to all resources
 ##
+## -- annotations
 annotations: {}
 # annotations:
 #   myAnnotation: myValue
 
+## -- labels
 labels: {}
 # labels:
 #   myLabel: myValue
@@ -45,71 +54,96 @@ labels: {}
 ##
 rbac:
 
-  ## Enable RBAC. Turning this on associates LLDAP with a service account.
+  ## -- Enable RBAC. Turning this on associates LLDAP with a service account.
   enabled: false
 
+  ## -- service account annotations
   annotations: {}
+  ## -- service account labels
   labels: {}
 
+  ## -- service account name
   serviceAccountName: lldap
 
 
 service:
+  ## -- service type
   type: "ClusterIP"
+  ## -- service annotations
   annotations: {}
   # annotations:
   #   myAnnotation: myValue
 
+  ## -- service labels
   labels: {}
   # labels:
   #   myLabel: myValue
 
+  ## -- service http port
   port: 80
+  ## -- service LDAP port
   ldapPort: 389
+  ## -- service LDAPS port (if enabled)
   ldapsPort: 636
+  ## -- node port
   nodePort: 30091
+  ## -- cluster IP
   clusterIP: {}
+  ## -- external IPs
   externalIPs: {}
 
 
 ingress:
+  ## -- enable the ingress
   enabled: false
+  ## -- ingress hostname
   hostname: lldap.example.com
 
+  ## -- ingress annotations
   annotations: {}
   # annotations:
   #   kubernetes.io/ingress.class: nginx
   #   kubernetes.io/tls-acme: "true"
 
+  ## -- ingress labels
   labels: {}
   # labels:
   #   myLabel: myValue
 
-  ## The Ingress Class Name.
+  ## -- The Ingress Class Name.
   className: nginx
 
   tls:
+    ## -- Enables ingress TLS
     enabled: true
+    ## -- Existing certificate secret
     secret: lldap-tls
 
+    ## -- hostname override
     # hostNameOverride:
 
 pod:
-  # Must be Deployment, DaemonSet, or StatefulSet.
+  ## -- Must be Deployment, DaemonSet, or StatefulSet.
   kind: DaemonSet
 
+  ## -- pod additional annotations
   annotations: {}
   # annotations:
   #   myAnnotation: myValue
 
+  ## -- pod additional labels
   labels: {}
   # labels:
   #   myLabel: myValue
 
+  ## -- number of replicas
   replicas: 1
+  ## -- number of revision in the history
   revisionHistoryLimit: 5
+  ## -- priority class
   priorityClassName: ""
 
+  ## -- strategy
   strategy:
     type: RollingUpdate
     # rollingUpdate:
@@ -117,6 +151,7 @@ pod:
     #   maxSurge: 25%
     #   maxUnavailable: 25%
 
+  ## -- security context
   securityContext:
     container: {}
     # container:
@@ -129,6 +164,7 @@ pod:
     #   allowPrivilegeEscalation: false
     #   privileged: false
 
+  ## -- Tolerations
   tolerations: []
   # tolerations:
   # - key: key1
@@ -137,6 +173,7 @@ pod:
   #   effect: NoSchedule
   #   tolerationSeconds: 3600
 
+  ## -- Selectors
   selectors:
   #   nodeName: worker-1
 
@@ -187,11 +224,13 @@ pod:
       #             - S2
       #         topologyKey: topology.kubernetes.io/zone
 
+  ## -- Additional env
   env: []
   # env:
   # - name: TZ
   #   value: Europre/Rome
 
+  ## -- Resources
   resources:
     limits: {}
     # limits:
@@ -202,6 +241,7 @@ pod:
     #   cpu: "0.25"
     #   memory: 50Mi
 
+  ## -- Probes
   probes:
     method:
       httpGet:
@@ -232,19 +272,23 @@ pod:
       successThreshold: 1
       failureThreshold: 6
 
+  ## -- Extra volume mounts
   extraVolumeMounts: []
+  ## -- Extra volumes
   extraVolumes: []
 
 ##
-## Kubernetes Pod Disruption Budget
+## -- Kubernetes Pod Disruption Budget
 ##
 podDisruptionBudget:
   enabled: false
 
+  ## -- PDB additional annotations
   annotations: {}
   # annotations:
   #   myAnnotation: myValue
 
+  ## -- PDB additional labels
   labels: {}
   # labels:
   #   myLabel: myValue
@@ -253,7 +297,7 @@ podDisruptionBudget:
   maxUnavailable: 0
 
 ##
-## Kubernetes Network Policy
+## -- Kubernetes Network Policy
 ##
 networkPolicy:
   enabled: false
@@ -280,13 +324,13 @@ networkPolicy:
     - protocol: TCP
       port: 9091
 
+## -- LLDAP configuration
 config: {}
 
-  ## Tune the logging to be more verbose by setting this to be true.
-  ## You can set it with the LLDAP_VERBOSE environment variable.
+  ## -- Tune the logging to be more verbose by setting this to be true.
   # verbose: false
 
-  ## The host address that the LDAP server will be bound to.
+  ## -- The host address that the LDAP server will be bound to.
   ## To enable IPv6 support, simply switch "ldap_host" to "::":
   ## To only allow connections from localhost (if you want to restrict to local self-hosted services),
   ## change it to "127.0.0.1" ("::1" in case of IPv6).
@@ -294,10 +338,10 @@ config: {}
   ## originating from outside the container.
   # ldap_host: "0.0.0.0"
 
-  ## The port on which to have the LDAP server.
+  ## -- The port on which to have the LDAP server.
   # ldap_port: 3890
 
-  ## The host address that the HTTP server will be bound to.
+  ## -- The host address that the HTTP server will be bound to.
   ## To enable IPv6 support, simply switch "http_host" to "::".
   ## To only allow connections from localhost (if you want to restrict to local self-hosted services),
   ## change it to "127.0.0.1" ("::1" in case of IPv6).
@@ -305,14 +349,14 @@ config: {}
   ## originating from outside the container.
   # http_host: "0.0.0.0"
 
-  ## The port on which to have the HTTP server, for user login and
+  ## -- The port on which to have the HTTP server, for user login and
   ## administration.
   # http_port: 17170
 
-  ## The public URL of the server, for password reset links.
+  ## -- The public URL of the server, for password reset links.
   # http_url: "http://localhost"
 
-  ## Random secret for JWT signature.
+  ## -- Random secret for JWT signature.
   ## This secret should be random, and should be shared with application
   ## servers that need to consume the JWTs.
   ## Changing this secret will invalidate all user sessions and require
@@ -325,7 +369,7 @@ config: {}
   ## LC_ALL=C tr -dc 'A-Za-z0-9!#%&'\''()*+,-./:;<=>?@[\]^_{|}~' </dev/urandom | head -c 32; echo ''
   # jwt_secret: "REPLACE_WITH_RANDOM"
 
-  ## Base DN for LDAP.
+  ## -- Base DN for LDAP.
   ## This is usually your domain name, and is used as a
   ## namespace for your users. The choice is arbitrary, but will be needed
   ## to configure the LDAP integration with other services.
@@ -334,18 +378,18 @@ config: {}
   ## name.
   # ldap_base_dn: "dc=example,dc=com"
 
-  ## Admin username.
+  ## -- Admin username.
   ## For the LDAP interface, a value of "admin" here will create the LDAP
   ## user "cn=admin,ou=people,dc=example,dc=com" (with the base DN above).
   ## For the administration interface, this is the username.
   # ldap_user_dn: "admin"
 
-  ## Admin email.
+  ## -- Admin email.
   ## Email for the admin account. It is only used when initially creating
   ## the admin user, and can safely be omitted.
   # ldap_user_email: "admin@example.com"
 
-  ## Admin password.
+  ## -- Admin password.
   ## Password for the admin account, both for the LDAP bind and for the
   ## administration interface. It is only used when initially creating
   ## the admin user.
@@ -357,13 +401,13 @@ config: {}
   ## is just the default one.
   # ldap_user_pass: "REPLACE_WITH_PASSWORD"
 
-  ## Force reset of the admin password.
+  ## -- Force reset of the admin password.
   ## Break glass in case of emergency: if you lost the admin password, you
   ## can set this to true to force a reset of the admin password to the value
   ## of ldap_user_pass above.
   # force_reset_admin_password: false
 
-  ## Private key file.
+  ## -- Private key file.
   ## Not recommended, use key_seed instead.
   ## Contains the secret private key used to store the passwords safely.
   ## Note that even with a database dump and the private key, an attacker
@@ -373,13 +417,13 @@ config: {}
   ## Env variable: LLDAP_KEY_FILE
   # key_file: "/data/private_key"
 
-  ## Seed to generate the server private key, see key_file above.
+  ## -- Seed to generate the server private key, see key_file above.
   ## This can be any random string, the recommendation is that it's at least 12
   ## characters long.
   ## Env variable: LLDAP_KEY_SEED
   # key_seed: "RanD0m STR1ng"
 
-  ## Ignored attributes.
+  ## -- Ignored attributes.
   ## Some services will request attributes that are not present in LLDAP. When it
   ## is the case, LLDAP will warn about the attribute being unknown. If you want
   ## to ignore the attribute and the service works without, you can add it to this
@@ -392,38 +436,39 @@ ldaps: {}
   ## To set these options from environment variables, use the following format
   ## (example with "port"): LLDAP_LDAPS_OPTIONS__PORT
   # [ldaps_options]
-  ## Whether to enable LDAPS.
+  ## -- Whether to enable LDAPS.
   # enabled: true
-  ## Port on which to listen.
+  ## -- Port on which to listen.
   # port: 6360
-  ## Certificate file.
+  ## -- Certificate file.
   # cert_file: "/data/cert.pem"
-  ## Certificate key file.
+  ## -- Certificate key file.
   # key_file: "/data/key.pem"
 
 ##
-## Config Map Generator
+## -- Config Map Generator
 ##
 configMap:
 
-  # Enable the configMap source for the config.
+  # -- Enable the configMap source for the config.
   # If this is false you need to provide a volumeMount via PV/PVC or other means that mounts to /config.
   enabled: true
+  mountAsFile: false
 
+  ## -- ConfigMap additional annotations
   annotations: {}
   # annotations:
   #   myAnnotation: myValue
 
+  ## -- ConfigMap additional labels
   labels: {}
   # labels:
   #   myLabel: myValue
 
-  key: configuration.yaml
-
   existingConfigMap: ""
 
 
-## Database URL.
+## -- Database URL.
 ## This encodes the type of database (SQlite, MySQL, or PostgreSQL)
 ## , the path, the user, password, and sometimes the mode (when
 ## relevant).
@@ -452,8 +497,6 @@ database:
   ## Also supports MariaDB
   ##
   mysql:
-    #
-    # existingSecret:
     enabled: false
     host: mysql.databases.svc.cluster.local
     port: 3306
@@ -465,7 +508,6 @@ database:
   ## PostgreSQL
   ##
   postgres:
-    # existingSecret:
     enabled: false
     host: postgres.databases.svc.cluster.local
     port: 5432
@@ -473,50 +515,27 @@ database:
     username: lldap
     password: password
 
-## Options to configure SMTP parameters, to send password reset emails.
-## To set these options from environment variables, use the following format
-## (example with "password"): LLDAP_SMTP_OPTIONS__PASSWORD
-# [smtp_options]
-## Whether to enabled password reset via email, from LLDAP.
-# enable_password_reset: true
-## The SMTP server.
-# server: "smtp.gmail.com"
-## The SMTP port.
-# port: 587
-## How the connection is encrypted, either "NONE" (no encryption), "TLS" or "STARTTLS".
-# smtp_encryption: "TLS"
-## The SMTP user, usually your email address.
-# user: "sender@gmail.com"
-## The SMTP password.
-# password: "password"
-## The header field, optional: how the sender appears in the email. The first
-## is a free-form name, followed by an email between <>.
-# from: "LLDAP Admin <sender@gmail.com>"
-## Same for reply-to, optional.
-# reply_to: "Do not reply <noreply@localhost>"
-
 ##
 ## SMTP
-## Options to configure SMTP parameters, to send password reset emails.
+## --Options to configure SMTP parameters, to send password reset emails.
 ##
 smtp:
   enabled: false
-  enabledSecret: false
-  ## Whether to enabled password reset via email, from LLDAP.
+  ## -- Whether to enabled password reset via email, from LLDAP.
   # enable_password_reset: true
   ## The SMTP server.
   server: smtp.mail.svc.cluster.local
   port: 587
-  ## How the connection is encrypted, either "NONE" (no encryption), "TLS" or "STARTTLS".
+  ## -- How the connection is encrypted, either "NONE" (no encryption), "TLS" or "STARTTLS".
   # smtp_encryption: "TLS"
-  ## The SMTP user, usually your email address.
+  ## -- The SMTP user, usually your email address.
   # user: "sender@gmail.com"    username: test
-  ## The SMTP password.
+  ## -- The SMTP password.
   # password: "password"
-  ## The header field, optional: how the sender appears in the email. The first
+  ## -- The header field, optional: how the sender appears in the email. The first
   ## is a free-form name, followed by an email between <>.
   # from: "LLDAP Admin <sender@gmail.com>"
-  ## Same for reply-to, optional.
+  ## -- Same for reply-to, optional.
   # reply_to: "Do not reply <noreply@localhost>"
 
 ##
@@ -530,10 +549,12 @@ secret:
   existingSecret: ""
   # existingSecret: lldap
 
+  ## -- Secret additional annotations
   annotations: {}
   # annotations:
   #   myAnnotation: myValue
 
+  ## -- Secret additional labels
   labels: {}
   # labels:
   #   myLabel: myValue
@@ -553,10 +574,12 @@ secret:
 persistence:
   enabled: false
 
+  ## -- PVC additional annotations
   annotations: {}
   # annotations:
   #   myAnnotation: myValue
 
+  ## -- PVC additional labels
   labels: {}
   # labels:
   #   myLabel: myValue
@@ -570,7 +593,7 @@ persistence:
   storageClass: ""
   # storageClass: "my-storage-class"
 
-  ## Persistent Volume Name
+  ## -- Persistent Volume Name
   ## Useful if Persistent Volumes have been provisioned in advance and you want to use a specific one
   ##
   volumeName: ""
