@@ -525,3 +525,18 @@ return the DB type
     {{- end -}}
 {{- end -}}
 
+{{/*
+return the DB URL
+*/}}
+{{- define "lldap.generate.dburl" -}}
+  {{- with .Values.database }}
+    {{- if .mysql.enabled }}
+      {{- print "mysql://" .mysql.username ":" .mysql.password "@" .mysql.host ":" .mysql.port "/" .mysql.database }}
+    {{- else if .postgres.enabled }}
+      {{- print "postgres://" .postgres.username ":" .postgres.password "@" .postgres.host ":" .postgres.port "/" .postgres.database }}
+    {{- else }}
+      {{- print "sqlite://" .local.path "?mode=rwc" }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+

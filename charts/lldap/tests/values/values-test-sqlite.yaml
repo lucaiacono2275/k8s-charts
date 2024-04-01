@@ -1,0 +1,49 @@
+## Database URL.
+## This encodes the type of database (SQlite, MySQL, or PostgreSQL)
+## , the path, the user, password, and sometimes the mode (when
+## relevant).
+## Note: SQlite should come with "?mode=rwc" to create the DB
+## if not present.
+## Example URLs:
+##  - "postgres://postgres-user:password@postgres-server/my-database"
+##  - "mysql://mysql-user:password@mysql-server/my-database"
+##
+## This can be overridden with the LLDAP_DATABASE_URL env variable.
+## database_url = "sqlite:///data/users.db?mode=rwc"
+database:
+  ##
+  ## Local
+  ##
+  ## This stores the data in a SQLite3 Database.
+  ## This is only recommended for lightweight non-stateful installations.
+  ##
+  local:
+    enabled: true
+    path: /data/users.db
+
+  ##
+  ## MySQL
+  ##
+  ## Also supports MariaDB
+  ##
+  mysql:
+    #
+    # existingSecret:
+    enabled: false
+    host: mysql.databases.svc.cluster.local
+    port: 3306
+    database: lldap
+    username: lldap
+    password: password
+
+  ##
+  ## PostgreSQL
+  ##
+  postgres:
+    # existingSecret:
+    enabled: false
+    host: postgres.databases.svc.cluster.local
+    port: 5432
+    database: lldap
+    username: lldap
+    password: password

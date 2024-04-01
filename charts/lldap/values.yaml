@@ -466,7 +466,7 @@ database:
   ##
   postgres:
     # existingSecret:
-    enabled: true
+    enabled: false
     host: postgres.databases.svc.cluster.local
     port: 5432
     database: lldap
