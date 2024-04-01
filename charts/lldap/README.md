@@ -1,6 +1,6 @@
 # lldap
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
 
 Helm chart for deploying LLdap
 
@@ -80,8 +80,7 @@ Helm chart for deploying LLdap
 | pod.probes.liveness.successThreshold | int | `1` |  |
 | pod.probes.liveness.timeoutSeconds | int | `5` |  |
 | pod.probes.method.httpGet.path | string | `"/"` |  |
-| pod.probes.method.httpGet.port | string | `"http"` |  |
-| pod.probes.method.httpGet.scheme | string | `"HTTP"` |  |
+| pod.probes.method.httpGet.port | int | `17170` |  |
 | pod.probes.readiness.failureThreshold | int | `5` |  |
 | pod.probes.readiness.initialDelaySeconds | int | `0` |  |
 | pod.probes.readiness.periodSeconds | int | `5` |  |
