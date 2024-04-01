@@ -510,18 +510,18 @@ squote a list joined by comma
 {{- end }}
 
 
-  ##  - "postgres://postgres-user:password@postgres-server/my-database"
-  ##  - "mysql://mysql-user:password@mysql-server/my-database"
-  ##
-  ## This can be overridden with the LLDAP_DATABASE_URL env variable.
-  ## database_url = "sqlite:///data/users.db?mode=rwc"
-
 {{/*
 return the DB type
 */}}
 {{- define "lldap.generate.dbtype" -}}
     {{- with .Values.database -}}
-        {{- printf (ternary "postgres" (ternary "mysql" "sqlite" .mysql.enabled) .postgres.enabled) -}}
+        {{- if .postgres.enabled -}}
+            {{- print "postgres" -}}
+        {{- else if .mysql.enabled -}}
+            {{- print "mysql" -}}
+        {{- else -}}
+            {{- print "sqlite" -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 

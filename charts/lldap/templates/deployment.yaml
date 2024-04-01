@@ -113,8 +113,6 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: lldap-data
-        {{- if (include "lldap.enabled.configMap" .) }}
-        {{- end }}
         {{- with $mounts := .Values.pod.extraVolumeMounts }}
           {{- toYaml $mounts | nindent 8 }}
         {{- end }}
@@ -127,10 +125,12 @@ spec:
       {{- end }}
       {{- end }}
       volumes:
-      {{- if (include "lldap.enabled.persistentVolumeClaim" .) }}
       - name: lldap-data
+      {{- if (include "lldap.enabled.persistentVolumeClaim" .) }}
         persistentVolumeClaim:
           claimName: {{ default (include "lldap.name" .) .Values.persistence.existingClaim }}
+      {{- else }}
+        emptyDir: 100Mi
       {{- end }}
       {{- with .Values.pod.extraVolumes }}
         {{- toYaml . | nindent 6 }}
