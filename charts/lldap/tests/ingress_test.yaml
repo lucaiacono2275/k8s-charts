@@ -43,7 +43,7 @@ tests:
           value: lldap.example.com
       - equal:
           path: spec.rules[0].http.paths[0].backend.service.name
-          value: myrelease-lldap
+          value: myrelease-lldap-service
       - equal:
           path: spec.rules[0].http.paths[0].backend.service.port.number
           value: 80

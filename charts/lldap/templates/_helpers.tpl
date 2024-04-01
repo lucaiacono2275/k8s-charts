@@ -567,3 +567,9 @@ Returns the secret name
     {{- default (printf "%s-secret" (include "lldap.name" .)) .Values.secret.existingSecret }}
 {{- end -}}
 
+{{/*
+Returns the service name
+*/}}
+{{- define "lldap.service.name" -}}
+    {{- printf "%s-service" (include "lldap.name" .) }}
+{{- end -}}

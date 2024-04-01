@@ -26,13 +26,13 @@ spec:
             backend:
               {{- if eq $apiVersion "networking.k8s.io/v1" }}
               service:
-                name: {{ include "lldap.name" . }}
+                name: {{ include "lldap.service.name" . }}
                 port:
                   number: {{ include "lldap.service.port" . }}
             {{- else }}
-              serviceName: {{ include "lldap.name" . }}
+              serviceName: {{ include "lldap.service.name" . }}
               servicePort: {{ include "lldap.service.port" . }}
-  {{- end }}
+            {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
