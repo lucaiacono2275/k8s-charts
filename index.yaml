@@ -368,6 +368,17 @@ entries:
   lldap:
   - apiVersion: v2
     appVersion: v0.5.0
+    created: "2024-04-01T16:01:32.167606686Z"
+    description: Helm chart for deploying LLdap
+    digest: 87b1886a2a8019ae755ce6b4773da851e85e3c0b62944623d5ba98689f45ecfc
+    maintainers:
+    - name: lucaiacono2275
+    name: lldap
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/lldap-0.0.2/lldap-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: v0.5.0
     created: "2024-04-01T09:15:10.370625336Z"
     description: Helm chart for deploying LLdap
     digest: 53de033834806e521b9dc7ee144672f0f9be8505665fe859fbd9d0c2cf6dee3b
@@ -386,4 +397,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-04-01T09:15:10.370698081Z"
+generated: "2024-04-01T16:01:32.167676926Z"
