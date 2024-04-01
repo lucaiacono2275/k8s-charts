@@ -1,6 +1,6 @@
 # lldap
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
 
 Helm chart for deploying LLdap
 
@@ -17,10 +17,10 @@ Helm chart for deploying LLdap
 | annotations | object | `{}` |  |
 | config | object | `{}` |  |
 | configMap.annotations | object | `{}` |  |
-| configMap.enabled | bool | `true` |  |
+| configMap.enabled | bool | `true` | Enable the configMap source for the config. If this is false you need to provide a volumeMount via PV/PVC or other means that mounts to /config. |
 | configMap.existingConfigMap | string | `""` |  |
-| configMap.key | string | `"configuration.yaml"` |  |
 | configMap.labels | object | `{}` |  |
+| configMap.mountAsFile | bool | `false` |  |
 | database.local.enabled | bool | `false` |  |
 | database.local.path | string | `"/data/users.db"` |  |
 | database.mysql.database | string | `"lldap"` |  |
@@ -128,7 +128,6 @@ Helm chart for deploying LLdap
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | smtp.enabled | bool | `false` |  |
-| smtp.enabledSecret | bool | `false` |  |
 | smtp.port | int | `587` |  |
 | smtp.server | string | `"smtp.mail.svc.cluster.local"` |  |
 | versionOverride | string | `""` |  |
