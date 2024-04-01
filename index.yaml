@@ -365,6 +365,18 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-secret-instance-0.0.1/external-secret-instance-0.0.1.tgz
     version: 0.0.1
+  lldap:
+  - apiVersion: v2
+    appVersion: v0.5.0
+    created: "2024-04-01T09:15:10.370625336Z"
+    description: Helm chart for deploying LLdap
+    digest: 53de033834806e521b9dc7ee144672f0f9be8505665fe859fbd9d0c2cf6dee3b
+    maintainers:
+    - name: lucaiacono2275
+    name: lldap
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/lldap-0.0.1/lldap-0.0.1.tgz
+    version: 0.0.1
   tekton-dashboard:
   - apiVersion: v1
     created: "2023-11-26T16:00:17.734765306Z"
@@ -374,4 +386,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-03-03T20:34:46.716567224Z"
+generated: "2024-04-01T09:15:10.370698081Z"
