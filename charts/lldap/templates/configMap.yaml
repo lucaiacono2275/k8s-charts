@@ -9,26 +9,42 @@ metadata:
   annotations: {{ $annotations | nindent 4 }}
   {{- end }}
 data:
-  {{- if .Values.config -}}
-    {{- $configs := deepCopy .Values.config }}
-    {{- $configs := unset $configs  "ldap_user_pass" }}
-    {{- $configs := unset $configs  "jwt_secret" }}
-    {{- $configs := unset $configs  "key_seed" }}
-    {{- range $key, $val := $configs }}
-  {{ printf "LLDAP_%s" (upper $key) }}: {{ $val | quote }}
+  {{- if .Values.configMap.mountAsFile }}
+  lldap_config.toml: |-
+    {{- range $key, $val := .Values.config }}
+    {{ $key }} = {{ $val }}
     {{- end }}
-  {{- end }}
-  {{- if .Values.ldaps -}}
+    database_url = {{ include "lldap.generate.dburl" . }}
+    [smtp_options]
+    {{- range $key, $val := .VAlue.smtp }}
+    {{ $key }} = {{ $val }}
+    {{- end }}    
+    [ldaps_options]
     {{- range $key, $val := .Values.ldaps }}
-  {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val | quote }}
+    {{ $key }} = {{ $val }}
     {{- end }}
-  {{- end }}
-  {{- if .Values.smtp -}}
-    {{- $smtp := deepCopy .Values.smtp }}
-    {{- $smtp := unset $smtp  "password" }}
-    {{- $smtp := unset $smtp  "enabledSecret" }}
-    {{- range $key, $val := $smtp }}
-  {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val | quote }}
+  {{- else -}}
+    {{- if .Values.config -}}
+      {{- $configs := deepCopy .Values.config }}
+      {{- $configs := unset $configs  "ldap_user_pass" }}
+      {{- $configs := unset $configs  "jwt_secret" }}
+      {{- $configs := unset $configs  "key_seed" }}
+      {{- range $key, $val := $configs }}
+    {{ printf "LLDAP_%s" (upper $key) }}: {{ $val | quote }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.ldaps -}}
+      {{- range $key, $val := .Values.ldaps }}
+    {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val | quote }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.smtp -}}
+      {{- $smtp := deepCopy .Values.smtp }}
+      {{- $smtp := unset $smtp  "password" }}
+      {{- $smtp := unset $smtp  "enabledSecret" }}
+      {{- range $key, $val := $smtp }}
+    {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val | quote }}
+      {{- end }}
     {{- end }}
   {{- end }}
 {{- end -}}

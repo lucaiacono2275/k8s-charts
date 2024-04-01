@@ -540,3 +540,30 @@ return the DB URL
   {{- end }}
 {{- end -}}
 
+{{/*
+Returns true if the env seciion is needed
+*/}}
+{{- define "lldap.enabled.env" -}}
+  {{- if .Values.pod.env }}
+    {{- true -}}
+  {{- else if and .Values.configMap.enabled (not .Values.configMap.mountAsFile) -}}
+    {{- true -}}
+  {{- end }}
+{{- end -}}
+
+
+{{/*
+Returns the configMap name
+*/}}
+{{- define "lldap.configMap.name" -}}
+    {{- default (printf "%s-cm" (include "lldap.name" .)) .Values.configMap.existingConfigMap  }}
+{{- end -}}
+
+
+{{/*
+Returns the secret name
+*/}}
+{{- define "lldap.secret.name" -}}
+    {{- default (printf "%s-secret" (include "lldap.name" .)) .Values.secret.existingSecret }}
+{{- end -}}
+

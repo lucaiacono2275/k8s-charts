@@ -83,12 +83,16 @@ spec:
           runAsUser: 1001
           allowPrivilegeEscalation: false
         {{- end }}
+        {{- if (include "lldap.enabled.env" .)}}
         envFrom:
+          {{- if not .Values.configMap.mountAsFile }}
         - configMapRef:
-            name: {{ include "lldap.name" . }}-cm
+            name: {{ include "lldap.configMap.name" . }}
+          {{- end }}
         - secretRef:
-            name: {{ include "lldap.name" . }}-secret
-        {{- with $env := .Values.pod.env }}{{ toYaml $env | nindent 8 }}{{- end }}
+            name: {{ include "lldap.secret.name" . }}
+          {{- with $env := .Values.pod.env }}{{ toYaml $env | nindent 8 }}{{- end }}
+        {{- end }}
         {{- with $probe := include "lldap.merge.probe" (merge (dict "Type" "startup" "Method" .Values.pod.probes.method "Probe" .Values.pod.probes.startup) .) }}
         {{- $probe | nindent 8 }}
         {{- end }}
@@ -129,6 +133,9 @@ spec:
       {{- if (include "lldap.enabled.persistentVolumeClaim" .) }}
         persistentVolumeClaim:
           claimName: {{ default (include "lldap.name" .) .Values.persistence.existingClaim }}
+      {{- else if .Values.configMap.mountAsFile }}
+        configMap:
+          name: {{ include "lldap.configMap.name" . }}
       {{- else }}
         emptyDir: 
           sizeLimit: {{ default "100Mi" .Values.persistence.size }}

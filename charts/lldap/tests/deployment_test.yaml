@@ -151,3 +151,56 @@ tests:
           content:
             name: lldap-data
           any: true
+  - it: should have the generated configMap mounted as file
+    release:
+      name: myrelease
+    set:
+      configMap:
+        enabled: true
+        mountAsFile: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: lldap-data
+            configMap:
+              name: myrelease-lldap-cm
+          any: true          
+  - it: should have the existing configMap mounted as file
+    set:
+      configMap:
+        enabled: true
+        mountAsFile: true
+        existingConfigMap: existingMap
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: lldap-data
+            configMap:
+              name: existingMap
+          any: true
+  - it: should have the generated secret as env
+    release:
+      name: myrelease
+    set:
+      secret:
+        existingSecret: ""
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: myrelease-lldap-secret
+  - it: should have the existing secret as env
+    release:
+      name: myrelease
+    set:
+      secret:
+        existingSecret: existingSecret
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: existingSecret
