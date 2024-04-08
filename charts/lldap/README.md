@@ -1,6 +1,6 @@
 # lldap
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
 
 Helm chart for deploying LLdap
 
@@ -47,7 +47,12 @@ Helm chart for deploying LLdap
 | ingress.tls.secret | string | `"lldap-tls"` |  |
 | kubeVersionOverride | string | `""` |  |
 | labels | object | `{}` |  |
-| ldaps | object | `{}` |  |
+| ldaps.certPath | string | `"/certs"` |  |
+| ldaps.cert_file | string | `"cert.pem"` |  |
+| ldaps.enabled | bool | `false` |  |
+| ldaps.existingSecret | string | `""` |  |
+| ldaps.key_file | string | `"key.pem"` |  |
+| ldaps.port | int | `6360` |  |
 | networkPolicy.annotations | object | `{}` |  |
 | networkPolicy.enabled | bool | `false` |  |
 | networkPolicy.ingress[0].from[0].namespaceSelector.matchLabels.lldap/network-policy | string | `"namespace"` |  |
