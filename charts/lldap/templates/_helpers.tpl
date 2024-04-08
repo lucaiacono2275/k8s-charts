@@ -541,7 +541,7 @@ return the DB URL
 {{- end -}}
 
 {{/*
-Returns true if the env seciion is needed
+Returns true if the env section is needed
 */}}
 {{- define "lldap.enabled.env" -}}
   {{- if .Values.pod.env }}
@@ -573,3 +573,53 @@ Returns the service name
 {{- define "lldap.service.name" -}}
     {{- printf "%s-service" (include "lldap.name" .) }}
 {{- end -}}
+
+{{/*
+Returns if ldaps enabled 
+*/}}
+{{- define "lldap.ldaps.enabled" }}
+  {{- if .Values.ldaps }}
+    {{- if .Values.ldaps.enabled }}
+      {{- true -}}
+    {{- end }}
+  {{- end }}    
+{{- end -}}
+
+{{/*
+Returns if to mount certificates volume
+*/}}
+{{- define "lldap.mount.certificates" -}}
+  {{- if (include "lldap.ldaps.enabled" .) }}
+    {{- if and .Values.ldaps.existingSecret (ne "" .Values.ldaps.existingSecret) }}
+      {{- true -}}
+    {{- end }}
+  {{- end }}    
+{{- end -}}
+
+{{/*
+Returns the ldaps cert_file
+*/}}
+{{- define "lldap.ldaps.certFile" }}
+  {{- default "/certs/cert.pem" (print .Values.ldaps.certPath "/" .Values.ldaps.cert_file) }}
+{{- end -}}
+
+{{/*
+Returns the ldaps key_file
+*/}}
+{{- define "lldap.ldaps.keyFile" }}
+  {{- default "/certs/key.pem" (print .Values.ldaps.certPath "/" .Values.ldaps.key_file) }}
+{{- end -}}
+
+
+{{/*
+Returns the ldaps options map
+*/}}
+{{- define "lldap.ldaps.options" -}}
+    {{- if .Values.ldaps }}
+      {{- $ldapsOptions := omit .Values.ldaps "existingSecret" "certPath" "cert_file" "key_file" }}
+      {{- $ldapsOptions := merge $ldapsOptions (dict "cert_file" (include "lldap.ldaps.certFile" . )) }}
+      {{- $ldapsOptions := merge $ldapsOptions (dict "key_file" (include "lldap.ldaps.keyFile" . )) }}
+      {{- toYaml $ldapsOptions }}
+    {{- end }}
+{{- end -}}
+
