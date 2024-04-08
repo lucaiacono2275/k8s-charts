@@ -204,3 +204,28 @@ tests:
           content:
             secretRef:
               name: existingSecret
+  - it: should have the cert secret mounted
+    release:
+      name: myrelease
+    set:
+      ldaps:
+        enabled: true
+        existingSecret: cert-secret
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: certs
+            mountPath: /certs
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: certs
+            secret:
+              secretName: cert-secret
+              items:
+              - key: cert
+                path: /certs/cert.pem
+              - key: key
+                path: /certs/key.pem
+          any: true

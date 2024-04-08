@@ -67,3 +67,36 @@ tests:
           value: myvalue
       - isNullOrEmpty:
           path: data
+  - it: should generate a configMap with ldaps options
+    release:
+      name: myrelease
+    set:
+      ldaps:
+        enabled: true
+    asserts:
+      - equal:
+          path: data.LLDAP_LDAPS_CERT_FILE
+          value: /certs/cert.pem
+      - equal:
+          path: data.LLDAP_LDAPS_KEY_FILE
+          value: /certs/key.pem
+  - it: should generate a configMap with a file
+    release:
+      name: myrelease
+    set:
+      configMap:
+        mountAsFile: true
+    asserts:
+      - equal:
+          path: data["lldap_config.toml"]
+          value: |-
+            database_url = sqlite:///data/users.db?mode=rwc
+            [smtp_options]
+            enabled = false
+            port = 587
+            server = smtp.mail.svc.cluster.local
+            [ldaps_options]
+            cert_file = /certs/cert.pem
+            enabled = false
+            key_file = /certs/key.pem
+            port = 6360

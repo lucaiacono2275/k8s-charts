@@ -73,24 +73,22 @@ spec:
       enableServiceLinks: true
       {{- else }}
       enableServiceLinks: false
-      {{- end }}
+      {{- end }}      
       containers:
       - name: lldap
         image: {{ include "lldap.image" . }}
         imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
-        {{- if .Values.secret.enabled }}
-        securityContext:
-          runAsUser: 1001
-          allowPrivilegeEscalation: false
-        {{- end }}
         {{- if (include "lldap.enabled.env" .)}}
         envFrom:
           {{- if not .Values.configMap.mountAsFile }}
         - configMapRef:
             name: {{ include "lldap.configMap.name" . }}
-          {{- end }}
         - secretRef:
             name: {{ include "lldap.secret.name" . }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.pod.env }}
+        env:
           {{- with $env := .Values.pod.env }}{{ toYaml $env | nindent 8 }}{{- end }}
         {{- end }}
         {{- with $probe := include "lldap.merge.probe" (merge (dict "Type" "startup" "Method" .Values.pod.probes.method "Probe" .Values.pod.probes.startup) .) }}
@@ -106,7 +104,7 @@ spec:
         - name: ldap
           containerPort: {{ default 3890 .Values.config.ldap_port }}
           protocol: TCP
-        {{- if .Values.ldaps -}}
+        {{- if (include "lldap.ldaps.enabled" .) }}
         - name: ldaps
           containerPort: {{ default 6360 .Values.ldaps.port }}
           protocol: TCP
@@ -117,11 +115,15 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: lldap-data
+        {{- if (include "lldap.mount.certificates" .) }}
+        - mountPath: /certs
+          name: certs
+        {{- end }}
         {{- with $mounts := .Values.pod.extraVolumeMounts }}
           {{- toYaml $mounts | nindent 8 }}
         {{- end }}
       {{- with $context := .Values.pod.securityContext.pod }}
-        securityContext: {{ toYaml $context | nindent 10 }}
+        securityContext: {{ toYaml $context | nindent 8 }}
       {{- end }}
       {{- with $pullSecrets := .Values.image.pullSecrets }}
       imagePullSecrets: {{- range $k, $secretName := $pullSecrets }}
@@ -139,6 +141,16 @@ spec:
       {{- else }}
         emptyDir: 
           sizeLimit: {{ default "100Mi" .Values.persistence.size }}
+      {{- end }}
+      {{- if (include "lldap.mount.certificates" .) }}
+      - name: certs
+        secret: 
+          secretName: {{ .Values.ldaps.existingSecret }}
+          items: 
+          - key: {{ default "cert" .Values.ldaps.certKey }}
+            path: {{ include "lldap.ldaps.certFile" . }}   
+          - key: {{ default "key" .Values.ldaps.keyKey}}
+            path: {{ include "lldap.ldaps.keyFile" . }}    
       {{- end }}
       {{- with .Values.pod.extraVolumes }}
         {{- toYaml . | nindent 6 }}

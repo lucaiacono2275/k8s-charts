@@ -15,33 +15,30 @@ data:
     {{ $key }} = {{ $val }}
     {{- end }}
     database_url = {{ include "lldap.generate.dburl" . }}
+    {{- if .Values.smtp }}
     [smtp_options]
-    {{- range $key, $val := .VAlue.smtp }}
+      {{- range $key, $val := (omit .Values.smtp "enabledSecret") }}
     {{ $key }} = {{ $val }}
-    {{- end }}    
+      {{- end }}    
+    {{- end }}
     [ldaps_options]
-    {{- range $key, $val := .Values.ldaps }}
+    {{- range $key, $val := fromYaml (include "lldap.ldaps.options" .) }}
     {{ $key }} = {{ $val }}
     {{- end }}
   {{- else -}}
     {{- if .Values.config -}}
-      {{- $configs := deepCopy .Values.config }}
-      {{- $configs := unset $configs  "ldap_user_pass" }}
-      {{- $configs := unset $configs  "jwt_secret" }}
-      {{- $configs := unset $configs  "key_seed" }}
+      {{- $configs := omit .Values.config "ldap_user_pass" "jwt_secret" "key_seed" }}
       {{- range $key, $val := $configs }}
     {{ printf "LLDAP_%s" (upper $key) }}: {{ $val | quote }}
       {{- end }}
     {{- end }}
-    {{- if .Values.ldaps -}}
-      {{- range $key, $val := .Values.ldaps }}
-    {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val | quote }}
-      {{- end }}
+    {{- if (include "lldap.ldaps.enabled" .)}}
+    {{- range $key, $val := fromYaml (include "lldap.ldaps.options" .) }}
+    {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val  }}
+    {{- end }}
     {{- end }}
     {{- if .Values.smtp -}}
-      {{- $smtp := deepCopy .Values.smtp }}
-      {{- $smtp := unset $smtp  "password" }}
-      {{- $smtp := unset $smtp  "enabledSecret" }}
+      {{- $smtp := omit .Values.smtp "password" "enabledSecret" }}
       {{- range $key, $val := $smtp }}
     {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val | quote }}
       {{- end }}
