@@ -430,7 +430,7 @@ config: {}
   # ignored_user_attributes: [ "sAMAccountName" ]
   # ignored_group_attributes: [ "mail", "userPrincipalName" ]
 
-ldaps: 
+ldaps:
   ## Options to configure LDAPS.
   ## To set these options from environment variables, use the following format
   ## (example with "port"): LLDAP_LDAPS_OPTIONS__PORT
@@ -449,7 +449,7 @@ ldaps:
   ## -- secret cert key
   ## certKey: cert
   ## -- secret key key
-  ## keyKey: key 
+  ## keyKey: key
 
 
 ##
