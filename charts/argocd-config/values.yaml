@@ -4,6 +4,8 @@ projects:
 -
   # -- name of the project
   name: dev
+  # -- skip project creation
+  skipCreation: false
   # list of allowed source repos
   sourceRepos:
   - '*'
