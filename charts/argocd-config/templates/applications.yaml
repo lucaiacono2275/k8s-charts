@@ -23,6 +23,7 @@ spec:
 {{- end }}
 ---
 {{ $project := .name }}
+{{ $env := .applications.env | default $project }}
 {{ $repoURL := .applications.repoURL }}
 {{ $targetRevision := .applications.targetRevision }}
 {{ $appPath := .applications.path }}
@@ -61,7 +62,7 @@ spec:
       # environment variables passed to the plugin
       env:
        - name: HELMFILE_GLOBAL_OPTIONS # pass-through options for all helmfile operations helmfile --help
-         value: "-e {{ $project }}" 
+         value: "-e {{ .env | default $env }}" 
       #  - HELMFILE_TEMPLATE_OPTIONS: # pass-through options for the templating operation helmfile template --help
       #  - name: FOO
       #    value: bar
