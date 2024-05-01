@@ -171,3 +171,19 @@ tests:
           name: myName
           namespace: argocd
         documentIndex: 1
+  - it: should use env
+    values: 
+      - ./values/values-6.yaml
+    asserts:
+      - contains:
+          path: spec.source.plugin.env
+          content: 
+            name: HELMFILE_GLOBAL_OPTIONS
+            value: "-e myenv"
+        documentIndex: 1
+      - contains:
+          path: spec.source.plugin.env
+          content: 
+            name: HELMFILE_GLOBAL_OPTIONS
+            value: "-e specificenv"
+        documentIndex: 2

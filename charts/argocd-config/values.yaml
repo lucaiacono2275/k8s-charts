@@ -2,60 +2,64 @@
 projects:
 # -- list of projects
 -
-  # -- name of the project
+  ##  -- name of the project
   name: dev
-  # -- skip project creation
+  ##  -- skip project creation
   skipCreation: false
   # list of allowed source repos
   sourceRepos:
   - '*'
-  # -- destinations
+  ##  -- destinations
   destinations:
   -
-    # -- list of allowed namespaces
+    ##  -- list of allowed namespaces
     namespace: '*'
-    # -- list of allowed clusters
+    ##  -- list of allowed clusters
     server: '*'
-  # -- whie list for resources
+  ## -- whie list for resources
   clusterResourceWhitelist:
   -
-    #  -- group
+    ##  -- group
     group: '*'
-    # -- kind
+    ## -- kind
     kind: '*'
   applications:
-    # -- default application name
+    ## -- default application name
     name: dev-applications
-    # -- default server address
+    ## -- default server address
     server: https://kubernetes.default.svc
-    # -- default path in the repo
+    ## -- default path in the repo
     path: environments/dev
-    # -- default repo URL
+    ## -- default repo URL
     repoURL: https://github.com/lucaiacono2275/k3s-home
-    # -- default repo revision
+    ## -- default repo revision
     targetRevision: HEAD
-    # -- default plugin
+    ## -- default plugin
     type: helmfile
+    ## -- helmfile Env - defaults to project
+    # env: dev
   deploy:
   - name: external-secrets
-    # -- label name - defaults to name
+    ##  -- label name - defaults to name
     # labelName: name
-    # -- repoURL - specific repo URL for the deploy
+    ##  -- repoURL - specific repo URL for the deploy
     # repoURL: https://github.com/lucaiacono2275/k3s-home
-    # -- targetRevision  - specific targetRevision for the deploy
+    ##  -- targetRevision  - specific targetRevision for the deploy
     # targetRevision: HEAD
-    # -- path - defaults to name
+    ##  -- path - defaults to name
     # path: path
-    # -- namespace - defauts to name
+    ##  -- namespace - defauts to name
     # namespace: # defauts to name
-    # -- skip plugin for specific application
+    ##  -- skip plugin for specific application
     # skipPlugin: true
-    # -- sync policy
+    ##  -- helmfile env for specific application
+    # env: dev
+    ##  -- sync policy
     # syncPolicy:
       # automated:
-        # -- enable automated sync
+        ##  -- enable automated sync
         # enabled: false
-        # -- prune on automated sync
+        ##  -- prune on automated sync
         # prune: true
-        # -- enable self heal
+        ##  -- enable self heal
         # selfHeal: true
