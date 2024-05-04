@@ -34,13 +34,13 @@ data:
     {{- end }}
     {{- if (include "lldap.ldaps.enabled" .)}}
     {{- range $key, $val := fromYaml (include "lldap.ldaps.options" .) }}
-    {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val | quote }}
+    {{ printf "LLDAP_LDAPS_OPTIONS__%s" (upper $key) }}: {{ $val | quote }}
     {{- end }}
     {{- end }}
     {{- if .Values.smtp -}}
       {{- $smtp := omit .Values.smtp "password" "enabledSecret" }}
       {{- range $key, $val := $smtp }}
-    {{ printf "LLDAP_SMTP_OPTIONS_%s" (upper $key) }}: {{ $val | quote }}
+    {{ printf "LLDAP_SMTP_OPTIONS__%s" (upper $key) }}: {{ $val | quote }}
       {{- end }}
     {{- end }}
   {{- end }}

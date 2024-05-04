@@ -38,10 +38,10 @@ tests:
           path: metadata.annotations.myannotation
           value: myvalue
       - equal:
-          path: data.LLDAP_SMTP_OPTIONS_ENABLED
+          path: data.LLDAP_SMTP_OPTIONS__ENABLED
           value: "false"
       - notExists:
-          path: data.LLDAP_SMTP_OPTIONS_ENABLEDSECRET
+          path: data.LLDAP_SMTP_OPTIONS__ENABLEDSECRET
   - it: should generate a configMap with empty data
     release:
       name: myrelease
@@ -75,10 +75,10 @@ tests:
         enabled: true
     asserts:
       - equal:
-          path: data.LLDAP_LDAPS_CERT_FILE
+          path: data.LLDAP_LDAPS_OPTIONS__CERT_FILE
           value: /certs/cert.pem
       - equal:
-          path: data.LLDAP_LDAPS_KEY_FILE
+          path: data.LLDAP_LDAPS_OPTIONS__KEY_FILE
           value: /certs/key.pem
   - it: should generate a configMap with a file
     release:
