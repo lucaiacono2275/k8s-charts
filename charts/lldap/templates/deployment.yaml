@@ -147,9 +147,9 @@ spec:
         secret: 
           secretName: {{ .Values.ldaps.existingSecret }}
           items: 
-          - key: {{ default "cert" .Values.ldaps.certKey }}
+          - key: {{ default "tls.crt" .Values.ldaps.certProperty }}
             path: {{ include "lldap.ldaps.certFile" . }}   
-          - key: {{ default "key" .Values.ldaps.keyKey}}
+          - key: {{ default "tls.key" .Values.ldaps.keyProperty }}
             path: {{ include "lldap.ldaps.keyFile" . }}    
       {{- end }}
       {{- with .Values.pod.extraVolumes }}

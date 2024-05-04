@@ -224,8 +224,8 @@ tests:
             secret:
               secretName: cert-secret
               items:
-              - key: cert
+              - key: tls.crt
                 path: /certs/cert.pem
-              - key: key
+              - key: tls.key
                 path: /certs/key.pem
           any: true
