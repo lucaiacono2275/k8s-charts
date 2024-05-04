@@ -116,7 +116,7 @@ spec:
         - mountPath: /data
           name: lldap-data
         {{- if (include "lldap.mount.certificates" .) }}
-        - mountPath: /certs
+        - mountPath: {{ .Values.ldaps.certPath }}
           name: certs
         {{- end }}
         {{- with $mounts := .Values.pod.extraVolumeMounts }}
@@ -148,9 +148,9 @@ spec:
           secretName: {{ .Values.ldaps.existingSecret }}
           items: 
           - key: {{ default "tls.crt" .Values.ldaps.certProperty }}
-            path: {{ include "lldap.ldaps.certFile" . }}   
+            path: {{ .Values.ldaps.cert_file }}   
           - key: {{ default "tls.key" .Values.ldaps.keyProperty }}
-            path: {{ include "lldap.ldaps.keyFile" . }}    
+            path: {{ .Values.ldaps.key_file }}    
       {{- end }}
       {{- with .Values.pod.extraVolumes }}
         {{- toYaml . | nindent 6 }}
