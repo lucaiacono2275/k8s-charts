@@ -446,10 +446,10 @@ ldaps:
   key_file: "key.pem"
   ## -- existing secret containing certificates
   existingSecret: ""
-  ## -- secret cert key
-  ## certKey: cert
-  ## -- secret key key
-  ## keyKey: key
+  ## -- secret cert property
+  ## certProperty: tls.crt
+  ## -- secret key property
+  ## keyProperty: tls.key
 
 
 ##
