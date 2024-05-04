@@ -34,7 +34,7 @@ data:
     {{- end }}
     {{- if (include "lldap.ldaps.enabled" .)}}
     {{- range $key, $val := fromYaml (include "lldap.ldaps.options" .) }}
-    {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val  }}
+    {{ printf "LLDAP_LDAPS_%s" (upper $key) }}: {{ $val | quote }}
     {{- end }}
     {{- end }}
     {{- if .Values.smtp -}}
