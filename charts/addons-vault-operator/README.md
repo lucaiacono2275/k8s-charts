@@ -1,6 +1,6 @@
 # addons-vault-operator
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square)
 
 Helm chart for addon resources for vault operator
 
@@ -15,6 +15,7 @@ Helm chart for addon resources for vault operator
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cr.caNamespaces[0] | string | `"*"` |  |
+| cr.claim | object | `{"name":"vault-raft","path":"/vault/data","storage":"1Gi"}` | additional volumes mounts additionalVolumesMount:  |
 | cr.claim.name | string | `"vault-raft"` | name of the PVC |
 | cr.claim.path | string | `"/vault/data"` | path of the PVC |
 | cr.claim.storage | string | `"1Gi"` | storage |
