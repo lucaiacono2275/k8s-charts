@@ -68,6 +68,11 @@ cr:
         tls_key_file: /vault/tls/server.key
     ui: true
 
+  # -- additional volumes
+  # additionalVolumes: 
+  # -- additional volumes mounts
+  # additionalVolumesMount: 
+
   claim:
     # -- name of the PVC
     name: vault-raft

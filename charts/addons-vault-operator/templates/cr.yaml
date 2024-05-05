@@ -110,7 +110,10 @@ spec:
   #     volumeMounts:
   #       - name: vault-raft
   #         mountPath: /vault/file
-
+  {{- if .Values.cr.additionalVolumes }}
+  volumes:
+    {{ .Values.cr.additionalVolumes | toYaml | indent 4}}
+  {{- end }}
   # Use local disk to store Vault raft data, see config section.
   volumeClaimTemplates:
     - metadata:
@@ -128,6 +131,9 @@ spec:
   volumeMounts:
     - name: {{ .Values.cr.claim.name }}
       mountPath: {{ .Values.cr.config.storage.raft.path | default .Values.cr.claim.path }}
+    {{- if .Values.cr.additionalVolumesMount }}
+    {{ .Values.cr.additionalVolumesMount | toYaml | indent 4}}
+    {{- end }}
 
   # Add Velero fsfreeze sidecar container and supporting hook annotations to Vault Pods:
   # https://velero.io/docs/v1.2.0/hooks/
