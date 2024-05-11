@@ -1,3 +1,4 @@
+
 pv:
   # -- enable PV
   enabled: false
@@ -7,11 +8,12 @@ pv:
   server: 192.168.1.6
   # -- path for PV in case of nfs
   path: "/nfs/vaultdata"
-  # -- storage class name
+  # -- storage class name 
   storageClassName: nfs-sc-vault-data
 
+
 cr:
-  # -- label for the vault
+  # -- label for the vault 
   label: vault
   # -- name of the vault
   name: vault
@@ -24,10 +26,22 @@ cr:
   # -- annotation for the vault pod
   vaultAnnotations: "vault"
   # -- annotation for the vault configurer pod
-  vaultConfigurerAnnotations: "vaultconfigurer"
+  vaultConfigurerAnnotations: "vaultconfigurer-dev"
+
+  additionalVolumes:
+  - name: ldap-cert
+    secret:
+      secretName: tls-lldap
+      items:
+      - key: ca.crt
+        path: ldap_ca_cert.pem
+  additionalVolumesMount:
+  - name: ldap-cert
+    readOnly: true
+    mountPath: /vault/ldap-cert
 
   caNamespaces:
-    - "*"
+  - "*"
 
   ingress:
     # -- enable the ingress
@@ -52,26 +66,14 @@ cr:
     storage:
       raft:
         path: /vault/data
-        # retry_join:
-        #   leader_api_addr: "https://vault-0.vault:8200"
-        # autopilot:
-        #  cleanup_dead_servers: "true"
-        #  last_contact_threshold: "200ms"
-        #  last_contact_failure_threshold: "10m"
-        #  max_trailing_logs:  250000
-        #  min_quorum: 1
-        #  server_stabilization_time: "10s"
-    listener:
+        retry_join: 
+          leader_api_addr: "https://vault-0.vault:8200"
+    listener: 
       tcp:
-        address: "0.0.0.0:8200"
+        address: "0.0.0.0:8300"
         tls_cert_file: /vault/tls/server.crt
         tls_key_file: /vault/tls/server.key
-    ui: true
-
-  # -- additional volumes
-  # additionalVolumes:
-  # -- additional volumes mounts
-  # additionalVolumesMount:
+    ui: false
 
   claim:
     # -- name of the PVC
@@ -79,11 +81,11 @@ cr:
     # -- path of the PVC
     path: /vault/data
     # -- storage
-    storage: 1Gi
+    storage: 100Mi
 
   # -- enable velero config
   veleroEnabled: false
-
+  
   # -- External config for the vault
   externalConfig:
     policies:
@@ -92,9 +94,9 @@ cr:
     auth:
     - type: kubernetes
       roles:
-        - name: externalsecrets
+        - name: externalsecrets 
           bound_service_account_names: ["vault-auth"]
-          bound_service_account_namespaces: ["*"]
+          bound_service_account_namespaces: ["*"] 
           policies: allow_secrets
           ttl: 1h
 
@@ -104,11 +106,9 @@ cr:
         description: Secrets for prod env.
         options:
           version: 2
-  vaultEnvsConfig:
-    - name: VAULT_LOG_LEVEL
-      value: debug
 
-rbac:
+
+rbac: 
   # -- SA name
   serviceAccountName: vault
   # -- role name

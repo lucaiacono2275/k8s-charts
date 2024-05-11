@@ -70,5 +70,24 @@ tests:
       - equal:
           path: spec.vaultEnvsConfig[0].value
           value: "debug"
+  - it: should render additional volumes properly
+    values: 
+      - ./values/values-test5.yaml
+    asserts:
+      - contains:
+          path: spec.volumes
+          content: 
+            name: ldap-cert
+            secret:
+              secretName: tls-lldap
+              items:
+              - key: ca.crt
+                path: ldap_ca_cert.pem
+      - contains:
+          path: spec.volumeMounts
+          content: 
+            name: ldap-cert
+            readOnly: true
+            mountPath: /vault/ldap-cert
         
 
