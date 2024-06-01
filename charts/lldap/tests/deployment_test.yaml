@@ -229,3 +229,32 @@ tests:
               - key: tls.key
                 path: key.pem
           any: true
+  - it: should have generate the db url from existing secret
+    set:
+      database:
+        createDbUrl: true
+        existingSecret: db-secret
+        postgres:
+          enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: username
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: password
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: LLDAP_DATABASE_URL
+            value: "postgres://$(DB_USER):$(DB_PASSWORD)@postgres.databases.svc.cluster.local:5432/lldap"
