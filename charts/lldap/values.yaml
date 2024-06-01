@@ -488,6 +488,12 @@ configMap:
 ## This can be overridden with the LLDAP_DATABASE_URL env variable.
 ## database_url = "sqlite:///data/users.db?mode=rwc"
 database:
+  ## Create DB url flag
+  createDbUrl: false
+  ##
+  existingSecret: dbSecret
+  usernameKey: username
+  passwordKey: password
   ##
   ## Local
   ##

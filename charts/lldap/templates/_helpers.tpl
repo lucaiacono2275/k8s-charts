@@ -541,6 +541,22 @@ return the DB URL
 {{- end -}}
 
 {{/*
+return the DB URL
+*/}}
+{{- define "lldap.generate.dburl.fromSecret" -}}
+  {{- with .Values.database }}
+    {{- if .mysql.enabled }}
+      {{- print "mysql://$(DB_USER):$(DB_PASSWORD)@" .mysql.host ":" .mysql.port "/" .mysql.database }}
+    {{- else if .postgres.enabled }}
+      {{- print "postgres://$(DB_USER):$(DB_PASSWORD)@" .postgres.host ":" .postgres.port "/" .postgres.database }}
+    {{- else }}
+      {{- print "sqlite://" .local.path "?mode=rwc" }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+
+{{/*
 Returns true if the env section is needed
 */}}
 {{- define "lldap.enabled.env" -}}
