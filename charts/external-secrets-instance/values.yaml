@@ -17,6 +17,8 @@ secrets:
   # namespace: default
   # -- specific name of the secret store
   # storeName: vault-backend
+  # -- annotations to add to the secret
+  # annotations: {}
   # -- specific type of the secret store
   # storeKind: ClusterSecretStore
   # -- specific refresh interval
