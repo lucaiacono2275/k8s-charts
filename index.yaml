@@ -391,6 +391,17 @@ entries:
     version: 0.0.2
   external-secret-instance:
   - apiVersion: v1
+    created: "2024-06-04T19:06:43.329409148Z"
+    description: Helm chart for adding external secrets instances
+    digest: 62a4097e7c543c1c92eaa05805eaa6539796988321d88a1c77a63866e25209b4
+    maintainers:
+    - email: luca.iacono@gmail.com
+      name: lucaiacono2275
+    name: external-secret-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-secret-instance-0.0.4/external-secret-instance-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v1
     created: "2023-12-13T20:20:32.968150712Z"
     description: Helm chart for adding external secrets instances
     digest: 7f14521c0244a6fcea67f22b221ef269dd5835a92261bd040cdfdb8e0525bd31
@@ -540,4 +551,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-06-01T18:56:29.420444648Z"
+generated: "2024-06-04T19:06:43.329507512Z"
