@@ -1,6 +1,6 @@
 # lldap
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![AppVersion: v0.5.0](https://img.shields.io/badge/AppVersion-v0.5.0-informational?style=flat-square)
 
 Helm chart for deploying LLdap
 
@@ -21,6 +21,8 @@ Helm chart for deploying LLdap
 | configMap.existingConfigMap | string | `""` |  |
 | configMap.labels | object | `{}` |  |
 | configMap.mountAsFile | bool | `false` |  |
+| database.createDbUrl | bool | `false` |  |
+| database.existingSecret | string | `"dbSecret"` |  |
 | database.local.enabled | bool | `false` |  |
 | database.local.path | string | `"/data/users.db"` |  |
 | database.mysql.database | string | `"lldap"` |  |
@@ -29,12 +31,14 @@ Helm chart for deploying LLdap
 | database.mysql.password | string | `"password"` |  |
 | database.mysql.port | int | `3306` |  |
 | database.mysql.username | string | `"lldap"` |  |
+| database.passwordKey | string | `"password"` |  |
 | database.postgres.database | string | `"lldap"` |  |
 | database.postgres.enabled | bool | `false` |  |
 | database.postgres.host | string | `"postgres.databases.svc.cluster.local"` |  |
 | database.postgres.password | string | `"password"` |  |
 | database.postgres.port | int | `5432` |  |
 | database.postgres.username | string | `"lldap"` |  |
+| database.usernameKey | string | `"username"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.pullSecrets | list | `[]` |  |
 | image.tag | string | `"stable"` |  |
