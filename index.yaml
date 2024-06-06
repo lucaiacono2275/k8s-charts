@@ -542,6 +542,17 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/lldap-0.0.1/lldap-0.0.1.tgz
     version: 0.0.1
+  postgres-cluster-instance:
+  - apiVersion: v2
+    created: "2024-06-06T19:48:49.945799084Z"
+    description: Helm chart for deploying Postgres cluster
+    digest: a104e6b45485da901b7f4888562043cc3e7e944354e4db682f027a506cae6832
+    maintainers:
+    - name: lucaiacono2275
+    name: postgres-cluster-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/postgres-cluster-instance-0.0.1/postgres-cluster-instance-0.0.1.tgz
+    version: 0.0.1
   tekton-dashboard:
   - apiVersion: v1
     created: "2023-11-26T16:00:17.734765306Z"
@@ -551,4 +562,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-06-04T19:06:43.329507512Z"
+generated: "2024-06-06T19:48:49.945894092Z"
