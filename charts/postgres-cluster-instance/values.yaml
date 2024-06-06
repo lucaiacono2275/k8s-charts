@@ -1,7 +1,7 @@
 # -- labels
 labels:
 # -- name override
-#nameOverride: postgresql
+# nameOverride: postgresql
 # -- namespace
 # namespace: database
 # -- databases
