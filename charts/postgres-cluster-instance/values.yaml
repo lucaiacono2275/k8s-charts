@@ -1,6 +1,6 @@
 # -- labels
 labels:
-# -- name 
+# -- name
 name: postgresql
 # -- namespace
 namespace: database
@@ -17,10 +17,8 @@ patroni:
 # -- postgresql version
 version: 16
 # -- resources
-resources: 
+resources:
 # -- users
 users:
 # -- volume size
 volumeSize: 1Gi
-
-
