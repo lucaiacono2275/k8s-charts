@@ -1,0 +1,31 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  {{- with .Values.labels }}
+  labels: {{ .Values.labels | toYaml | nindent 4}}
+  {{- end }}
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  {{- with .Values.databases }}  
+  databases: {{ .Values.databases | toYaml | nindent 4 }}
+  {{- end }}
+  enableConnectionPooler: {{ .Values.enableConnectionPooler }}
+  enableMasterLoadBalancer: {{ .Values.enableMasterLoadBalancer }}
+  numberOfInstances: {{ .Values.numberOfInstances }}
+  {{- with .Values.patroni }}
+  patroni: {{ .Values.patroni | toYaml | nindent 4 }}
+  {{- end }}
+  postgresql:
+    version: '{{ .Values.version }}'
+  {{- with .Values.resources }}
+  resources: {{ .Values.resources | toYaml | nindent 4 }}
+  {{- end }}
+  teamId: acid
+  {{- with .Values.users }}  
+  users: {{ .Values.users | toYaml | nindent 4 }}
+  {{- end }}
+  volume:
+    iops: 3000
+    size: {{ .Values.volumeSize }}
+    throughput: 125

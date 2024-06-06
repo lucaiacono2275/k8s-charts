@@ -104,6 +104,17 @@ jobs:
             echo "Found vault-operator changes."
           fi
 
+      - name: Check postgres operator in the list of changes
+        if: steps.list-changed.outputs.changed == 'true'
+        id: postgres-changed
+        run: |
+          echo "Checking for vault-operator changes..."
+          postgres=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "postgres" || true)
+          if [[ -n "$postgres" ]]; then
+            echo "install=true" >> "$GITHUB_OUTPUT"
+            echo "Found postgres-operator changes."
+          fi
+
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
         run: ct lint --target-branch ${{ github.event.repository.default_branch }}
@@ -133,6 +144,11 @@ jobs:
         if: steps.vault-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://raw.githubusercontent.com/bank-vaults/vault-operator/main/deploy/charts/vault-operator/crds/crd.yaml
+
+      - name: Installs postgres operator CRDs
+        if: steps.postgres-changed.outputs.install == 'true'
+        run: |
+          kubectl apply -f https://raw.githubusercontent.com/zalando/postgres-operator/master/charts/postgres-operator/crds/postgresqls.yaml
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'

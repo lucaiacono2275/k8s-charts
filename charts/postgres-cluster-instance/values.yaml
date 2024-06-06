@@ -1,0 +1,26 @@
+# -- labels
+labels:
+# -- name 
+name: postgresql
+# -- namespace
+namespace: database
+# -- databases
+databases:
+# -- enable Connection Pooler
+enableConnectionPooler: false
+# -- enable Master LoadBalancer
+enableMasterLoadBalancer: false
+# -- number Of Instances
+numberOfInstances: 1
+# -- patroni config
+patroni:
+# -- postgresql version
+version: 16
+# -- resources
+resources: 
+# -- users
+users:
+# -- volume size
+volumeSize: 1Gi
+
+

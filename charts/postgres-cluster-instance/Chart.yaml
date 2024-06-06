@@ -1,0 +1,6 @@
+apiVersion: v2
+description: Helm chart for deploying Postgres cluster
+name: lldap
+version: 0.0.1
+maintainers:
+  - name: lucaiacono2275
