@@ -4,7 +4,7 @@ metadata:
   {{- with .Values.labels }}
   labels: {{ .Values.labels | toYaml | nindent 4}}
   {{- end }}
-  name: {{ .Values.nameOverride | default .Release.name }}
+  name: {{ include "postgres.name" . }}
   namespace: {{ .Values.namespace | default .Release.namespace }}
 spec:
   {{- with .Values.databases }}  
