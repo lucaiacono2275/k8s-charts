@@ -29,4 +29,4 @@ spec:
     iops: 3000
     size: {{ .Values.volumeSize }}
     throughput: 125
-    storageClass: {{ .VAlues.storageClass }}
+    storageClass: {{ .Values.storageClass }}
