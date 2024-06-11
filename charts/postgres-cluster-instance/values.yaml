@@ -22,3 +22,5 @@ resources:
 users:
 # -- volume size
 volumeSize: 1Gi
+# -- storage class
+storageClass: local-path
