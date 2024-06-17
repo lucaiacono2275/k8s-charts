@@ -544,6 +544,16 @@ entries:
     version: 0.0.1
   postgres-cluster-instance:
   - apiVersion: v2
+    created: "2024-06-17T20:01:07.592122163Z"
+    description: Helm chart for deploying Postgres cluster
+    digest: aca4236d5c8c356d3d3fff1c84c88537a02508f45f00efa02c7531d091f73d4a
+    maintainers:
+    - name: lucaiacono2275
+    name: postgres-cluster-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/postgres-cluster-instance-0.0.3/postgres-cluster-instance-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     created: "2024-06-11T19:34:44.678202104Z"
     description: Helm chart for deploying Postgres cluster
     digest: ba9c015d681ce2fcaa138714ef208f151026236d21fcb37bafdb81c2010d4ddb
@@ -572,4 +582,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-06-11T19:34:44.678334873Z"
+generated: "2024-06-17T20:01:07.592212523Z"
