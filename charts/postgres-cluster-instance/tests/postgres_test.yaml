@@ -1,0 +1,28 @@
+suite: postgres test suite
+templates:
+  - postgres.yaml
+tests:
+  - it: should generate a postgres object
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values: 
+      - ./values/values-1.yaml
+    set:
+      nameOverride: myreelase
+      namespace: mynamespace
+    asserts:
+      - containsDocument:
+          kind: postgres
+          apiVersion: acid.zalan.do/v1
+          name: "myrelease-postgres"
+          namespace: mynamespace
+      - equal:
+          path: spec.databases.user1
+          value: user1.ns1
+      - equal:
+          path: spec.databases.user2
+          value: user2.ns2
+      - equal:
+          path: spec.databases.user3
+          value: user3.ns3
