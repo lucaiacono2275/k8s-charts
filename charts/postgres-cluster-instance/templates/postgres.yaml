@@ -5,15 +5,15 @@ metadata:
   labels: {{ .Values.labels | toYaml | nindent 4}}
   {{- end }}
   name: {{ include "postgres.name" . }}
-  namespace: {{ .Values.namespace | default .Release.namespace }}
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
 spec:
-  {{- with .Values.databases }}  
+  {{- if .Values.databases }}  
   databases: {{ .Values.databases | toYaml | nindent 4 }}
   {{- end }}
   enableConnectionPooler: {{ .Values.enableConnectionPooler }}
   enableMasterLoadBalancer: {{ .Values.enableMasterLoadBalancer }}
   numberOfInstances: {{ .Values.numberOfInstances }}
-  {{- with .Values.patroni }}
+  {{- if .Values.patroni }}
   patroni: {{ .Values.patroni | toYaml | nindent 4 }}
   {{- end }}
   postgresql:
@@ -22,7 +22,7 @@ spec:
   resources: {{ .Values.resources | toYaml | nindent 4 }}
   {{- end }}
   teamId: acid
-  {{- with .Values.users }}  
+  {{- if .Values.users }}  
   users: {{ .Values.users | toYaml | nindent 4 }}
   {{- end }}
   volume:
