@@ -8,15 +8,12 @@ tests:
       namespace: mynamespace
     values: 
       - ./values/values-1.yaml
-    set:
-      nameOverride: myreelase
-      namespace: mynamespace
     asserts:
       - containsDocument:
-          kind: postgres
+          kind: postgresql
           apiVersion: acid.zalan.do/v1
-          name: "myrelease-postgres"
-          namespace: mynamespace
+          name: "postgresql"
+          namespace: database
       - equal:
           path: spec.databases.user1
           value: user1.ns1

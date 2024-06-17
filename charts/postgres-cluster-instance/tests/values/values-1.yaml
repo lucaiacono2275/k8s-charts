@@ -1,9 +1,9 @@
 # -- labels
 labels:
 # -- name override
-# nameOverride: postgresql
+nameOverride: postgresql
 # -- namespace
-# namespace: database
+namespace: database
 # -- databases
 databases:
   user1: user1.ns1
