@@ -28,6 +28,8 @@ users:
   user2.ns2: []
   user3.ns3:
   - createdb
+tls:
+  secretName: "secret"
 # -- volume size
 volumeSize: 1Gi
 storageClass: local-path

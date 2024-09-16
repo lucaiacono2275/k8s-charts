@@ -20,6 +20,8 @@ version: 16
 resources:
 # -- users
 users:
+# -- tls
+tls:
 # -- volume size
 volumeSize: 1Gi
 # -- storage class
