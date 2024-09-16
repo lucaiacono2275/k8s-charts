@@ -23,3 +23,6 @@ tests:
       - equal:
           path: spec.databases.user3
           value: user3.ns3
+      - equal:
+          path: spec.tls.secretName
+          value: "secret"
