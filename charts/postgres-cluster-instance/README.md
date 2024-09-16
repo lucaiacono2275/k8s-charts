@@ -1,6 +1,6 @@
 # postgres-cluster-instance
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square)
 
 Helm chart for deploying Postgres cluster
 
@@ -22,6 +22,7 @@ Helm chart for deploying Postgres cluster
 | patroni | string | `nil` | patroni config |
 | resources | string | `nil` | resources |
 | storageClass | string | `"local-path"` | storage class |
+| tls | string | `nil` | tls |
 | users | string | `nil` | users |
 | version | int | `16` | postgresql version |
 | volumeSize | string | `"1Gi"` | volume size |
