@@ -26,3 +26,6 @@ tests:
       - equal:
           path: spec.tls.secretName
           value: "secret"
+      - equal:
+          path: spec.spiloFSGroup
+          value: 103

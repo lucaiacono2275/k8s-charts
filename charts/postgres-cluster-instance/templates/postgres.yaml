@@ -28,6 +28,9 @@ spec:
   {{- if .Values.tls }}  
   tls: {{ .Values.tls | toYaml | nindent 4 }}
   {{- end }}
+  {{- if .Values.spilo }}  
+  {{ .Values.spilo | toYaml | nindent 2 }}
+  {{- end }}
   volume:
     iops: 3000
     size: {{ .Values.volumeSize }}

@@ -30,6 +30,8 @@ users:
   - createdb
 tls:
   secretName: "secret"
+spilo:
+  spiloFSGroup: 103
 # -- volume size
 volumeSize: 1Gi
 storageClass: local-path

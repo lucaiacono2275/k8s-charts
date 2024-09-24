@@ -22,6 +22,9 @@ resources:
 users:
 # -- tls
 tls:
+# -- spilo options
+spilo:  
+  spiloFSGroup: 103
 # -- volume size
 volumeSize: 1Gi
 # -- storage class

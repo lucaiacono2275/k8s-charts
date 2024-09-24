@@ -1,6 +1,6 @@
 apiVersion: v2
 description: Helm chart for deploying Postgres cluster
 name: postgres-cluster-instance
-version: 0.0.4
+version: 0.0.5
 maintainers:
   - name: lucaiacono2275
