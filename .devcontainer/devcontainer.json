@@ -12,6 +12,7 @@
       }
     },
     "features": {
-        "ghcr.io/mpriscella/features/helm-chart-testing:1": {}
+      "ghcr.io/mpriscella/features/helm-chart-testing:1": {},
+      "ghcr.io/dirsigler/devcontainer-features/helm-docs:1": {}
     }
   }
