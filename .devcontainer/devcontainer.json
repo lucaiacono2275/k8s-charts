@@ -1,0 +1,17 @@
+{
+    "name": "K3S Home",
+    "image": "ghcr.io/lucaiacono2275/k8s-helmfile-image:latest",
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "workbench.colorTheme": "Visual Studio Dark"
+        },
+        "extensions": [
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    },
+    "features": {
+        "ghcr.io/mpriscella/features/helm-chart-testing:1": {}
+    }
+  }
