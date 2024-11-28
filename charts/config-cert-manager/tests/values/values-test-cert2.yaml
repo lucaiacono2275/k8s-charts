@@ -37,19 +37,8 @@ clusterissuers:
     # skipTLSVerify: true
 # -- list of certificates to be created
 certificates:
-- name: tls-ihsws-it-p
+- name: no-reflector
   namespace: cert-manager
   issuerRef: letsencrypt-dns01-prod
   dnsNames:
   - '*.example.org'
-  reflector:
-    allowed: "*"
-    auto: "*"
-- name: tls-ihsws-it-s
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-staging
-  dnsNames:
-  - '*.example.org'
-  reflector:
-    allowed: "*"
-    auto: "*"

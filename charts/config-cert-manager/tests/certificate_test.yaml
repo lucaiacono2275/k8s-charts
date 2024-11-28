@@ -1,0 +1,21 @@
+suite: service account test suite
+templates:
+  - certificates.yaml
+tests:
+  - it: should have 1 document
+    values: 
+      - ./values/values-test-cert1.yaml  
+    asserts:
+      - containsDocuments:
+          kind: Certificate
+  - it: should have 1 document without reflector
+    values: 
+      - ./values/values-test-cert1.yaml  
+    asserts:
+      - containsDocuments:
+          kind: Certificate
+      - notContains:
+          path: spec
+          content:
+            name: secretTemplate
+

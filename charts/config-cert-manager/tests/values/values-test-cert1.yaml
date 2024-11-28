@@ -45,11 +45,3 @@ certificates:
   reflector:
     allowed: "*"
     auto: "*"
-- name: tls-ihsws-it-s
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-staging
-  dnsNames:
-  - '*.example.org'
-  reflector:
-    allowed: "*"
-    auto: "*"
