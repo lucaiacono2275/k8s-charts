@@ -1,13 +1,14 @@
 {
-    "name": "K3S Home",
-    "image": "ghcr.io/lucaiacono2275/k8s-helmfile-image:latest",
+    "name": "K3S Charts",
+    "image": "codercom/enterprise-base:ubuntu",
     "customizations": {
       "vscode": {
         "settings": {
           "workbench.colorTheme": "Visual Studio Dark"
         },
         "extensions": [
-          "ms-azuretools.vscode-docker"
+          "ms-azuretools.vscode-docker",
+          "github.vscode-github-actions"
         ]
       }
     },
