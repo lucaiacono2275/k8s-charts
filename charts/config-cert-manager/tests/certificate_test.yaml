@@ -6,16 +6,16 @@ tests:
     values: 
       - ./values/values-test-cert1.yaml  
     asserts:
-      - containsDocuments:
+      - containsDocument:
           kind: Certificate
+          apiVersion: cert-manager.io/v1
   - it: should have 1 document without reflector
     values: 
       - ./values/values-test-cert1.yaml  
     asserts:
-      - containsDocuments:
+      - containsDocument:
           kind: Certificate
-      - notContains:
-          path: spec
-          content:
-            name: secretTemplate
+          apiVersion: cert-manager.io/v1
+      - notExists:
+          path: spec/secretTemplate
 
