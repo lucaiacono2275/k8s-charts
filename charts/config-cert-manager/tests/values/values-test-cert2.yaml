@@ -20,36 +20,10 @@ clusterissuers:
   # saSecretName: clouddns-dns01-solver-svc-acct
   # -- type of cluster issuer (acme|vault)
   type: acme
-- name: letsencrypt-dns01-staging
-  server: https://acme-staging-v02.api.letsencrypt.org/directory
-  type: acme
-- name: vault
-  type: vault
-  path: pki_int/sign/example-dot-com
-  server: https://vault.local
-  role: my-app-1
-  mountPath: /v1/auth/kubernetes
-  ## -- optional properties to be added to the issuer
-  # optionalProperties:
-    # -- caBundle used to SSL connect to the issuer
-    # caBundle: ASDFASFDAV
-    # -- skip TLS verify in the issuer connection
-    # skipTLSVerify: true
 # -- list of certificates to be created
 certificates:
-- name: tls-ihsws-it-p
+- name: no-reflector
   namespace: cert-manager
   issuerRef: letsencrypt-dns01-prod
   dnsNames:
   - '*.example.org'
-  reflector:
-    allowed: "*"
-    auto: "*"
-- name: tls-ihsws-it-s
-  namespace: cert-manager
-  issuerRef: letsencrypt-dns01-staging
-  dnsNames:
-  - '*.example.org'
-  reflector:
-    allowed: "*"
-    auto: "*"

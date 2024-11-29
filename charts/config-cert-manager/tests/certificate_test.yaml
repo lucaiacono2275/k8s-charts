@@ -1,0 +1,21 @@
+suite: service account test suite
+templates:
+  - certificates.yaml
+tests:
+  - it: should have 1 document
+    values: 
+      - ./values/values-test-cert1.yaml  
+    asserts:
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+  - it: should have 1 document without reflector
+    values: 
+      - ./values/values-test-cert1.yaml  
+    asserts:
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+      - notExists:
+          path: spec/secretTemplate
+

@@ -1,0 +1,19 @@
+{
+    "name": "K3S Charts",
+    "image": "codercom/enterprise-base:ubuntu",
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "workbench.colorTheme": "Visual Studio Dark"
+        },
+        "extensions": [
+          "ms-azuretools.vscode-docker",
+          "github.vscode-github-actions"
+        ]
+      }
+    },
+    "features": {
+      "ghcr.io/mpriscella/features/helm-chart-testing:1": {},
+      "ghcr.io/dirsigler/devcontainer-features/helm-docs:1": {}
+    }
+  }
