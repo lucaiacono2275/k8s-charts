@@ -8,11 +8,13 @@
         },
         "extensions": [
           "ms-azuretools.vscode-docker",
-          "github.vscode-github-actions"
+          "github.vscode-github-actions",
+          "redhat.vscode-yaml"
         ]
       }
     },
     "features": {
+      "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
       "ghcr.io/mpriscella/features/helm-chart-testing:1": {},
       "ghcr.io/dirsigler/devcontainer-features/helm-docs:1": {}
     }
