@@ -14,8 +14,8 @@ tests:
         path: spec.rules[0].host
         value: external-service-expose.yourdomain.com
     - equal:
-        path: spec.rules[0].http[0].backend.service.name
+        path: spec.rules[0].http.paths[0].backend.service.name
         value: RELEASE-NAME-external-service-ingress-external-service
     - equal:
-        path: spec.rules[0].http[0].backend.service.port.number
+        path: spec.rules[0].http.paths[0].backend.service.port.number
         value: 8080
