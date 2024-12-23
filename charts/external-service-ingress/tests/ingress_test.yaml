@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: ingress test suite
+templates:
+  - ingress.yaml
+tests:
+  - it: should pass
+    values:
+      - ./values/values-test1.yaml
+    asserts:
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-external-service-ingress
+    - equal:
+        path: spec.rules[0].host
+        value: external-service-expose.yourdomain.com
+    - equal:
+        path: spec.rules[0].http[0].backend.service.name
+        value: RELEASE-NAME-external-service-ingress-external-service
+    - equal:
+        path: spec.rules[0].http[0].backend.service.port.number
+        value: 8080

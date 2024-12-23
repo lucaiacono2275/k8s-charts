@@ -4,4 +4,4 @@ metadata:
   name: {{ include  "service.name" . }}
 spec:
   type: ExternalName
-  externalName: {{ .Values.service.externalName }}
+  externalName: {{ .Values.external.hostname }}

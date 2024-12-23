@@ -5,7 +5,7 @@ metadata:
   annotations: {{ .Values.annotations | toYaml | nindent 4}}
 spec:
   rules:
-  - host: {{ .Values.external.hostname }}
+  - host: {{ .Values.ingress.hostname }}
     http:
       - path: /
         pathType: Prefix
@@ -17,6 +17,6 @@ spec:
   {{- if .Values.tls.enabled }}
   tls:
   - hosts:
-    - {{ .Value.ingress.hostname }}
+    - {{ .Values.ingress.hostname }}
     secretName: {{ .Values.tls.secretName }}
   {{- end }}

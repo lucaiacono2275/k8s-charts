@@ -1,0 +1,16 @@
+
+external:
+  hostname: external-service.yourdomain.com
+
+service:
+  name:
+  port: 8080
+
+ingress:
+  hostname: external-service-expose.yourdomain.com
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" #important
+
+tls:
+  enabled: true
+  secretName: tls-secret

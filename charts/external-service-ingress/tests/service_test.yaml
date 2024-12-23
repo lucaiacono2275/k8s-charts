@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: service test suite
+templates:
+  - service.yaml
+tests:
+  - it: should pass
+    values:
+      - ./values/values-test1.yaml
+    asserts:
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-external-service-ingress-external-service
+    - equal:
+        path: spec.externalName
+        value: external-service.yourdomain.com
