@@ -441,6 +441,18 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-secret-instance-0.0.1/external-secret-instance-0.0.1.tgz
     version: 0.0.1
+  external-service-ingress:
+  - apiVersion: v1
+    created: "2024-12-23T16:24:23.610487673Z"
+    description: Helm chart for exposing through ingress a service external to the
+      cluster
+    digest: 1f6ef5610c8aa8a239a83eb9cfaafbc2988b3235c173047be813310d30b9a39e
+    maintainers:
+    - name: lucaiacono2275
+    name: external-service-ingress
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-service-ingress-0.0.1/external-service-ingress-0.0.1.tgz
+    version: 0.0.1
   lldap:
   - apiVersion: v2
     appVersion: v0.5.0
@@ -612,4 +624,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-11-29T19:58:52.879015161Z"
+generated: "2024-12-23T16:24:23.610648305Z"
