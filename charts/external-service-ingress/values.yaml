@@ -3,7 +3,7 @@ external:
 
 service:
   name:
-  port:
+  port: 80
 
 ingress:
   hostname: external-service-expose.yourdomain.com
