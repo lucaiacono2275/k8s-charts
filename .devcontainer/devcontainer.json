@@ -17,5 +17,6 @@
       "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
       "ghcr.io/mpriscella/features/helm-chart-testing:1": {},
       "ghcr.io/dirsigler/devcontainer-features/helm-docs:1": {}
-    }
+    },
+    "onCreateCommand": ["helm", "plugin", "install", "https://github.com/helm-unittest/helm-unittest.git", "--version", "v0.5.2"]
   }
