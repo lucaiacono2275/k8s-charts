@@ -6,6 +6,7 @@ service:
   port: 80
 
 ingress:
+  className: nginx
   hostname: external-service-expose.yourdomain.com
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # important

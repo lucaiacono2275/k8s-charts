@@ -4,6 +4,7 @@ metadata:
   name: {{ include  "chart.name" . }}
   annotations: {{ .Values.annotations | toYaml | nindent 4}}
 spec:
+  ingressClassName: {{ .Values.ingress.className  }}
   rules:
   - host: {{ .Values.ingress.hostname }}
     http:
