@@ -1,10 +1,12 @@
----
 name: test-charts
 
 on:
   push:
     branches:
       - develop
+    paths: 
+      - "charts/**"
+      - ".github/workflows/**"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
