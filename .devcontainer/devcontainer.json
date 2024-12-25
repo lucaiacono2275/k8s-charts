@@ -9,7 +9,8 @@
         "extensions": [
           "ms-azuretools.vscode-docker",
           "github.vscode-github-actions",
-          "redhat.vscode-yaml"
+          "redhat.vscode-yaml",
+          "GitHub.vscode-pull-request-github"
         ]
       }
     },
