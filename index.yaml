@@ -443,6 +443,17 @@ entries:
     version: 0.0.1
   external-service-ingress:
   - apiVersion: v1
+    created: "2024-12-27T13:38:52.410438458Z"
+    description: Helm chart for exposing through ingress a service external to the
+      cluster
+    digest: 3d8515933d2765b6fc1ed9edc47dacedd9383d5f28b2f0be071b3fd5520af537
+    maintainers:
+    - name: lucaiacono2275
+    name: external-service-ingress
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-service-ingress-0.0.3/external-service-ingress-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v1
     created: "2024-12-25T21:08:12.640617945Z"
     description: Helm chart for exposing through ingress a service external to the
       cluster
@@ -635,4 +646,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2024-12-25T21:08:12.640720047Z"
+generated: "2024-12-27T13:38:52.41056844Z"
