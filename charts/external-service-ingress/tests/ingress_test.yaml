@@ -11,6 +11,9 @@ tests:
         path: metadata.name
         value: RELEASE-NAME-external-service-ingress
     - equal:
+        path: metadata.annotations["nginx.ingress.kubernetes.io/backend-protocol"]
+        value: "HTTPS"
+    - equal:
         path: spec.rules[0].host
         value: external-service-expose.yourdomain.com
     - equal:
@@ -22,3 +25,4 @@ tests:
     - equal:
         path: spec.ingressClassName
         value: myIngressClass
+
