@@ -1,0 +1,13 @@
+suite: cronjob test suite
+templates:
+  - cronjob.yaml
+tests:
+  - it: should generate a cronjob
+    values: 
+      - ./values/values-test.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "samba-cert-sync"

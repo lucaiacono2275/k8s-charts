@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: samba-cert-sync
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: samba-cert-sync
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: sync-container
+              image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+              command: ["/bin/sh", "-c", "/scripts/sync.sh"]
+              volumeMounts:
+                - name: script-volume
+                  mountPath: /scripts
+                - name: cert-secret
+                  mountPath: /certs
+                  readOnly: true
+                - name: samba-secret
+                  mountPath: /secrets
+                  readOnly: true
+          volumes:
+            - name: script-volume
+              configMap:
+                name: {{ .Values.scriptConfigMap }}
+            - name: cert-secret
+              secret:
+                secretName: {{ .Values.certificateSecret }}
+            - name: samba-secret
+              secret:
+                secretName: {{ .Values.sambaSecret }}
