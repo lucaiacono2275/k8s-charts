@@ -5,8 +5,3 @@ description: A Helm chart to deploy a Kubernetes CronJob that syncs a certificat
 
 maintainers:
   - name: lucaiacono2275
-
-dependency:
-  - name: alpine
-    repository: docker.io/library/alpine
-    version: latest
