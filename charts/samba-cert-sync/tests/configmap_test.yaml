@@ -1,0 +1,15 @@
+suite: configmap test suite
+templates:
+  - configmap.yaml
+tests:
+  - it: should generate a configMap
+    values: 
+      - ./values/values-test.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "sync-script"
+      - isNotNullOrEmpty:
+          path: data["sync.sh"]

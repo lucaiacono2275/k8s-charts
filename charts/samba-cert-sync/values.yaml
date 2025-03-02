@@ -1,0 +1,10 @@
+image:
+  repository: alpine
+  tag: latest
+certificateSecret: certificate-secret
+sambaSecret: samba-credentials
+scriptConfigMap: sync-script
+samba:
+  server: "//samba.example.com/share"
+  certTargetFile: "cert.pem"
+  keyTargetFile: "key.pem"

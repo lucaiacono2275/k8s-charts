@@ -1,0 +1,13 @@
+apiVersion: v2
+name: k8s-samba-cert-sync
+version: 0.0.1
+description: A Helm chart to deploy a Kubernetes CronJob that syncs a certificate and key to a Samba share every day at midnight.
+type: application
+
+maintainers:
+  - name: lucaiacono2275
+
+dependency:
+  - name: alpine
+    repository: docker.io/library/alpine
+    version: latest

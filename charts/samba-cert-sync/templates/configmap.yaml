@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.scriptConfigMap }}
+data:
+  sync.sh: | 
+{{ .Files.Get "files/sync.sh" | indent 4 }}

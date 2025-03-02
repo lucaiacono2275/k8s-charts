@@ -1,0 +1,4 @@
+samba:
+  server: "//samba.example.com/share"
+  certTargetFile: "cert.pem"
+  keyTargetFile: "key.pem"
