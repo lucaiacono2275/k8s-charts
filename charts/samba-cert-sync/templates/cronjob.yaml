@@ -19,6 +19,7 @@ spec:
               volumeMounts:
                 - name: script-volume
                   mountPath: /scripts
+                  defaultMode: 0555
                 - name: cert-secret
                   mountPath: /certs
                   readOnly: true
