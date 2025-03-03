@@ -29,6 +29,7 @@ spec:
             - name: script-volume
               configMap:
                 name: {{ .Values.scriptConfigMap }}
+                defaultMode: 0555
             - name: cert-secret
               secret:
                 secretName: {{ .Values.certificateSecret }}
