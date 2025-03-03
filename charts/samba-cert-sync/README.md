@@ -1,6 +1,6 @@
 # samba-cert-sync
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square)
 
 A Helm chart to deploy a Kubernetes CronJob that syncs a certificate and key to a Samba share every day at midnight.
 
@@ -15,7 +15,7 @@ A Helm chart to deploy a Kubernetes CronJob that syncs a certificate and key to 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | certificateSecret | string | `"certificate-secret"` |  |
-| image.repository | string | `"alpine"` |  |
+| image.repository | string | `"bmauter/alpine-samba-client"` |  |
 | image.tag | string | `"latest"` |  |
 | samba.certTargetFile | string | `"cert.pem"` |  |
 | samba.keyTargetFile | string | `"key.pem"` |  |
