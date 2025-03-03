@@ -26,9 +26,12 @@ spec:
                   mountPath: /secrets
                   readOnly: true
               env:
-                TARGET_CERT: "{{ .Values.samba.certTargetFile }}"
-                TARGET_KEY: "{{ .Values.samba.keyTargetFile }}"
-                SAMBA_SERVER: "{{ .Values.samba.server }}"
+                - name: TARGET_CERT
+                  value: "{{ .Values.samba.certTargetFile }}"
+                - name: TARGET_KEY
+                  value: "{{ .Values.samba.keyTargetFile }}"
+                - name: SAMBA_SERVER
+                  value: "{{ .Values.samba.server }}"
           volumes:
             - name: script-volume
               configMap:
