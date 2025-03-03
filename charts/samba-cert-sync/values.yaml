@@ -1,5 +1,5 @@
 image:
-  repository: alpine
+  repository: bmauter/alpine-samba-client
   tag: latest
 certificateSecret: certificate-secret
 sambaSecret: samba-credentials
