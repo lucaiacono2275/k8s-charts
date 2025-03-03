@@ -9,7 +9,7 @@ KEY_PATH="/certs/tls.key"
 USERNAME=$(cat /secrets/username)
 PASSWORD=$(cat /secrets/password)
 echo "Uploading certificate..."
-echo "put $CERT_PATH $TARGET_CERT" | smbclient "$SAMBA_SERVER" "$PASSWORD" -U "$USERNAME" -c "exit"
+smbclient "$SAMBA_SERVER" "$PASSWORD" -U "$USERNAME" -c "put $CERT_PATH $TARGET_CERT; exit"
 echo "Uploading key..."
-echo "put $KEY_PATH $TARGET_KEY" | smbclient "$SAMBA_SERVER" "$PASSWORD" -U "$USERNAME" -c "exit"
+smbclient "$SAMBA_SERVER" "$PASSWORD" -U "$USERNAME" -c "put $KEY_PATH $TARGET_KEY; exit"
 echo "Sync completed successfully."
