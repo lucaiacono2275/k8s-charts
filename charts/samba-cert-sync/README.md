@@ -1,6 +1,6 @@
 # samba-cert-sync
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square)
 
 A Helm chart to deploy a Kubernetes CronJob that syncs a certificate and key to a Samba share every day at midnight.
 
