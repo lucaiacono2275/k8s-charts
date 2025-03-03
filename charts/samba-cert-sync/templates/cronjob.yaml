@@ -40,3 +40,8 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
+          env:
+            TARGET_CERT: "{{ .Values.samba.certTargetFile }}"
+            TARGET_KEY: "{{ .Values.samba.keyTargetFile }}"
+            SAMBA_SERVER: "{{ .Values.samba.server }}"
+
