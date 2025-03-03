@@ -15,7 +15,7 @@ spec:
           containers:
             - name: sync-container
               image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-              command: ["/bin/sh", "-c", "/scripts/sync.sh"]
+              command: ["/bin/sh", "-c", "chmod +x /scripts/sync.sh && /scripts/sync.sh"]
               volumeMounts:
                 - name: script-volume
                   mountPath: /scripts
