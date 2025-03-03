@@ -15,11 +15,10 @@ spec:
           containers:
             - name: sync-container
               image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-              command: ["/bin/sh", "-c", "chmod +x /scripts/sync.sh && /scripts/sync.sh"]
+              command: ["/bin/sh", "-c", "/scripts/sync.sh"]
               volumeMounts:
                 - name: script-volume
                   mountPath: /scripts
-                  defaultMode: 0555
                 - name: cert-secret
                   mountPath: /certs
                   readOnly: true
@@ -36,3 +35,7 @@ spec:
             - name: samba-secret
               secret:
                 secretName: {{ .Values.sambaSecret }}
+            securityContext:
+              runAsUser: 1001
+              runAsGroup: 1001
+              fsGroup: 1001
