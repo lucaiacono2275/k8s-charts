@@ -639,6 +639,17 @@ entries:
     version: 0.0.1
   samba-cert-sync:
   - apiVersion: v2
+    created: "2025-03-03T14:01:05.838375365Z"
+    description: A Helm chart to deploy a Kubernetes CronJob that syncs a certificate
+      and key to a Samba share every day at midnight.
+    digest: 055941a50bac0d2f2e1b96d77c86fda4e917e9fa5f403ee423d4493ae17f81c4
+    maintainers:
+    - name: lucaiacono2275
+    name: samba-cert-sync
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/samba-cert-sync-0.0.8/samba-cert-sync-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
     created: "2025-03-03T13:39:51.030720555Z"
     description: A Helm chart to deploy a Kubernetes CronJob that syncs a certificate
       and key to a Samba share every day at midnight.
@@ -724,4 +735,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2025-03-03T13:39:51.030858112Z"
+generated: "2025-03-03T14:01:05.838692205Z"
