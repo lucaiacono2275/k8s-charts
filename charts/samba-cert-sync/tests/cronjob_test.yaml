@@ -5,9 +5,20 @@ tests:
   - it: should generate a cronjob
     values: 
       - ./values/values-test.yaml
+    release:
+      name: my-release
     asserts:
       - hasDocuments:
           count: 1
+      - equal:
+          path: metadata.name
+          value: "my-release-samba-cert-sync"
+  - it: should use the release name
+    values: 
+      - ./values/values-test.yaml
+    release:
+      name: samba-cert-sync
+    asserts:
       - equal:
           path: metadata.name
           value: "samba-cert-sync"

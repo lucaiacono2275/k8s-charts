@@ -4,6 +4,7 @@ image:
 certificateSecret: certificate-secret
 sambaSecret: samba-credentials
 scriptConfigMap: sync-script
+schedule: "0 0 * * *"
 samba:
   server: "//samba.example.com/share"
   certTargetFile: "cert.pem"
