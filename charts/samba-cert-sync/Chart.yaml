@@ -1,6 +1,6 @@
 apiVersion: v2
 name: samba-cert-sync
-version: 0.0.11
+version: 0.0.12
 description: A Helm chart to deploy a Kubernetes CronJob that syncs a certificate and key to a Samba share every day at midnight.
 
 maintainers:
