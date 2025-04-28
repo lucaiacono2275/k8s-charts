@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - master
+    paths: 
+      - "charts/**"
+      - ".github/workflows/release.yaml"
 
 env:
   HELM_DOCS_VERSION: "1.14.2"
