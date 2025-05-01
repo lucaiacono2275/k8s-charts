@@ -135,6 +135,7 @@ jobs:
         if: steps.extsecrets-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml 
+          kubectl create namespace vault
 
       - name: Installs cert-manager CRDs
         if: steps.certmanager-changed.outputs.install == 'true'
