@@ -1,0 +1,5 @@
+type: sentinel
+name: redis-sentinel
+clusterSize: 3
+redisSentinelConfig:
+    redisReplicationName : redis-replication
