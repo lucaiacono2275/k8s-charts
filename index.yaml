@@ -658,6 +658,17 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/postgres-cluster-instance-0.0.1/postgres-cluster-instance-0.0.1.tgz
     version: 0.0.1
+  redis-ot-instance:
+  - apiVersion: v2
+    created: "2025-07-18T20:47:01.973942415Z"
+    description: Helm chart for deploying redis-ot elements
+    digest: f0b52093c610c85544761ee32c3da91c6d4af108d72e258e052f7777cd3ffe3c
+    maintainers:
+    - name: lucaiacono2275
+    name: redis-ot-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/redis-ot-instance-0.0.1/redis-ot-instance-0.0.1.tgz
+    version: 0.0.1
   samba-cert-sync:
   - apiVersion: v2
     created: "2025-04-27T19:17:20.72946338Z"
@@ -800,4 +811,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2025-05-01T16:04:01.724087504Z"
+generated: "2025-07-18T20:47:01.974087937Z"
