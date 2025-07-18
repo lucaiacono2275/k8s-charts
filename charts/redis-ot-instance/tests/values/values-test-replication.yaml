@@ -1,0 +1,3 @@
+type: replication
+name: redis-replication
+clusterSize: 3

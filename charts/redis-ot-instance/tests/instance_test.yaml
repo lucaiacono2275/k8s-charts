@@ -1,0 +1,63 @@
+suite: instance test suite
+templates:
+  - instance.yaml
+tests:
+  - it: should generate replication
+    values: 
+      - ./values/values-test-replication.yaml
+    asserts:
+      - containsDocument:
+          kind: RedisReplication
+          apiVersion: redis.redis.opstreelabs.in/v1beta2
+          name: redis-replication
+      - equal:
+          path: spec.clusterSize
+          value: 3
+      - isNotEmpty:
+          path: spec.kubernetesConfig.resources
+  - it: should generate standalone
+    values: 
+      - ./values/values-test-standalone.yaml
+    asserts:
+      - containsDocument:
+          kind: Redis
+          apiVersion: redis.redis.opstreelabs.in/v1beta2
+          name: redis-standalone
+  - it: should generate sentinel
+    values: 
+      - ./values/values-test-sentinel.yaml
+    asserts:
+      - containsDocument:
+          kind: RedisSentinel
+          apiVersion: redis.redis.opstreelabs.in/v1beta2
+          name: redis-sentinel
+      - equal:
+          path: spec.clusterSize
+          value: 3
+      - isNotEmpty:
+          path: spec.redisSentinelConfig  
+      - equal:
+          path: spec.redisSentinelConfig.redisReplicationName
+          value: redis-replication
+  - it: should generate cluster
+    values: 
+      - ./values/values-test-cluster.yaml
+    asserts:
+      - containsDocument:
+          kind: RedisCluster
+          apiVersion: redis.redis.opstreelabs.in/v1beta2
+          name: redis-cluster
+      - equal:
+          path: spec.clusterSize
+          value: 3
+      - equal:
+          path: spec.clusterVersion
+          value: v7
+      - equal:
+          path: spec.persistenceEnabled
+          value: true
+
+
+
+
+

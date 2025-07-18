@@ -1,0 +1,34 @@
+## -- type of cluster. could be replication, standalone, sentinel or cluster
+type:
+## -- name of the instance - required
+name:
+kubernetesConfig:
+  ## -- image
+  image: quay.io/opstree/redis:v7.0.15
+  ## -- image pull policy
+  imagePullPolicy: IfNotPresent
+  ## -- resources
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+## -- security context
+securityContext:
+  runAsUser: 1000
+  fsGroup: 1000
+storage:
+  ## -- storage class
+  storageClassName: standard
+  ## -- storage size
+  size: 1Gi
+## -- redis sentinel config (only for type sentinel)
+redisSentinelConfig:
+## -- cluster size (not for standalone)
+clusterSize:
+## -- redis cluster version (only for cluster)
+clusterVersion:
+## -- persistence enabled (only for cluster)
+persistenceEnabled:

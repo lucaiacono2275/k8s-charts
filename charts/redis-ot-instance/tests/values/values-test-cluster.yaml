@@ -1,0 +1,5 @@
+type: cluster
+name: redis-cluster
+clusterSize: 3
+clusterVersion: v7
+persistenceEnabled: true

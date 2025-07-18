@@ -1,0 +1,38 @@
+{{- $allowedTypes := list "replication" "standalone" "cluster" "sentinel" }}
+{{- $type :=  mustHas (required ".Values.type is required" .Values.type) $allowedTypes }}
+apiVersion: redis.redis.opstreelabs.in/v1beta2
+{{- if eq "replication" .Values.type }}
+kind: RedisReplication
+{{- else if eq "standalone" .Values.type }}
+kind: Redis
+{{- else if eq "sentinel" .Values.type }}
+kind: RedisSentinel
+{{- else if eq "cluster" .Values.type }}
+kind: RedisCluster
+{{- end }}
+metadata:
+  name:  {{ required "Values.name is required" .Values.name  }}
+spec:
+{{- if ne "standalone" .Values.type }}
+  clusterSize: {{ required "Values.clusterSize is required" .Values.clusterSize }}
+{{- end }}
+{{- if eq "sentinel" .Values.type }}
+  redisSentinelConfig: {{ toYaml .Values.redisSentinelConfig | nindent 4 }}
+{{- end }}  
+{{- if eq "cluster" .Values.type }}
+  clusterVersion: {{ .Values.clusterVersion }}
+  persistenceEnabled: {{ .Values.persistenceEnabled }}
+{{- end }}
+  securityContext: {{ toYaml .Values.securityContext | nindent 4 }}
+  kubernetesConfig: 
+    image: {{ .Values.kubernetesConfig.image }}
+    imagePullPolicy: {{ .Values.kubernetesConfig.imagePullPolicy }} 
+    resources: {{ toYaml .Values.kubernetesConfig.resources | nindent 6 }}
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: {{ .Values.storage.storageClassName }}
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}

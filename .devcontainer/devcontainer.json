@@ -10,7 +10,8 @@
           "ms-azuretools.vscode-docker",
           "github.vscode-github-actions",
           "redhat.vscode-yaml",
-          "GitHub.vscode-pull-request-github"
+          "GitHub.vscode-pull-request-github",
+          "helm-ls.helm-ls"
         ]
       }
     },
