@@ -117,6 +117,17 @@ jobs:
             echo "Found postgres-operator changes."
           fi
 
+      - name: Check redis operator in the list of changes
+        if: steps.list-changed.outputs.changed == 'true'
+        id: redis-changed
+        run: |
+          echo "Checking for redis-operator changes..."
+          redis=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "redis" || true)
+          if [[ -n "$redis" ]]; then
+            echo "install=true" >> "$GITHUB_OUTPUT"
+            echo "Found redis-operator changes."
+          fi
+
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
         run: ct lint --target-branch ${{ github.event.repository.default_branch }}
@@ -152,6 +163,11 @@ jobs:
         if: steps.postgres-changed.outputs.install == 'true'
         run: |
           kubectl apply -f https://raw.githubusercontent.com/zalando/postgres-operator/master/charts/postgres-operator/crds/postgresqls.yaml
+      
+      - name: Installs redis operator CRDs
+        if: steps.redis-changed.outputs.install == 'true'
+        run: |
+          kubectl apply -f https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/refs/heads/main/charts/redis-operator/crds/crds.yaml
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
