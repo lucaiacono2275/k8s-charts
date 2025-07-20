@@ -15,6 +15,9 @@ kubernetesConfig:
     limits:
       cpu: 100m
       memory: 128Mi
+## -- TLS
+tls:
+  secretName: tls-redis
 ## -- security context
 securityContext:
   runAsUser: 1000

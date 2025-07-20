@@ -23,6 +23,9 @@ tests:
           kind: Redis
           apiVersion: redis.redis.opstreelabs.in/v1beta2
           name: redis-standalone
+      - equal:
+          path: spec.TLS.secret.secretName
+          value: tls-redis
   - it: should generate sentinel
     values: 
       - ./values/values-test-sentinel.yaml
@@ -39,6 +42,9 @@ tests:
       - equal:
           path: spec.redisSentinelConfig.redisReplicationName
           value: redis-replication
+      - equal:
+          path: spec.TLS.secret.secretName
+          value: tls-redis          
   - it: should generate cluster
     values: 
       - ./values/values-test-cluster.yaml
@@ -56,6 +62,9 @@ tests:
       - equal:
           path: spec.persistenceEnabled
           value: true
+      - equal:
+          path: spec.TLS.secret.secretName
+          value: tls-redis          
 
 
 

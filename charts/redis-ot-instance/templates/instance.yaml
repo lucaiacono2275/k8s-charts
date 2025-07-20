@@ -24,6 +24,9 @@ spec:
   persistenceEnabled: {{ .Values.persistenceEnabled }}
 {{- end }}
   securityContext: {{ toYaml .Values.securityContext | nindent 4 }}
+  TLS:
+    secret:
+      secretName: {{ .Values.tls.secretName }}
   kubernetesConfig: 
     image: {{ .Values.kubernetesConfig.image }}
     imagePullPolicy: {{ .Values.kubernetesConfig.imagePullPolicy }} 

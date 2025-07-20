@@ -1,6 +1,6 @@
 apiVersion: v2
 description: Helm chart for deploying redis-ot elements
 name: redis-ot-instance
-version: 0.0.1
+version: 0.0.2
 maintainers:
   - name: lucaiacono2275
