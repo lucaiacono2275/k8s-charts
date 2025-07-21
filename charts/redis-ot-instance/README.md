@@ -1,6 +1,6 @@
 # redis-ot-instance
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square)
 
 Helm chart for deploying redis-ot elements
 
@@ -29,6 +29,7 @@ Helm chart for deploying redis-ot elements
 | securityContext.runAsUser | int | `1000` |  |
 | storage.size | string | `"1Gi"` |  |
 | storage.storageClassName | string | `"standard"` |  |
+| tls.enabled | bool | `false` |  |
 | tls.secretName | string | `"tls-redis"` |  |
 | type | string | `nil` |  |
 
