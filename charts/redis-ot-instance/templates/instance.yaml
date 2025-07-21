@@ -33,6 +33,7 @@ spec:
     image: {{ .Values.kubernetesConfig.image }}
     imagePullPolicy: {{ .Values.kubernetesConfig.imagePullPolicy }} 
     resources: {{ toYaml .Values.kubernetesConfig.resources | nindent 6 }}
+{{- if .Values.storage.enabled }}
   storage:
     volumeClaimTemplate:
       spec:
@@ -41,3 +42,4 @@ spec:
         resources:
           requests:
             storage: {{ .Values.storage.size }}
+{{- end }}
