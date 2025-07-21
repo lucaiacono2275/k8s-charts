@@ -15,6 +15,8 @@ tests:
           value: 3
       - isNotEmpty:
           path: spec.kubernetesConfig.resources
+      - isNull:
+          path: spec.TLS
   - it: should generate standalone
     values: 
       - ./values/values-test-standalone.yaml
@@ -23,9 +25,8 @@ tests:
           kind: Redis
           apiVersion: redis.redis.opstreelabs.in/v1beta2
           name: redis-standalone
-      - equal:
-          path: spec.TLS.secret.secretName
-          value: tls-redis
+      - isNull:
+          path: spec.TLS
   - it: should generate sentinel
     values: 
       - ./values/values-test-sentinel.yaml
@@ -42,9 +43,8 @@ tests:
       - equal:
           path: spec.redisSentinelConfig.redisReplicationName
           value: redis-replication
-      - equal:
-          path: spec.TLS.secret.secretName
-          value: tls-redis          
+      - isNull:
+          path: spec.TLS
   - it: should generate cluster
     values: 
       - ./values/values-test-cluster.yaml
@@ -62,9 +62,18 @@ tests:
       - equal:
           path: spec.persistenceEnabled
           value: true
+      - isNull:
+          path: spec.TLS
+  - it: should generate tls
+    values: 
+      - ./values/values-test-replication.yaml
+    set:
+      tls:
+        enabled: true
+    asserts:
       - equal:
           path: spec.TLS.secret.secretName
-          value: tls-redis          
+          value: tls-redis
 
 
 

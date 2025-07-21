@@ -24,9 +24,11 @@ spec:
   persistenceEnabled: {{ .Values.persistenceEnabled }}
 {{- end }}
   securityContext: {{ toYaml .Values.securityContext | nindent 4 }}
+{{- if .Values.tls.enabled }}
   TLS:
     secret:
       secretName: {{ .Values.tls.secretName }}
+{{- end }}      
   kubernetesConfig: 
     image: {{ .Values.kubernetesConfig.image }}
     imagePullPolicy: {{ .Values.kubernetesConfig.imagePullPolicy }} 
