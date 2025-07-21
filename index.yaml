@@ -660,6 +660,16 @@ entries:
     version: 0.0.1
   redis-ot-instance:
   - apiVersion: v2
+    created: "2025-07-21T20:26:13.901645803Z"
+    description: Helm chart for deploying redis-ot elements
+    digest: a04d6b0f9479cb89eeac8f01c67999359fb63d1636c6741d3df3ccd68a798ea5
+    maintainers:
+    - name: lucaiacono2275
+    name: redis-ot-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/redis-ot-instance-0.0.4/redis-ot-instance-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2025-07-21T20:12:19.78010728Z"
     description: Helm chart for deploying redis-ot elements
     digest: dd71644d3914dcc29c9315e35b2f380f090abf4050f0319ff98df9eb20c6404d
@@ -831,4 +841,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2025-07-21T20:12:19.780262091Z"
+generated: "2025-07-21T20:26:13.901813847Z"
