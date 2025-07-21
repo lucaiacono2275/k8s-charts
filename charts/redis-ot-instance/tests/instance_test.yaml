@@ -17,6 +17,8 @@ tests:
           path: spec.kubernetesConfig.resources
       - isNull:
           path: spec.TLS
+      - isNull:
+          path: spec.storage
   - it: should generate standalone
     values: 
       - ./values/values-test-standalone.yaml
@@ -74,6 +76,16 @@ tests:
       - equal:
           path: spec.TLS.secret.secretName
           value: tls-redis
+  - it: should generate storage
+    values: 
+      - ./values/values-test-replication.yaml
+    set:
+      storage:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.storage.volumeClaimTemplate.spec.storageClassName
+          value: standard
 
 
 

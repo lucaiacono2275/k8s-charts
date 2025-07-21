@@ -23,7 +23,9 @@ tls:
 securityContext:
   runAsUser: 1000
   fsGroup: 1000
+## -- storage
 storage:
+  enabled: false
   ## -- storage class
   storageClassName: standard
   ## -- storage size
