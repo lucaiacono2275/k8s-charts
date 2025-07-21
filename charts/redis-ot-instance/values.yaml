@@ -17,6 +17,7 @@ kubernetesConfig:
       memory: 128Mi
 ## -- TLS
 tls:
+  enabled: false
   secretName: tls-redis
 ## -- security context
 securityContext:
