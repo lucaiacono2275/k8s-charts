@@ -13,6 +13,7 @@ on:
     # Publish semver tags as releases.
     tags: 
       - smbclient-v*.*.*
+      - webfinger-v*.*.*
     paths: 
       - "images/**"
       - ".github/workflows/docker-publish.yaml"
@@ -28,8 +29,6 @@ env:
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
   OWNER_NAME: ${{ github.repository_owner}}
-
-
 
 
 jobs:
