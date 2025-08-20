@@ -1,0 +1,16 @@
+webfinger:
+  subject: admin@ihsws.it
+  issuer: https://zitadel.ihsws.it
+
+image:
+  repository: nginx
+  tag: stable
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  host: zitadel.ihsws.it

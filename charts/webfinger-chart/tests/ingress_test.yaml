@@ -1,0 +1,15 @@
+suite: Test Ingress rendering
+templates:
+  - templates/ingress.yaml
+tests:
+  - it: should create ingress with correct host and path
+    set:
+      ingress:
+        host: zitadel.ihsws.it
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: zitadel.ihsws.it
+      - matchRegex:
+          path: spec.rules[0].http.paths[0].path
+          pattern: /.well-known/webfinger.*

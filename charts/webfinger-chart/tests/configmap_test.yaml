@@ -1,0 +1,16 @@
+suite: Test ConfigMap generation
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: should render webfinger.json with correct subject and issuer
+    set:
+      webfinger:
+        subject: admin@ihsws.it
+        issuer: https://zitadel.ihsws.it
+    asserts:
+      - matchRegex:
+          path: data['webfinger.json']
+          pattern: '"subject": "acct:admin@ihsws.it"'
+      - matchRegex:
+          path: data['webfinger.json']
+          pattern: '"href": "https://zitadel.ihsws.it"'

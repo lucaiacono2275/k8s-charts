@@ -1,0 +1,5 @@
+apiVersion: v2
+name: webfinger-chart
+description: Servizio per generare e servire webfinger.json
+version: 0.1.0
+appVersion: "1.0"
