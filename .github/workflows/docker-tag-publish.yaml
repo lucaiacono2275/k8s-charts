@@ -80,9 +80,9 @@ jobs:
       - name: Get image digest
         id: digest
         run: |
-          DIGEST=$(crane digest ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.name }}:${{ steps.meta.outputs.version }})
+          DIGEST=$(crane digest ${{ steps.image.outputs.name }}:${{ steps.meta.outputs.version }})
           echo "digest=$DIGEST" >> $GITHUB_OUTPUT
-          DIGEST_LATEST=$(crane digest ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.name }}:latest)
+          DIGEST_LATEST=$(crane digest ${{ steps.image.outputs.name }}:latest)
           echo "digest_latest=$DIGEST" >> $GITHUB_OUTPUT
 
       - name: Keyless sign Docker image with Cosign
@@ -90,10 +90,10 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
           COSIGN_YES: "true"
         run: |
-          cosign sign ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.app }}@${{ steps.digest.outputs.digest }}
-          cosign sign ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.app }}@${{ steps.digest.outputs.digest_latest }}
+          cosign sign ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest }}
+          cosign sign ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest_latest }}
 
       - name: Verify signature
         run: |
-          cosign verify ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.app }}@${{ steps.digest.outputs.digest }}
-          cosign verify ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.app }}@${{ steps.digest.outputs.digest_latest }}
+          cosign verify ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest }}
+          cosign verify ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest_latest }}
