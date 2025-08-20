@@ -75,9 +75,7 @@ jobs:
         uses: sigstore/cosign-installer@v3
 
       - name: Install crane
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/google/go-containerregistry/main/cmd/crane/install.sh | sh
-          sudo mv crane /usr/local/bin/
+        uses: imjasonh/setup-crane@v0.1
 
       - name: Get image digest
         id: digest
