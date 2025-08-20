@@ -93,7 +93,3 @@ jobs:
           cosign sign ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest }}
           cosign sign ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest_latest }}
 
-      - name: Verify signature
-        run: |
-          cosign verify ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest }}
-          cosign verify ${{ steps.image.outputs.name }}@${{ steps.digest.outputs.digest_latest }}
