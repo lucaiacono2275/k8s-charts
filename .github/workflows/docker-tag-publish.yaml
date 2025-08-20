@@ -1,0 +1,63 @@
+name: Build, Push and Keyless Sign Docker Image
+
+on:
+  push:
+    tags:
+      - '*-v*.*.*'  # es. app1-v1.2.3
+
+jobs:
+  build-sign:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract metadata from tag
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/placeholder
+          tags: |
+            type=match,pattern=(?P<app>.+)-v(?P<version>\d+\.\d+\.\d+),group=version
+            type=raw,value=latest
+          flavor: |
+            latest=false
+
+      - name: Set image name dynamically
+        id: image
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          APP_NAME=$(echo $TAG | cut -d'-' -f1)
+          echo "name=ghcr.io/${{ github.repository_owner }}/$APP_NAME" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./images/${{ steps.image.outputs.name##*/ }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ steps.image.outputs.name }}:${{ steps.meta.outputs.version }}
+            ${{ steps.image.outputs.name }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Keyless sign Docker image with Cosign
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: |
+          cosign sign ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.name##*/ }}:${{ steps.meta.outputs.version }}
+          cosign sign ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.name##*/ }}:latest
