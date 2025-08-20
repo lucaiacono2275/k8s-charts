@@ -841,4 +841,16 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/tekton-dashboard-0.0.2/tekton-dashboard-0.0.2.tgz
     version: 0.0.2
-generated: "2025-07-21T20:26:13.901813847Z"
+  webfinger-chart:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-08-20T18:58:07.650287215Z"
+    description: Servizio per generare e servire webfinger.json
+    digest: 82a14eadcc9b9c5255d79fa285fafd3bdf88d2bf1b006650d24f13987f9e94f3
+    maintainers:
+    - name: lucaiacono2275
+    name: webfinger-chart
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-08-20T18:58:07.650448677Z"
