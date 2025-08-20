@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webfinger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webfinger
+  template:
+    metadata:
+      labels:
+        app: webfinger
+    spec:
+      containers:
+        - name: webfinger
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: webfinger-volume
+              mountPath: /usr/share/nginx/html/.well-known/webfinger
+              subPath: webfinger.json
+      volumes:
+        - name: webfinger-volume
+          configMap:
+            name: webfinger-config

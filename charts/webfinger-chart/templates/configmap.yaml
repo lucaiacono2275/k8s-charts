@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webfinger-config
+data:
+  webfinger.json: |
+    {{- tpl (.Files.Get "files/webfinger.json.tpl") . | nindent 4 }}

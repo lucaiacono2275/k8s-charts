@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webfinger-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /.well-known/webfinger(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: webfinger
+                port:
+                  number: {{ .Values.service.port }}
