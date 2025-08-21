@@ -844,6 +844,17 @@ entries:
   webfinger-chart:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2025-08-21T12:36:39.336821294Z"
+    description: Servizio per generare e servire webfinger.json
+    digest: 1b3aff12ce1370aed94b1c2b62349bb7d1cf42efb5eba24f68eb35f8ad0ef023
+    maintainers:
+    - name: lucaiacono2275
+    name: webfinger-chart
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.2/webfinger-chart-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2025-08-21T08:56:58.624585807Z"
     description: Servizio per generare e servire webfinger.json
     digest: 6b77fa6e378bde5973ed0b7fa1f9e75de78bc6568924548abc1f18d52027c54f
@@ -864,4 +875,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-21T08:56:58.624768007Z"
+generated: "2025-08-21T12:36:39.336964451Z"
