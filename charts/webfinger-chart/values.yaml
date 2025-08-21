@@ -1,6 +1,6 @@
 webfinger:
-  subject: admin@ihsws.it
-  issuer: https://zitadel.ihsws.it
+  subject: admin@domain.com
+  issuer: https://iam.domain.com
 
 image:
   repository: nginx
@@ -13,4 +13,4 @@ service:
 
 ingress:
   enabled: true
-  host: zitadel.ihsws.it
+  host: iam.domain.com
