@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: webfinger-ingress
   annotations:
+    nginx.ingress.kubernetes.io/mergeable: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
