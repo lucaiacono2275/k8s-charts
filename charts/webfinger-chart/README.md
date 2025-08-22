@@ -1,6 +1,6 @@
 # webfinger-chart
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
 Servizio per generare e servire webfinger.json
 
@@ -15,12 +15,14 @@ Servizio per generare e servire webfinger.json
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"nginx"` |  |
-| image.tag | string | `"stable"` |  |
+| image.repository | string | `"ghcr.io/lucaiacono2275/webfinger"` |  |
+| image.tag | string | `"latest"` |  |
 | ingress.enabled | bool | `true` |  |
-| ingress.host | string | `"iam.domain.com"` |  |
+| ingress.host | string | `"domain.com"` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
+| tls[0].hosts[0] | string | `"domain.com"` |  |
+| tls[0].secretName | string | `"tls-secret"` |  |
 | webfinger.issuer | string | `"https://iam.domain.com"` |  |
 | webfinger.subject | string | `"admin@domain.com"` |  |
 
