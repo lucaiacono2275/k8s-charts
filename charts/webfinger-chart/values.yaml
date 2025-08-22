@@ -3,7 +3,7 @@ webfinger:
   issuer: https://iam.domain.com
 
 image:
-  repository: ghcr.com/lucaiacono2275/webfinger
+  repository: ghcr.io/lucaiacono2275/webfinger
   tag: latest
   pullPolicy: IfNotPresent
 
