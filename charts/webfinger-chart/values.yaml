@@ -15,7 +15,7 @@ ingress:
   enabled: true
   host: domain.com
 
-tls: 
+tls:
   - secretName: tls-secret
     hosts:
       - domain.com
