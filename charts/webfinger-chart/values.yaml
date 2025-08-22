@@ -3,8 +3,8 @@ webfinger:
   issuer: https://iam.domain.com
 
 image:
-  repository: nginx
-  tag: stable
+  repository: ghcr.com/lucaiacono2275/webfinger
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
@@ -13,4 +13,9 @@ service:
 
 ingress:
   enabled: true
-  host: iam.domain.com
+  host: domain.com
+
+tls: 
+  - secretName: tls-secret
+    hosts:
+      - domain.com
