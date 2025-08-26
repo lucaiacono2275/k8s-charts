@@ -496,6 +496,17 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/external-service-ingress-0.0.1/external-service-ingress-0.0.1.tgz
     version: 0.0.1
+  init-vault:
+  - apiVersion: v2
+    created: "2025-08-26T14:16:40.183829724Z"
+    description: A Helm chart that launches a job to init vault.
+    digest: ff9f54ab50248335abb02f1863c38c750bff0686222dc9084ce7ff4e51419568
+    maintainers:
+    - name: lucaiacono2275
+    name: init-vault
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/init-vault-0.0.1/init-vault-0.0.1.tgz
+    version: 0.0.1
   lldap:
   - apiVersion: v2
     appVersion: v0.5.0
@@ -886,4 +897,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-22T09:57:05.680225582Z"
+generated: "2025-08-26T14:16:40.183978664Z"
