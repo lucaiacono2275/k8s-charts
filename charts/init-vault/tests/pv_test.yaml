@@ -1,0 +1,18 @@
+suite: Vault Job Chart Tests
+templates:
+  - pv.yaml
+tests:
+
+  - it: should create a PersistentVolume for NFS when enabled
+    set:
+      nfs.enabled: true
+      nfs.server: nfs.example.local
+      nfs.path: /exports/vault-scripts
+    asserts:
+      - equal:
+          path: spec.nfs.server
+          value: nfs.example.local
+      - equal:
+          path: spec.nfs.path
+          value: /exports/vault-scripts
+

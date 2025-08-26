@@ -1,0 +1,132 @@
+suite: Vault Job Chart Tests
+templates:
+  - job.yaml
+tests:
+  - it: should create a Job with initContainer when waitForVault is enabled
+    set:
+      waitForVault:
+        enabled: true
+        podName: vault-0
+        timeoutSeconds: 300
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 1
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: "kubectl wait --for=condition=Ready pod/vault-0"
+
+  - it: should mount NFS volume when nfs is enabled
+    set:
+      nfs:
+        enabled: true
+        mountPath: /mnt/nfs
+        scriptFile: script.sh
+        server: nfs.example.local
+        path: /exports/vault-scripts
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: nfs-volume
+            persistentVolumeClaim:
+              claimName: vault-config-job-nfs-pvc
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: nfs-volume
+            mountPath: /mnt/nfs
+
+  - it: should mount Vault token secret correctly
+    set:
+      vault:
+        rootTokenSecret:
+          name: vault-unseal-keys
+          key: vault-root
+          mountPath: /vault/creds
+          fileName: vault-root-token
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          any: true
+          content:
+            name: vault-token
+            secret:
+              secretName: vault-unseal-keys
+              items:
+                - key: vault-root
+                  path: vault-root-token
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          any: true
+          content:
+            name: vault-token
+            mountPath: /vault/creds
+
+  - it: should use the correct ServiceAccount
+    set:
+      jobName: vault-config-job
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: vault-config-job-sa
+
+  - it: should fallback to ConfigMap volume when NFS is disabled
+    set:
+      nfs.enabled: false
+      configMap.name: vault-config-job-cm
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: script-volume
+            configMap:
+              name: vault-config-job-cm
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: script-volume
+            mountPath: /scripts
+
+  - it: should set restartPolicy to Never
+    asserts:
+      - equal:
+          path: spec.template.spec.restartPolicy
+          value: Never
+
+  - it: should set backoffLimit to 1
+    asserts:
+      - equal:
+          path: spec.backoffLimit
+          value: 1
+
+  - it: should name the Job correctly
+    set:
+      jobName: vault-config-job
+    asserts:
+      - equal:
+          path: metadata.name
+          value: vault-config-job          
+
+  - it: should have exactly one initContainer
+    set:
+      waitForVault.enabled: true
+      waitForVault.podName: vault-0
+      waitForVault.timeoutSeconds: 300
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 1
+
+  - it: should have correct initContainer name and image
+    set:
+      waitForVault.enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-for-vault
+      - equal:
+          path: spec.template.spec.initContainers[0].image
+          value: bitnami/kubectl:latest
+
+
