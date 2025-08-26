@@ -1,0 +1,33 @@
+jobName: vault-config-job
+namespace: vault
+
+waitForVault:
+  enabled: true
+  podName: vault-0
+  timeoutSeconds: 300
+
+vault:
+  address: "http://vault-0.vault.svc.cluster.local:8200"
+  rootTokenSecret:
+    name: vault-unseal-keys
+    key: vault-root
+    mountPath: /vault/creds
+    fileName: vault-root-token
+
+script: |
+  export VAULT_ADDR="{{ .Values.vault.address }}"
+  VAULT_ROOT_TOKEN=$(cat {{ .Values.vault.rootTokenSecret.mountPath }}/{{ .Values.vault.rootTokenSecret.fileName }})
+  vault login $VAULT_ROOT_TOKEN
+  vault secrets enable -path=kv kv
+  vault kv put kv/mysecret password="supersecret"
+
+image:
+  repository: hashicorp/vault
+  tag: latest
+
+nfs:
+  enabled: true
+  server: nfs.example.local
+  path: /exports/vault-scripts
+  mountPath: /mnt/nfs
+  scriptFile: script.sh

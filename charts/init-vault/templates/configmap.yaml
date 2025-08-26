@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.jobName }}-cm
+  namespace: {{ .Values.namespace }}
+data:
+  script.sh: |-
+{{ .Values.script | indent 4 }}

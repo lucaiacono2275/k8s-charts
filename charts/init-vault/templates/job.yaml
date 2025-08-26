@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.jobName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ .Values.jobName }}-sa
+      initContainers:
+      {{- if .Values.waitForVault.enabled }}
+      - name: wait-for-vault
+        image: bitnami/kubectl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            echo "Aspetto che {{ .Values.waitForVault.podName }} sia Ready..."
+            if kubectl wait --for=condition=Ready pod/{{ .Values.waitForVault.podName }} --namespace={{ .Values.namespace }} --timeout={{ .Values.waitForVault.timeoutSeconds }}s; then
+              echo "Vault è pronto!"
+            else
+              echo "❌ Timeout: Vault non è diventato Ready entro {{ .Values.waitForVault.timeoutSeconds }}s"
+              exit 1
+            fi
+      {{- end }}
+      containers:
+      - name: vault-config
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["/bin/sh", "/scripts/script.sh"]
+        volumeMounts:
+        - name: vault-token
+          mountPath: {{ .Values.vault.rootTokenSecret.mountPath }}
+          readOnly: true
+        {{- if .Values.nfs.enabled }}
+        - name: nfs-volume
+          mountPath: {{ .Values.nfs.mountPath }}
+        {{- else }}
+        - name: script-volume
+          mountPath: /scripts
+        {{- end }}
+
+      volumes:
+      - name: vault-token
+        secret:
+          secretName: {{ .Values.vault.rootTokenSecret.name }}
+          items:
+          - key: {{ .Values.vault.rootTokenSecret.key }}
+            path: {{ .Values.vault.rootTokenSecret.fileName }}
+      {{- if .Values.nfs.enabled }}
+      - name: nfs-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.jobName }}-nfs-pvc
+      {{- else }}
+      - name: script-volume
+        configMap:
+          name: {{ .Values.jobName }}-cm
+      {{- end }}
+      restartPolicy: Never
+  backoffLimit: 1  
