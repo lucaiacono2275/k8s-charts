@@ -15,7 +15,7 @@ vault:
     fileName: vault-root-token
 
 scriptFile: "/scripts/script.sh"
-scriptDir: "/scripts" 
+scriptDir: "/scripts"
 script: |
   export VAULT_ADDR="{{ .Values.vault.address }}"
   VAULT_ROOT_TOKEN=$(cat {{ .Values.vault.rootTokenSecret.mountPath }}/{{ .Values.vault.rootTokenSecret.fileName }})
