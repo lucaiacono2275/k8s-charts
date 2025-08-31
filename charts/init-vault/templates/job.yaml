@@ -26,17 +26,17 @@ spec:
       containers:
       - name: vault-config
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ["/bin/sh", "{{ .Values.scriptFile }}"]
+        command: ["/bin/sh", "cd /{{ .Values.scriptDir }}; ./{{ .Values.scriptFile }}"]
         volumeMounts:
         - name: vault-token
           mountPath: {{ .Values.vault.rootTokenSecret.mountPath }}
           readOnly: true
         {{- if .Values.nfs.enabled }}
         - name: nfs-volume
-          mountPath: {{ .Values.nfs.mountPath }}
+          mountPath: {{ .Values.scriptDir }}
         {{- else }}
         - name: script-volume
-          mountPath: /scripts
+          mountPath: {{ .Values.scriptDir }}
         {{- end }}
 
       volumes:

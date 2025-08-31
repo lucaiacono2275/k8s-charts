@@ -18,10 +18,10 @@ tests:
 
   - it: should mount NFS volume when nfs is enabled
     set:
+      scriptDir: "/myscript"
+      scriptFile: "myscript.sh"
       nfs:
         enabled: true
-        mountPath: /mnt/nfs
-        scriptFile: script.sh
         server: nfs.example.local
         path: /exports/vault-scripts
     asserts:
@@ -35,7 +35,7 @@ tests:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: nfs-volume
-            mountPath: /mnt/nfs
+            mountPath: /myscript
 
   - it: should mount Vault token secret correctly
     set:
@@ -74,6 +74,7 @@ tests:
   - it: should fallback to ConfigMap volume when NFS is disabled
     set:
       nfs.enabled: false
+      scriptDir: "/myscripts"
       configMap.name: vault-config-job-cm
     asserts:
       - contains:
@@ -86,7 +87,7 @@ tests:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: script-volume
-            mountPath: /scripts
+            mountPath: /myscripts
 
   - it: should set restartPolicy to Never
     asserts:
