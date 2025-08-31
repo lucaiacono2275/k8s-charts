@@ -1,6 +1,6 @@
 # init-vault
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square)
 
 A Helm chart that launches a job to init vault.
 
@@ -24,6 +24,7 @@ A Helm chart that launches a job to init vault.
 | nfs.scriptFile | string | `"script.sh"` |  |
 | nfs.server | string | `"nfs.example.local"` |  |
 | script | string | `"export VAULT_ADDR=\"{{ .Values.vault.address }}\"\nVAULT_ROOT_TOKEN=$(cat {{ .Values.vault.rootTokenSecret.mountPath }}/{{ .Values.vault.rootTokenSecret.fileName }})\nvault login $VAULT_ROOT_TOKEN\nvault secrets enable -path=kv kv\nvault kv put kv/mysecret password=\"supersecret\"\n"` |  |
+| scriptFile | string | `"/scripts/script.sh"` |  |
 | vault.address | string | `"http://vault-0.vault.svc.cluster.local:8200"` |  |
 | vault.rootTokenSecret.fileName | string | `"vault-root-token"` |  |
 | vault.rootTokenSecret.key | string | `"vault-root"` |  |
