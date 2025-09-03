@@ -26,7 +26,10 @@ spec:
       containers:
       - name: vault-config
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ["/bin/sh", "cd /{{ .Values.scriptDir }}; ./{{ .Values.scriptFile }}"]
+        command: 
+          - "/bin/sh"
+          - "-c"
+          - "cd {{ .Values.scriptDir }}; chmod +x {{ .Values.scriptFile }}; ./{{ .Values.scriptFile }}"
         volumeMounts:
         - name: vault-token
           mountPath: {{ .Values.vault.rootTokenSecret.mountPath }}
@@ -38,7 +41,6 @@ spec:
         - name: script-volume
           mountPath: {{ .Values.scriptDir }}
         {{- end }}
-
       volumes:
       - name: vault-token
         secret:

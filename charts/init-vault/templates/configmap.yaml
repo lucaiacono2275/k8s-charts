@@ -4,5 +4,5 @@ metadata:
   name: {{ .Values.jobName }}-cm
   namespace: {{ .Values.namespace }}
 data:
-  script.sh: |-
+  {{ .Values.scriptFile }}: |-
 {{ .Values.script | indent 4 }}
