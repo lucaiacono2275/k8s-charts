@@ -29,7 +29,7 @@ spec:
         command: 
           - "/bin/sh"
           - "-c"
-          - "cd {{ .Values.scriptDir }}; chmod +x {{ .Values.scriptFile }}; ./{{ .Values.scriptFile }}"
+          - "cd {{ .Values.scriptDir }}; ./{{ .Values.scriptFile }}"
         volumeMounts:
         - name: vault-token
           mountPath: {{ .Values.vault.rootTokenSecret.mountPath }}
@@ -37,9 +37,11 @@ spec:
         {{- if .Values.nfs.enabled }}
         - name: nfs-volume
           mountPath: {{ .Values.scriptDir }}
+          defaultMode: 0777
         {{- else }}
         - name: script-volume
           mountPath: {{ .Values.scriptDir }}
+          defaultMode: 0777
         {{- end }}
       volumes:
       - name: vault-token
