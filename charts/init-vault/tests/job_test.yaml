@@ -8,6 +8,8 @@ tests:
         enabled: true
         podName: vault-0
         timeoutSeconds: 300
+      waitForSecret:
+        enabled: false
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
@@ -15,6 +17,22 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
           pattern: "kubectl wait --for=condition=Ready pod/vault-0"
+
+  - it: should create a Job with initContainer when waitForSecret is enabled
+    set:
+      waitForSecret:
+        enabled: true
+        timeoutSeconds: 300
+      waitForVault:
+        enabled: false
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 1
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: "kubectl wait --for=create secret/vault-unseal-keys"
+
 
   - it: should mount NFS volume when nfs is enabled
     set:
@@ -116,10 +134,24 @@ tests:
       waitForVault.enabled: true
       waitForVault.podName: vault-0
       waitForVault.timeoutSeconds: 300
+      waitForSecret.enabled: false
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
           count: 1
+
+  - it: should have exactly 2 initContainer
+    set:
+      waitForVault.enabled: true
+      waitForVault.podName: vault-0
+      waitForVault.timeoutSeconds: 300
+      waitForSecret.enabled: true
+      waitForSecret.timeoutSeconds: 300
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 2
+
 
   - it: should have correct initContainer name and image
     set:
