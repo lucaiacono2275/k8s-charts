@@ -1,6 +1,6 @@
 # init-vault
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square)
+![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square)
 
 A Helm chart that launches a job to init vault.
 
@@ -29,6 +29,7 @@ A Helm chart that launches a job to init vault.
 | vault.rootTokenSecret.key | string | `"vault-root"` |  |
 | vault.rootTokenSecret.mountPath | string | `"/vault/creds"` |  |
 | vault.rootTokenSecret.name | string | `"vault-unseal-keys"` |  |
+| vault.tlsSecret.name | string | `"vault-tls"` |  |
 | waitForSecret.enabled | bool | `true` |  |
 | waitForSecret.timeoutSeconds | int | `300` |  |
 | waitForVault.enabled | bool | `true` |  |
