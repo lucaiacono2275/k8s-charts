@@ -6,6 +6,10 @@ waitForVault:
   podName: vault-0
   timeoutSeconds: 300
 
+waitForSecret:
+  enabled: true
+  timeoutSeconds: 300
+
 vault:
   address: "http://vault-0.vault.svc.cluster.local:8200"
   rootTokenSecret:

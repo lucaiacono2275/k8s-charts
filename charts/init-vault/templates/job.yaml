@@ -23,6 +23,21 @@ spec:
               exit 1
             fi
       {{- end }}
+      {{- if .Values.waitForSecret.enabled }}
+      - name: wait-for-secret
+        image: bitnami/kubectl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            echo "Aspetto che {{ .Values.vault.rootTokenSecret.name }} sia Created..."
+            if kubectl wait --for=create secret/{{ .Values.vault.rootTokenSecret.name }} --namespace={{ .Values.namespace }} --timeout={{ .Values.waitForSecret.timeoutSeconds }}s; then
+              echo "Secret è pronto!"
+            else
+              echo "❌ Timeout: Secret non è diventato Ready entro {{ .Values.waitForSecret.timeoutSeconds }}s"
+              exit 1
+            fi
+      {{- end }}
       containers:
       - name: vault-config
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
