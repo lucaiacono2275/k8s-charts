@@ -36,6 +36,7 @@ tests:
           content:
             name: nfs-volume
             mountPath: /myscript
+            defaultMode: 0777
 
   - it: should mount Vault token secret correctly
     set:
@@ -88,6 +89,7 @@ tests:
           content:
             name: script-volume
             mountPath: /myscripts
+            defaultMode: 0777
 
   - it: should set restartPolicy to Never
     asserts:
