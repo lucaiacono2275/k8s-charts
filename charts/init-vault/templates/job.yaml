@@ -45,9 +45,19 @@ spec:
           - "/bin/sh"
           - "{{ .Values.scriptFile }}"
         workingDir: "{{ .Values.scriptDir }}"
+        env:
+        - name: VAULT_ADDR
+          value: {{ .Values.vault.address | quote }}
+        - name: VAULT_CACERT
+          value: /vault/tls/ca.crt
+        - name: VAULT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.vault.rootTokenSecret.name }}
+              key: {{ .Values.vault.rootTokenSecret.key }}
         volumeMounts:
-        - name: vault-token
-          mountPath: {{ .Values.vault.rootTokenSecret.mountPath }}
+        - name: vault-certs
+          mountPath: /vault/tls
           readOnly: true
         {{- if .Values.nfs.enabled }}
         - name: nfs-volume
@@ -59,6 +69,10 @@ spec:
           defaultMode: 0777
         {{- end }}
       volumes:
+      - name: vault-tls
+        secret:
+          defaultMode: 420
+        secretName: {{ .Values.vault.tlsSecret.name }}
       - name: vault-token
         secret:
           secretName: {{ .Values.vault.rootTokenSecret.name }}
