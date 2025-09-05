@@ -28,8 +28,8 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: 
           - "/bin/sh"
-          - "-c"
-          - "cd {{ .Values.scriptDir }}; ./{{ .Values.scriptFile }}"
+          - "{{ .Values.scriptFile }}"
+        workingDir: "{{ .Values.scriptDir }}"
         volumeMounts:
         - name: vault-token
           mountPath: {{ .Values.vault.rootTokenSecret.mountPath }}
