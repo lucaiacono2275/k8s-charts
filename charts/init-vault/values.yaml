@@ -12,6 +12,8 @@ waitForSecret:
 
 vault:
   address: "http://vault-0.vault.svc.cluster.local:8200"
+  tlsSecret:
+    name: vault-tls
   rootTokenSecret:
     name: vault-unseal-keys
     key: vault-root

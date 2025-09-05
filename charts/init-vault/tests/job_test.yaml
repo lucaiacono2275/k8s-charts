@@ -56,31 +56,21 @@ tests:
             mountPath: /myscript
             defaultMode: 0777
 
-  - it: should mount Vault token secret correctly
+
+  - it: should pass VAULT_TOKEN as env var from secret
     set:
-      vault:
-        rootTokenSecret:
-          name: vault-unseal-keys
-          key: vault-root
-          mountPath: /vault/creds
-          fileName: vault-root-token
+      vault.rootTokenSecret.name: vault-unseal-keys
+      vault.rootTokenSecret.key: vault-root
     asserts:
       - contains:
-          path: spec.template.spec.volumes
-          any: true
+          path: spec.template.spec.containers[0].env
           content:
-            name: vault-token
-            secret:
-              secretName: vault-unseal-keys
-              items:
-                - key: vault-root
-                  path: vault-root-token
-      - contains:
-          path: spec.template.spec.containers[0].volumeMounts
-          any: true
-          content:
-            name: vault-token
-            mountPath: /vault/creds
+            name: VAULT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: vault-unseal-keys
+                key: vault-root
+
 
   - it: should use the correct ServiceAccount
     set:
