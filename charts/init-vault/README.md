@@ -1,6 +1,6 @@
 # init-vault
 
-![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square)
+![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square)
 
 A Helm chart that launches a job to init vault.
 
@@ -21,6 +21,8 @@ A Helm chart that launches a job to init vault.
 | nfs.enabled | bool | `true` |  |
 | nfs.path | string | `"/exports/vault-scripts"` |  |
 | nfs.server | string | `"nfs.example.local"` |  |
+| prepareScript.repository | string | `"busybox"` |  |
+| prepareScript.tag | string | `"latest"` |  |
 | script | string | `"export VAULT_ADDR=\"{{ .Values.vault.address }}\"\nVAULT_ROOT_TOKEN=$(cat {{ .Values.vault.rootTokenSecret.mountPath }}/{{ .Values.vault.rootTokenSecret.fileName }})\nvault login $VAULT_ROOT_TOKEN\nvault secrets enable -path=kv kv\nvault kv put kv/mysecret password=\"supersecret\"\n"` |  |
 | scriptDir | string | `"/scripts"` |  |
 | scriptFile | string | `"script.sh"` |  |
@@ -31,9 +33,13 @@ A Helm chart that launches a job to init vault.
 | vault.rootTokenSecret.name | string | `"vault-unseal-keys"` |  |
 | vault.tlsSecret.name | string | `"vault-tls"` |  |
 | waitForSecret.enabled | bool | `true` |  |
+| waitForSecret.repository | string | `"bitnami/kubectl"` |  |
+| waitForSecret.tag | string | `"latest"` |  |
 | waitForSecret.timeoutSeconds | int | `300` |  |
 | waitForVault.enabled | bool | `true` |  |
 | waitForVault.podName | string | `"vault-0"` |  |
+| waitForVault.repository | string | `"bitnami/kubectl"` |  |
+| waitForVault.tag | string | `"latest"` |  |
 | waitForVault.timeoutSeconds | int | `300` |  |
 
 ----------------------------------------------
