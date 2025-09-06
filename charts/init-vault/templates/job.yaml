@@ -72,7 +72,7 @@ spec:
       - name: vault-tls
         secret:
           defaultMode: 420
-        secretName: {{ .Values.vault.tlsSecret.name }}
+          secretName: {{ .Values.vault.tlsSecret.name }}
       - name: vault-token
         secret:
           secretName: {{ .Values.vault.rootTokenSecret.name }}
