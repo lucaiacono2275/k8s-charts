@@ -10,7 +10,7 @@ spec:
       initContainers:
       {{- if .Values.waitForVault.enabled }}
       - name: wait-for-vault
-        image: bitnami/kubectl:latest
+        image: {{ .Values.waitForVault.repository }}:{{ .Values.waitForVault.tag }}
         command:
           - /bin/sh
           - -c
@@ -25,7 +25,7 @@ spec:
       {{- end }}
       {{- if .Values.waitForSecret.enabled }}
       - name: wait-for-secret
-        image: bitnami/kubectl:latest
+        image: {{ .Values.waitForSecret.repository }}:{{ .Values.waitForSecret.tag }}
         command:
           - /bin/sh
           - -c
@@ -38,13 +38,31 @@ spec:
               exit 1
             fi
       {{- end }}
+      - name: prepare-script
+        image: {{ .Values.prepareScript.repository }}:{{ .Values.prepareScript.tag }}
+        command:
+          - /bin/sh
+          - -c
+          - |
+            cp {{ .Values.scriptDir }}/* /workdir
+            chmod +x /workdir/{{ .Values.scriptFile }}
+        volumeMounts:
+        {{- if .Values.nfs.enabled }}
+        - name: nfs-volume
+          mountPath: {{ .Values.scriptDir }}
+        {{- else }}
+        - name: script-volume
+          mountPath: {{ .Values.scriptDir }}
+        {{- end }}
+        - name: workdir-volume
+          mountPath: /workdir
       containers:
       - name: vault-config
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: 
           - "/bin/sh"
           - "{{ .Values.scriptFile }}"
-        workingDir: "{{ .Values.scriptDir }}"
+        workingDir: /workdir
         env:
         - name: VAULT_ADDR
           value: {{ .Values.vault.address | quote }}
@@ -59,20 +77,15 @@ spec:
         - name: vault-tls
           mountPath: /vault/tls
           readOnly: true
-        {{- if .Values.nfs.enabled }}
-        - name: nfs-volume
-          mountPath: {{ .Values.scriptDir }}
-          defaultMode: 0777
-        {{- else }}
-        - name: script-volume
-          mountPath: {{ .Values.scriptDir }}
-          defaultMode: 0777
-        {{- end }}
+        - name: workdir-volume
+          mountPath: /workdir
       volumes:
       - name: vault-tls
         secret:
           defaultMode: 420
           secretName: {{ .Values.vault.tlsSecret.name }}
+      - name: workdir-volume
+        emptyDir: {}
       - name: vault-token
         secret:
           secretName: {{ .Values.vault.rootTokenSecret.name }}

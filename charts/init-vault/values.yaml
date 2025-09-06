@@ -3,12 +3,21 @@ namespace: vault
 
 waitForVault:
   enabled: true
+  repository: bitnami/kubectl
+  tag: latest
   podName: vault-0
   timeoutSeconds: 300
 
 waitForSecret:
   enabled: true
+  repository: bitnami/kubectl
+  tag: latest
   timeoutSeconds: 300
+
+prepareScript:
+  repository: busybox
+  tag: latest
+
 
 vault:
   address: "http://vault-0.vault.svc.cluster.local:8200"

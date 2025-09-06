@@ -13,7 +13,7 @@ tests:
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
-          count: 1
+          count: 2
       - matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
           pattern: "kubectl wait --for=condition=Ready pod/vault-0"
@@ -28,7 +28,7 @@ tests:
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
-          count: 1
+          count: 2
       - matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
           pattern: "kubectl wait --for=create secret/vault-unseal-keys"
@@ -36,6 +36,8 @@ tests:
 
   - it: should mount NFS volume when nfs is enabled
     set:
+      waitForSecret.enabled: false
+      waitForVault.enabled: false
       scriptDir: "/myscript"
       scriptFile: "myscript.sh"
       nfs:
@@ -50,11 +52,11 @@ tests:
             persistentVolumeClaim:
               claimName: vault-config-job-nfs-pvc
       - contains:
-          path: spec.template.spec.containers[0].volumeMounts
+          path: spec.template.spec.initContainers[0].volumeMounts
+          any: true
           content:
             name: nfs-volume
             mountPath: /myscript
-            defaultMode: 0777
 
 
   - it: should pass VAULT_TOKEN as env var from secret
@@ -82,6 +84,8 @@ tests:
 
   - it: should fallback to ConfigMap volume when NFS is disabled
     set:
+      waitForSecret.enabled: false
+      waitForVault.enabled: false    
       nfs.enabled: false
       scriptDir: "/myscripts"
       configMap.name: vault-config-job-cm
@@ -93,11 +97,11 @@ tests:
             configMap:
               name: vault-config-job-cm
       - contains:
-          path: spec.template.spec.containers[0].volumeMounts
+          path: spec.template.spec.initContainers[0].volumeMounts
+          any: true
           content:
             name: script-volume
             mountPath: /myscripts
-            defaultMode: 0777
 
   - it: should set restartPolicy to Never
     asserts:
@@ -119,7 +123,17 @@ tests:
           path: metadata.name
           value: vault-config-job          
 
-  - it: should have exactly one initContainer
+  - it: should have exactly 1 initContainer
+    set:
+      waitForVault.enabled: false
+      waitForSecret.enabled: false
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 1
+
+
+  - it: should have exactly due initContainer
     set:
       waitForVault.enabled: true
       waitForVault.podName: vault-0
@@ -128,9 +142,19 @@ tests:
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
-          count: 1
+          count: 2
 
-  - it: should have exactly 2 initContainer
+  - it: should have exactly due initContainer
+    set:
+      waitForVault.enabled: false
+      waitForSecret.enabled: true
+      waitForSecret.timeoutSeconds: 300
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 2
+
+  - it: should have exactly 3 initContainer
     set:
       waitForVault.enabled: true
       waitForVault.podName: vault-0
@@ -140,7 +164,7 @@ tests:
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
-          count: 2
+          count: 3
 
 
   - it: should have correct initContainer name and image
