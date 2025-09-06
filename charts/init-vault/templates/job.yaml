@@ -56,7 +56,7 @@ spec:
               name: {{ .Values.vault.rootTokenSecret.name }}
               key: {{ .Values.vault.rootTokenSecret.key }}
         volumeMounts:
-        - name: vault-certs
+        - name: vault-tls
           mountPath: /vault/tls
           readOnly: true
         {{- if .Values.nfs.enabled }}
