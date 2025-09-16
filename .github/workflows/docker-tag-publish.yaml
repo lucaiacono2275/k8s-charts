@@ -44,8 +44,8 @@ jobs:
         id: image
         run: |
           TAG=${GITHUB_REF#refs/tags/}
-          APP_NAME=$(echo $TAG | cut -d'-' -f1)
-          VERSION=$(echo $TAG | cut -d'-' -f2 | sed 's/^v//')
+          VERSION="${TAG##*-}"
+          APP_NAME="${TAG%-*}"
           echo "name=ghcr.io/${{ github.repository_owner }}/$APP_NAME" >> $GITHUB_OUTPUT
           echo "app=$APP_NAME" >> $GITHUB_OUTPUT
           echo "version=$VERSION" >> $GITHUB_OUTPUT          
