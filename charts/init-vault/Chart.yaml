@@ -1,6 +1,6 @@
 apiVersion: v2
 name: init-vault
-version: 0.0.13
+version: 0.0.14
 description: A Helm chart that launches a job to init vault.
 
 maintainers:
