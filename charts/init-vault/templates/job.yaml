@@ -44,7 +44,7 @@ spec:
           - /bin/sh
           - -c
           - |
-            cp {{ .Values.scriptDir }}/* /workdir
+            cp {{ .Values.scriptDir }}/*.sh /workdir
             chmod +x /workdir/{{ .Values.scriptFile }}
         volumeMounts:
         {{- if .Values.nfs.enabled }}
@@ -56,6 +56,11 @@ spec:
         {{- end }}
         - name: workdir-volume
           mountPath: /workdir
+        {{- if .Values.extraFiles.enabled }}
+        - name: extra-files
+          mountPath: {{ .Values.extraFiles.mountPath | quote }}
+          readOnly: {{ .Values.extraFiles.readOnly | default true }}
+        {{- end }}
       containers:
       - name: vault-config
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -79,6 +84,11 @@ spec:
           readOnly: true
         - name: workdir-volume
           mountPath: /workdir
+        {{- if .Values.extraFiles.enabled }}
+        - name: extra-files
+          mountPath: {{ .Values.extraFiles.mountPath | quote }}
+          readOnly: {{ .Values.extraFiles.readOnly | default true }}
+        {{- end }}
       volumes:
       - name: vault-tls
         secret:
@@ -100,6 +110,19 @@ spec:
       - name: script-volume
         configMap:
           name: {{ .Values.jobName }}-cm
+      {{- end }}
+      {{- if .Values.extraFiles.enabled }}
+      - name: extra-files
+        {{- if .Values.extraFiles.configMap }}
+        configMap:
+          name: {{ .Values.extraFiles.configMap }}
+        {{- else if .Values.extraFiles.secret }}
+        secret:
+          secretName: {{ .Values.extraFiles.secret }}
+        {{- else if .Values.extraFiles.existingVolume }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.extraFiles.existingVolume }}
+        {{- end }}
       {{- end }}
       restartPolicy: Never
   backoffLimit: 1  

@@ -1,0 +1,30 @@
+# Test: extraFiles volume is mounted when enabled and configMap is set
+suite: extraFiles volume
+
+templates:
+  - templates/job.yaml
+
+tests:
+  - it: should mount extraFiles configMap as volume
+    set:
+      extraFiles.enabled: true
+      extraFiles.configMap: test-files-cm
+      extraFiles.mountPath: /extra-files
+      extraFiles.readOnly: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Job
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-files
+            configMap:
+              name: test-files-cm
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: extra-files
+            mountPath: /extra-files
+            readOnly: true
