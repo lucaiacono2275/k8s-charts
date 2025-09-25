@@ -1,6 +1,6 @@
 # init-vault
 
-![Version: 0.0.13](https://img.shields.io/badge/Version-0.0.13-informational?style=flat-square)
+![Version: 0.0.14](https://img.shields.io/badge/Version-0.0.14-informational?style=flat-square)
 
 A Helm chart that launches a job to init vault.
 
@@ -14,6 +14,9 @@ A Helm chart that launches a job to init vault.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| customExtraFilesSecret.enabled | bool | `false` |  |
+| customExtraFilesSecret.name | string | `"custom-extra-files-secret"` |  |
+| customExtraFilesSecret.stringData | object | `{}` |  |
 | extraFiles.configMap | string | `""` | Name of ConfigMap containing files (optional) |
 | extraFiles.enabled | bool | `false` |  |
 | extraFiles.existingVolume | string | `""` | Name of an existing volume to mount (optional) |
@@ -24,9 +27,11 @@ A Helm chart that launches a job to init vault.
 | image.tag | string | `"latest"` |  |
 | jobName | string | `"vault-config-job"` |  |
 | namespace | string | `"vault"` |  |
+| nfs.accessModes[0] | string | `"ReadOnlyMany"` |  |
 | nfs.enabled | bool | `true` |  |
 | nfs.path | string | `"/exports/vault-scripts"` |  |
 | nfs.server | string | `"nfs.example.local"` |  |
+| nfs.storage | string | `"1Gi"` |  |
 | prepareScript.repository | string | `"busybox"` |  |
 | prepareScript.tag | string | `"latest"` |  |
 | script | string | `"export VAULT_ADDR=\"{{ .Values.vault.address }}\"\nVAULT_ROOT_TOKEN=$(cat {{ .Values.vault.rootTokenSecret.mountPath }}/{{ .Values.vault.rootTokenSecret.fileName }})\nvault login $VAULT_ROOT_TOKEN\nvault secrets enable -path=kv kv\nvault kv put kv/mysecret password=\"supersecret\"\n"` |  |
