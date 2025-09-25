@@ -61,3 +61,11 @@ nfs:
   enabled: true
   server: nfs.example.local
   path: /exports/vault-scripts
+  storage: 1Gi
+  accessModes:
+    - ReadOnlyMany
+
+customExtraFilesSecret:
+  enabled: false
+  name: custom-extra-files-secret
+  stringData: {}
