@@ -509,6 +509,16 @@ entries:
     version: 0.0.1
   init-vault:
   - apiVersion: v2
+    created: "2025-09-25T19:28:38.968199814Z"
+    description: A Helm chart that launches a job to init vault.
+    digest: 72dceaf4c955701137504c420f3301a8d5bfe2cc7de33707ecf1b5e5ee13939c
+    maintainers:
+    - name: lucaiacono2275
+    name: init-vault
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/init-vault-0.0.14/init-vault-0.0.14.tgz
+    version: 0.0.14
+  - apiVersion: v2
     created: "2025-09-25T18:52:56.702477603Z"
     description: A Helm chart that launches a job to init vault.
     digest: 5d0fb9fad76e4810eb7d1100e16da6a42f610d7fd4e1f25f7bd6406c3aa1960c
@@ -1028,4 +1038,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-25T18:52:56.70271149Z"
+generated: "2025-09-25T19:28:38.968446648Z"
