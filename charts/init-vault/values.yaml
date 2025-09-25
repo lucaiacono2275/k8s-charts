@@ -43,10 +43,14 @@ script: |
 extraFiles:
   enabled: false
   # One of configMap, secret, or existingVolume must be set if enabled is true
-  configMap: ""  # Name of ConfigMap containing files (optional)
-  secret: ""     # Name of Secret containing files (optional)
-  existingVolume: "" # Name of an existing volume to mount (optional)
-  mountPath: "/extra-files" # Path to mount the extra files
+  # -- Name of ConfigMap containing files (optional)
+  configMap: ""
+  # -- Name of Secret containing files (optional)
+  secret: ""
+  # -- Name of an existing volume to mount (optional)
+  existingVolume: ""
+  # -- Path to mount the extra files
+  mountPath: "/extra-files"
   readOnly: true
 
 image:
