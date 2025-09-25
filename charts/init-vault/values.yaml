@@ -38,6 +38,21 @@ script: |
   vault secrets enable -path=kv kv
   vault kv put kv/mysecret password="supersecret"
 
+# Additional files volume configuration
+# Set enabled: true and specify either configMap, secret, or existing volume to mount files into the job
+extraFiles:
+  enabled: false
+  # One of configMap, secret, or existingVolume must be set if enabled is true
+  # -- Name of ConfigMap containing files (optional)
+  configMap: ""
+  # -- Name of Secret containing files (optional)
+  secret: ""
+  # -- Name of an existing volume to mount (optional)
+  existingVolume: ""
+  # -- Path to mount the extra files
+  mountPath: "/extra-files"
+  readOnly: true
+
 image:
   repository: hashicorp/vault
   tag: latest
