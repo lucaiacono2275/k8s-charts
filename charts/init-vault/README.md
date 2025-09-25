@@ -1,6 +1,6 @@
 # init-vault
 
-![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square)
+![Version: 0.0.13](https://img.shields.io/badge/Version-0.0.13-informational?style=flat-square)
 
 A Helm chart that launches a job to init vault.
 
@@ -14,6 +14,12 @@ A Helm chart that launches a job to init vault.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| extraFiles.configMap | string | `""` | Name of ConfigMap containing files (optional) |
+| extraFiles.enabled | bool | `false` |  |
+| extraFiles.existingVolume | string | `""` | Name of an existing volume to mount (optional) |
+| extraFiles.mountPath | string | `"/extra-files"` | Path to mount the extra files |
+| extraFiles.readOnly | bool | `true` |  |
+| extraFiles.secret | string | `""` | Name of Secret containing files (optional) |
 | image.repository | string | `"hashicorp/vault"` |  |
 | image.tag | string | `"latest"` |  |
 | jobName | string | `"vault-config-job"` |  |
