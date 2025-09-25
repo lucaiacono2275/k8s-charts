@@ -1,0 +1,12 @@
+{{- if and .Values.customExtraFilesConfigMap (hasKey .Values.customExtraFilesConfigMap "enabled") (eq .Values.customExtraFilesConfigMap.enabled true) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.customExtraFilesConfigMap.name }}
+  namespace: {{ .Values.namespace }}
+data:
+{{- range $key, $value := .Values.customExtraFilesConfigMap.data }}
+  {{ $key }}: |-
+    {{ $value | nindent 4 }}
+{{- end }}
+{{- end }}
