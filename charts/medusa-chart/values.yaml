@@ -1,0 +1,26 @@
+image:
+  repository: ghcr.io/your-org/medusa
+  tag: latest
+  pullPolicy: IfNotPresent
+
+config:
+  useSecret: false  # true per usare Secret invece di ConfigMap
+  data:
+    VAULT_ADDR: "https://vault.example.com"
+    VAULT_TOKEN: "sensitive-token"  # usato solo se useSecret: true
+
+extraEnv: []
+  # Esempio:
+  # - name: CUSTOM_VAR
+  #   value: "custom-value"
+
+volumes: []
+  # Esempio:
+  # - name: data-volume
+  #   configMap:
+  #     name: medusa-extra-config
+
+volumeMounts: []
+  # Esempio:
+  # - name: data-volume
+  #   mountPath: /app/config

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: medusa
+description: Helm chart per Medusa Vault exporter/importer
+version: 0.0.1
+appVersion: "latest"
+
+maintainers:
+  - name: lucaiacono2275

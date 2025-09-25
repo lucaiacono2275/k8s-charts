@@ -1,0 +1,10 @@
+{{- if not .Values.config.useSecret }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: medusa-config
+data:
+  {{- range $key, $value := .Values.config.data }}
+  {{ $key }}: "{{ $value }}"
+  {{- end }}
+{{- end }}
