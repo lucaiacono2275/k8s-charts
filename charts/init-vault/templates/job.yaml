@@ -121,10 +121,10 @@ spec:
           secretName: {{ .Values.extraFiles.existingSecret }}
         {{- else if .Values.extraFiles.configMap }}
         configMap:
-          name: {{ .Values.extraFiles.configMap }}
+          name: {{ .Values.extraFiles.configMap.name }}
         {{- else if .Values.extraFiles.secret }}
         secret:
-          secretName: {{ .Values.extraFiles.secret }}
+          secretName: {{ .Values.extraFiles.secret.name }}
         {{- else if .Values.extraFiles.existingVolume }}
         persistentVolumeClaim:
           claimName: {{ .Values.extraFiles.existingVolume }}

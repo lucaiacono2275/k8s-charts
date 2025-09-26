@@ -1,6 +1,7 @@
 # values for testing extraFiles with a configMap
 extraFiles:
   enabled: true
-  configMap: test-files-cm
+  configMap:
+    name: my-extra-configmap
   mountPath: /extra-files
   readOnly: true
