@@ -1,0 +1,28 @@
+suite: extraFiles volume names
+
+templates:
+  - templates/job.yaml
+
+# This test ensures that the extraFiles secret and configMap names are read and rendered correctly in the Job volumes
+
+tests:
+  - it: should use the correct extraFiles secret name
+    values:
+      - values/extra-files-secret.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-files
+            secret:
+              secretName: my-extra-secret
+  - it: should use the correct extraFiles configMap name
+    values:
+      - values/extra-files-configmap.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-files
+            configMap:
+              name: my-extra-configmap

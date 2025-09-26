@@ -8,7 +8,7 @@ tests:
   - it: should mount extraFiles configMap as volume
     set:
       extraFiles.enabled: true
-      extraFiles.configMap: test-files-cm
+      extraFiles.configMap.name: test-files-cm
       extraFiles.mountPath: /extra-files
       extraFiles.readOnly: true
     asserts:
