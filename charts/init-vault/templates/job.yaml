@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.jobName }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   template:
     spec:
@@ -113,7 +113,13 @@ spec:
       {{- end }}
       {{- if .Values.extraFiles.enabled }}
       - name: extra-files
-        {{- if .Values.extraFiles.configMap }}
+        {{- if .Values.extraFiles.existingConfigMap }}
+        configMap:
+          name: {{ .Values.extraFiles.existingConfigMap }}
+        {{- else if .Values.extraFiles.existingSecret }}
+        secret:
+          secretName: {{ .Values.extraFiles.existingSecret }}
+        {{- else if .Values.extraFiles.configMap }}
         configMap:
           name: {{ .Values.extraFiles.configMap }}
         {{- else if .Values.extraFiles.secret }}

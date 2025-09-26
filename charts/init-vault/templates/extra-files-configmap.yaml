@@ -1,11 +1,11 @@
-{{- if and .Values.customExtraFilesConfigMap (hasKey .Values.customExtraFilesConfigMap "enabled") (eq .Values.customExtraFilesConfigMap.enabled true) }}
+{{- if and .Values.extraFiles.enabled .Values.extraFiles.configMap }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.customExtraFilesConfigMap.name }}
-  namespace: {{ .Values.namespace }}
+  name: {{ .Values.extraFiles.configMap.name }}
+  namespace: {{ .Release.Namespace }}  
 data:
-{{- range $key, $value := .Values.customExtraFilesConfigMap.data }}
+{{- range $key, $value := .Values.extraFiles.secret.data }}
   {{ $key }}: |-
     {{ $value | nindent 4 }}
 {{- end }}

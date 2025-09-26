@@ -1,5 +1,8 @@
 jobName: vault-config-job
-namespace: vault
+
+image:
+  repository: hashicorp/vault
+  tag: latest
 
 waitForVault:
   enabled: true
@@ -43,19 +46,25 @@ script: |
 extraFiles:
   enabled: false
   # One of configMap, secret, or existingVolume must be set if enabled is true
+  existingConfigMap: ""
+  existingSecret: ""
+  # -- optional ConfigMap containing files configuration
+  configMap: {}
   # -- Name of ConfigMap containing files (optional)
-  configMap: ""
-  # -- Name of Secret containing files (optional)
-  secret: ""
+  #  name: custom-extra-files-cm
+  # -- ConfigMap content as key/value pairs
+  #  data: {}
+  # -- Optional Secret containing files configuration
+  secret: {}
+  # -- Name of the secret containing files (optional)
+  #  name: custom-extra-files-secret
+  # -- secret content as key/value pairs
+  #  data: {}
   # -- Name of an existing volume to mount (optional)
   existingVolume: ""
   # -- Path to mount the extra files
   mountPath: "/extra-files"
   readOnly: true
-
-image:
-  repository: hashicorp/vault
-  tag: latest
 
 nfs:
   enabled: true
@@ -64,8 +73,3 @@ nfs:
   storage: 1Gi
   accessModes:
     - ReadOnlyMany
-
-customExtraFilesSecret:
-  enabled: false
-  name: custom-extra-files-secret
-  stringData: {}
