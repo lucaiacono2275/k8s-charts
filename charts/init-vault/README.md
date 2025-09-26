@@ -1,6 +1,6 @@
 # init-vault
 
-![Version: 0.0.14](https://img.shields.io/badge/Version-0.0.14-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square)
 
 A Helm chart that launches a job to init vault.
 
@@ -14,19 +14,17 @@ A Helm chart that launches a job to init vault.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| customExtraFilesSecret.enabled | bool | `false` |  |
-| customExtraFilesSecret.name | string | `"custom-extra-files-secret"` |  |
-| customExtraFilesSecret.stringData | object | `{}` |  |
-| extraFiles.configMap | string | `""` | Name of ConfigMap containing files (optional) |
+| extraFiles.configMap | object | `{}` | optional ConfigMap containing files configuration |
 | extraFiles.enabled | bool | `false` |  |
+| extraFiles.existingConfigMap | string | `""` |  |
+| extraFiles.existingSecret | string | `""` |  |
 | extraFiles.existingVolume | string | `""` | Name of an existing volume to mount (optional) |
 | extraFiles.mountPath | string | `"/extra-files"` | Path to mount the extra files |
 | extraFiles.readOnly | bool | `true` |  |
-| extraFiles.secret | string | `""` | Name of Secret containing files (optional) |
+| extraFiles.secret | object | `{}` | Optional Secret containing files configuration |
 | image.repository | string | `"hashicorp/vault"` |  |
 | image.tag | string | `"latest"` |  |
 | jobName | string | `"vault-config-job"` |  |
-| namespace | string | `"vault"` |  |
 | nfs.accessModes[0] | string | `"ReadOnlyMany"` |  |
 | nfs.enabled | bool | `true` |  |
 | nfs.path | string | `"/exports/vault-scripts"` |  |
