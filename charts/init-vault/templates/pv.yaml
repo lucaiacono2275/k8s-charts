@@ -2,12 +2,15 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: vault-nfs-pv
+  labels:
+    app: vault-init
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
   nfs:
     server: nfs.example.local
     path: /exports/vault-scripts
