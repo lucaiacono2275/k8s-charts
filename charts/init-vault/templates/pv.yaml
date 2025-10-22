@@ -7,10 +7,9 @@ metadata:
 spec:
   capacity:
     storage: 1Gi
-  accessModes:
-    - ReadOnlyMany
+  accessModes: {{ .Values.nfs.accessModes | toYaml |nindent 4 }}
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   nfs:
     server: {{ .Values.nfs.server }}
-    path: /exports/vault-scripts
+    path: {{ .Values.nfs.path }}
