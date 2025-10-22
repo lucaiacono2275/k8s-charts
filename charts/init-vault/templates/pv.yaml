@@ -12,5 +12,5 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   nfs:
-    server: nfs.example.local
+    server: {{ .Values.nfs.server }}
     path: /exports/vault-scripts
