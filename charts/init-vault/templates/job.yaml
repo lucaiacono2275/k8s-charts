@@ -11,6 +11,7 @@ spec:
       {{- if .Values.waitForVault.enabled }}
       - name: wait-for-vault
         image: {{ .Values.waitForVault.repository }}:{{ .Values.waitForVault.tag }}
+        imagePullPolicy: IfNotPresent
         command:
           - /bin/sh
           - -c
@@ -26,6 +27,7 @@ spec:
       {{- if .Values.waitForSecret.enabled }}
       - name: wait-for-secret
         image: {{ .Values.waitForSecret.repository }}:{{ .Values.waitForSecret.tag }}
+        imagePullPolicy: IfNotPresent
         command:
           - /bin/sh
           - -c
@@ -40,6 +42,7 @@ spec:
       {{- end }}
       - name: prepare-script
         image: {{ .Values.prepareScript.repository }}:{{ .Values.prepareScript.tag }}
+        imagePullPolicy: IfNotPresent
         command:
           - /bin/sh
           - -c
@@ -64,6 +67,7 @@ spec:
       containers:
       - name: vault-config
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: IfNotPresent
         command: 
           - "/bin/sh"
           - "{{ .Values.scriptFile }}"
