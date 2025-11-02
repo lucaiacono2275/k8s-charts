@@ -1,6 +1,5 @@
-
 advertisments:
-  # -- advertisement 
+  # -- advertisement
   - name: default
     addressPools:
       # -- address pool name
