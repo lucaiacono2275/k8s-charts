@@ -1,0 +1,17 @@
+suite: metallb-config - advertisement valid
+
+templates:
+  - templates/advertisement.yaml
+
+tests:
+  - it: should render L2Advertisement referencing the pool name
+    values:
+      - values/valid-advert.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: L2Advertisement
+      - contains:
+          path: spec.ipAddressPools
+          content: pool-a

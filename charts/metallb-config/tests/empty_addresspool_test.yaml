@@ -1,0 +1,12 @@
+suite: metallb-config - addresspool empty
+
+templates:
+  - templates/addresspool.yaml
+
+tests:
+  - it: should render no IPAddressPool when addressPools is empty
+    values:
+      - values/empty-pools.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
