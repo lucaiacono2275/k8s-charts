@@ -197,7 +197,7 @@ jobs:
       #    kubectl apply -f https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/refs/heads/main/charts/redis-operator/crds/crds.yaml
 
       - name: Run chart-testing (install)
-        if: steps.list-changed.outputs.changed == 'true' && steps.redis-changed.outputs.install != 'true' && steps.init-vault-changed.outputs.install != 'true' && steps.metallb-config-changed-changed.outputs.install != 'true'
+        if: steps.list-changed.outputs.changed == 'true' && steps.redis-changed.outputs.install != 'true' && steps.init-vault-changed.outputs.install != 'true' && steps.metallb-config-changed.outputs.install != 'true'
         run: ct install --target-branch ${{ github.event.repository.default_branch }}
 
 
