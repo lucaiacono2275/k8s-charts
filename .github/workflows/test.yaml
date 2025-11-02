@@ -189,7 +189,7 @@ jobs:
       - name: Installs metallb CRDs
         if: steps.metallb-config-changed.outputs.install == 'true'
         run: |
-          kubectl apply -f https://github.com/metallb/metallb/raw/refs/heads/main/charts/metallb/charts/crds/templates/crds.yaml
+          helm repo add metallb install https://metallb.github.io/metallb && helm install metallb metallb/install --set controller.enabled=false --set speaker.enabled=false 
 
       #- name: Installs redis operator CRDs
       #  if: steps.redis-changed.outputs.install == 'true'
