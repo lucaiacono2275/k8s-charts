@@ -1,0 +1,3 @@
+advertisments:
+  - name: adv-empty
+    addressPools: []

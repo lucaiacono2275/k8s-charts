@@ -1,0 +1,33 @@
+suite: metallb-config
+
+templates:
+  - templates/addresspool.yaml
+  - templates/advertisement.yaml
+
+tests:
+  - it: should render IPAddressPool with provided addresses
+    values:
+      - values/valid-advert.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isKind:
+          of: IPAddressPool
+      - contains:
+          path: metadata.name
+          content: pool-a
+      - contains:
+          path: spec.addresses
+          content:
+            - 10.0.0.1-10.0.0.5
+
+  - it: should render L2Advertisement referencing the pool name
+    values:
+      - values/valid-advert.yaml
+    asserts:
+      - isKind:
+          of: L2Advertisement
+      - contains:
+          path: spec.ipAddressPools
+          content:
+            - pool-a

@@ -1,0 +1,24 @@
+suite: metallb-config multi pools
+
+templates:
+  - templates/addresspool.yaml
+  - templates/advertisement.yaml
+
+tests:
+  - it: should render two IPAddressPools and one L2Advertisement
+    values:
+      - values/multi-pools.yaml
+    asserts:
+      - hasDocuments:
+          count: 3
+      - contains:
+          path: metadata.name
+          content: pool1
+      - contains:
+          path: metadata.name
+          content: pool2
+      - contains:
+          path: spec.ipAddressPools
+          content:
+            - pool1
+            - pool2

@@ -1,0 +1,6 @@
+advertisments:
+  - name: pool1
+    addressPools:
+      - name: pool-a
+        ipRanges:
+          - 10.0.0.1-10.0.0.5

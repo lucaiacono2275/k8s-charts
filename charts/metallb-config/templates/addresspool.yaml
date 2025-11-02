@@ -1,10 +1,15 @@
+{{- range .Values.advertisments}}
+  {{- range .addressPools }}
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: default
+  name: {{ .name }}
   namespace: metallb-system
 spec:
   addresses:
-    {{- range .Values.addresspool }}
+    {{- range .ipRanges }}
     - {{ .  }}
     {{- end }}   
+---
+  {{- end }} 
+{{- end }}
