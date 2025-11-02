@@ -139,6 +139,17 @@ jobs:
             echo "Found init-vault changes."
           fi
 
+      - name: Check metallb-config in the list of changes
+        if: steps.list-changed.outputs.changed == 'true'
+        id: metallb-config-changed
+        run: |
+          echo "Checking for metallb-config changes..."
+          metallb=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} | grep "metallb" || true)
+          if [[ -n "$metallb" ]]; then
+            echo "install=true" >> "$GITHUB_OUTPUT"
+            echo "Found metallb changes."
+          fi
+
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
         run: ct lint --target-branch ${{ github.event.repository.default_branch }}
@@ -175,6 +186,11 @@ jobs:
         run: |
           kubectl apply -f https://raw.githubusercontent.com/zalando/postgres-operator/master/charts/postgres-operator/crds/postgresqls.yaml
       
+      - name: Installs metallb CRDs
+        if: steps.metallb-config-changed.outputs.install == 'true'
+        run: |
+          kubectl apply -f https://github.com/metallb/metallb/raw/refs/heads/main/charts/metallb/charts/crds/templates/crds.yaml
+
       #- name: Installs redis operator CRDs
       #  if: steps.redis-changed.outputs.install == 'true'
       #  run: |
