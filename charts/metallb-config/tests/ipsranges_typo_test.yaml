@@ -1,11 +1,18 @@
 suite: metallb-config ipsRanges typo
 
-templates:
-  - templates/addresspool.yaml
-  - templates/advertisement.yaml
-
 tests:
   - it: should not create IPAddressPool when ipRanges key is misspelled
+    templates:
+      - templates/addresspool.yaml
+    values:
+      - values/ipsranges-typo.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render L2Advertisement even if ipRanges key is misspelled
+    templates:
+      - templates/advertisement.yaml
     values:
       - values/ipsranges-typo.yaml
     asserts:
@@ -13,6 +20,6 @@ tests:
           count: 1
       - isKind:
           of: L2Advertisement
-      - contains:
+      - equal:
           path: metadata.name
-          content: adv-typo
+          value: adv-typo

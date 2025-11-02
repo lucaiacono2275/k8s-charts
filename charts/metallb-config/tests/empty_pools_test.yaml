@@ -1,11 +1,18 @@
 suite: metallb-config empty pools
 
-templates:
-  - templates/addresspool.yaml
-  - templates/advertisement.yaml
-
 tests:
-  - it: should render only L2Advertisement when addressPools is empty
+  - it: should render no IPAddressPool when addressPools is empty
+    templates:
+      - templates/addresspool.yaml
+    values:
+      - values/empty-pools.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should still render L2Advertisement when addressPools is empty
+    templates:
+      - templates/advertisement.yaml
     values:
       - values/empty-pools.yaml
     asserts:
@@ -13,6 +20,6 @@ tests:
           count: 1
       - isKind:
           of: L2Advertisement
-      - contains:
+      - equal:
           path: metadata.name
-          content: adv-empty
+          value: adv-empty

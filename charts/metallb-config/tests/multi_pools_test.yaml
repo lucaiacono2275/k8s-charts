@@ -1,24 +1,37 @@
 suite: metallb-config multi pools
 
-templates:
-  - templates/addresspool.yaml
-  - templates/advertisement.yaml
-
 tests:
-  - it: should render two IPAddressPools and one L2Advertisement
+  - it: should render two IPAddressPools
+    templates:
+      - templates/addresspool.yaml
     values:
       - values/multi-pools.yaml
-    asserts:
+      asserts:
+    - hasDocuments:
+      count: 2
+    - isKind:
+      of: IPAddressPool
+    - equal:
+      documentIndex: 0
+      path: metadata.name
+      value: pool1
+    - equal:
+      documentIndex: 1
+      path: metadata.name
+      value: pool2
+
+  - it: should render one L2Advertisement referencing both pools
+    templates:
+      - templates/advertisement.yaml
+    values:
+      - values/multi-pools.yaml
+      asserts:
       - hasDocuments:
-          count: 3
-      - contains:
-          path: metadata.name
-          content: pool1
-      - contains:
-          path: metadata.name
-          content: pool2
-      - contains:
+          count: 1
+      - isKind:
+          of: L2Advertisement
+      - equal:
           path: spec.ipAddressPools
-          content:
+          value:
             - pool1
             - pool2
