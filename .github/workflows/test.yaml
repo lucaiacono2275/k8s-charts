@@ -189,7 +189,7 @@ jobs:
       - name: Installs metallb CRDs
         if: steps.metallb-config-changed.outputs.install == 'true'
         run: |
-          helm repo add metallb https://metallb.github.io/metallb && helm install metallb metallb/install --set controller.enabled=false --set speaker.enabled=false 
+          helm repo add metallb https://metallb.github.io/metallb && helm install metallb metallb/metallb --set controller.enabled=false --set speaker.enabled=false 
 
       #- name: Installs redis operator CRDs
       #  if: steps.redis-changed.outputs.install == 'true'
