@@ -809,6 +809,17 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/lldap-0.0.1/lldap-0.0.1.tgz
     version: 0.0.1
+  metallb-config:
+  - apiVersion: v1
+    created: "2025-11-05T09:16:41.14892766Z"
+    description: Helm chart for cofniguring resources for metallb
+    digest: 83d50f8e5a2a6cbbe5ce78282a4bfc0d2ce311ca216c5e6fa7732b4819667440
+    maintainers:
+    - name: lucaiacono2275
+    name: metallb-config
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/metallb-config-0.1.0/metallb-config-0.1.0.tgz
+    version: 0.1.0
   postgres-cluster-instance:
   - apiVersion: v2
     created: "2024-09-24T14:16:29.666336575Z"
@@ -1088,4 +1099,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-23T19:38:02.902860442Z"
+generated: "2025-11-05T09:16:41.14916315Z"
