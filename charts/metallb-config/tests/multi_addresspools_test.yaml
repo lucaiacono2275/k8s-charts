@@ -1,0 +1,14 @@
+suite: metallb-config - addresspool multi
+
+templates:
+  - templates/addresspool.yaml
+
+tests:
+  - it: should render two IPAddressPools
+    values:
+      - values/multi-pools.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isKind:
+          of: IPAddressPool

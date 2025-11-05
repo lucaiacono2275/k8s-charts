@@ -1,0 +1,9 @@
+advertisments:
+  - name: adv1
+    addressPools:
+      - name: pool1
+        ipRanges:
+          - 10.0.0.1-10.0.0.5
+      - name: pool2
+        ipRanges:
+          - 10.0.0.6-10.0.0.10

@@ -1,0 +1,15 @@
+suite: metallb-config - addresspool typo
+
+templates:
+  - templates/addresspool.yaml
+
+tests:
+  - it: ipRanges typo - IPAddressPool created but addresses empty
+    values:
+      - values/ipsranges-typo.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.addresses
+          value: null

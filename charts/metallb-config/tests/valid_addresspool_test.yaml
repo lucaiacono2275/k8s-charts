@@ -1,0 +1,20 @@
+suite: metallb-config - addresspool valid
+
+templates:
+  - templates/addresspool.yaml
+
+tests:
+  - it: should render IPAddressPool with provided addresses
+    values:
+      - values/valid-advert.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: IPAddressPool
+      - equal:
+          path: metadata.name
+          value: pool-a
+      - contains:
+          path: spec.addresses
+          content: 10.0.0.1-10.0.0.5

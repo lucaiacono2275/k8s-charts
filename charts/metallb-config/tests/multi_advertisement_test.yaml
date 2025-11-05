@@ -1,0 +1,19 @@
+suite: metallb-config - advertisement multi
+
+templates:
+  - templates/advertisement.yaml
+
+tests:
+  - it: should render L2Advertisement referencing both pools
+    values:
+      - values/multi-pools.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: L2Advertisement
+      - equal:
+          path: spec.ipAddressPools
+          value:
+            - pool1
+            - pool2
