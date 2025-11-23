@@ -12,7 +12,7 @@ serviceAccountSecret:  #
   # name: clouddns-dns01-solver-svc-acct
 # -- list of the cluster issuers to be created
 clusterissuers: []
-#- name: letsencrypt-dns01-prod
+# - name: letsencrypt-dns01-prod
   # server: https://acme-v02.api.letsencrypt.org/directory
   # -- specific key of the secret for cluster issuer
   # saSecretKey: key.json
