@@ -186,10 +186,10 @@ jobs:
         run: |
           kubectl apply -f https://raw.githubusercontent.com/zalando/postgres-operator/master/charts/postgres-operator/crds/postgresqls.yaml
       
-      - name: Installs metallb CRDs
-        if: steps.metallb-config-changed.outputs.install == 'true'
-        run: |
-          helm repo add metallb https://metallb.github.io/metallb && helm install metallb metallb/metallb -n metallb-system --create-namespace --set speaker.enabled=false 
+      #- name: Installs metallb CRDs
+      #  if: steps.metallb-config-changed.outputs.install == 'true'
+      #  run: |
+      #    helm repo add metallb https://metallb.github.io/metallb && helm install metallb metallb/metallb -n metallb-system --create-namespace --set speaker.enabled=false 
 
       #- name: Installs redis operator CRDs
       #  if: steps.redis-changed.outputs.install == 'true'

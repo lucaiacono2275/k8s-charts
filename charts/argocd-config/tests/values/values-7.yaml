@@ -1,0 +1,79 @@
+projects:
+  - project: "dev"
+    applications:
+      name: dev-applications
+      path: "apps"
+      server: https://kubernetes.default.svc
+      repoURL: https://github.com/lucaiacono2275/k3s-home
+      targetRevision: dev
+    deploy:
+    - name: argocd
+    - name: argocd-apps
+      namespace: argocd
+      nameOverride: dev-apps
+    - name: zitadel
+    - name: postfix
+    - name: external-secrets  
+    - name: synology-csi
+      ignoreDifferences:
+      - kind: Secret
+        name: client-info-secret      
+    - name: bank-vaults
+      namespace: vault
+    - name: metallb
+      namespace: metallb-system
+      ignoreDifferences:
+      - group: "apiextensions.k8s.io"
+        kind: CustomResourceDefinition
+        name: bgppeers.metallb.io
+        jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+      - group: "apiextensions.k8s.io"
+        kind: CustomResourceDefinition
+        name: addresspools.metallb.io
+        jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+    - name: cert-manager
+    - name: certificates
+      namespace: cert-manager
+    - name: nginx-external
+      namespace: nginx-ingress-external
+    - name: nginx-internal
+      namespace: nginx-ingress-internal
+    - name: crds-installer
+      namespace: argocd
+      path: crds-installer/resources
+      type: "directory"
+    - name: postgres-operator
+    - name: postgres-operator-ui
+      namespace: postgres-operator
+    - name: postgres-cluster
+      namespace: database        
+    - name: coder
+    - name: velero
+    - name: velero-ui
+    - name: prometheus-stack
+    - name: samba-cert-sync
+      namespace: scripts
+    - name: redis
+    - name: headlamp
+  - project: "incubator"
+    applications:
+      name: incubator-applications
+      path: "incubator"
+      server: https://kubernetes.default.svc
+      repoURL: https://github.com/lucaiacono2275/k3s-home
+      targetRevision: dev
+      env: dev
+    deploy:
+    - name: crds-installer
+      namespace: argocd
+      path: crds-installer/resources
+      type: "directory"
+    - name: homarr
+    - name: homeassistant
+    - name: oauth2proxy
+    - name: webfinger
+    - name: cloudnative-pg
+      namespace: cnpg-system
+
