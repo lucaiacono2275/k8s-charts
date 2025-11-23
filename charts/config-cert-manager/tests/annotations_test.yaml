@@ -1,0 +1,17 @@
+suite: annotations test suite
+
+templates:
+  - certificates.yaml
+
+values:
+  - ./values/annotations-values.yaml
+
+tests:
+  - it: should add metadata annotations to Certificate
+    asserts:
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+      - equal:
+          path: metadata.annotations.my-annotation
+          value: "expected-value"

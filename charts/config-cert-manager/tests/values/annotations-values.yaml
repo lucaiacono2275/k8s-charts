@@ -1,0 +1,8 @@
+certificates:
+  - name: my-cert
+    namespace: default
+    issuerRef: letsencrypt
+    dnsNames:
+      - example.com
+    annotations:
+      my-annotation: "expected-value"
