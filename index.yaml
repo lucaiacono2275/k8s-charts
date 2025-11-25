@@ -326,6 +326,16 @@ entries:
     version: 0.1.2
   config-cert-manager:
   - apiVersion: v1
+    created: "2025-11-25T17:50:08.136634666Z"
+    description: Helm chart for config for cert-manager
+    digest: 406875fc9bf0fc930d1a0c26b77a8aeed40c21ea73e0a9a59a70020669bf121c
+    maintainers:
+    - name: lucaiacono2275
+    name: config-cert-manager
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/config-cert-manager-0.3.1/config-cert-manager-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
     created: "2025-11-23T09:42:23.676597835Z"
     description: Helm chart for config for cert-manager
     digest: 2022cb6843fa4531e8e4830cacb6e9513509071945d027d6c65b51956676e7ea
@@ -1120,4 +1130,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-11-23T09:42:23.676756221Z"
+generated: "2025-11-25T17:50:08.136847643Z"
