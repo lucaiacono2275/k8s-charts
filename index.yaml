@@ -853,6 +853,16 @@ entries:
     version: 0.1.0
   postgres-cluster-instance:
   - apiVersion: v2
+    created: "2026-01-21T18:33:40.473951924Z"
+    description: Helm chart for deploying Postgres cluster
+    digest: 6ff0e37e80c43c34287e58e31efe47b475d1e96bfd78d007d6d982d342154d3d
+    maintainers:
+    - name: lucaiacono2275
+    name: postgres-cluster-instance
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/postgres-cluster-instance-0.0.6/postgres-cluster-instance-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     created: "2024-09-24T14:16:29.666336575Z"
     description: Helm chart for deploying Postgres cluster
     digest: 7d6996c016abf900622255d10ea36e910870cf3c4602a128735477fcf1de844d
@@ -1130,4 +1140,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-11-25T17:50:08.136847643Z"
+generated: "2026-01-21T18:33:40.474131011Z"
