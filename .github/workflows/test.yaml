@@ -46,13 +46,14 @@ jobs:
           python-version: '3.10'
           check-latest: true
 
-      - name: Run helm unittest
-        run: |
-          helm plugin install https://github.com/helm-unittest/helm-unittest.git --version v0.5.2
-          helm unittest charts/*
-
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.0
+
+      - name: Run helm unittest
+        run: |
+          helm plugin install https://github.com/helm-unittest/helm-unittest.git --version v1.0.3 --verify=false
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          helm unittest $changed
 
       - name: Run chart-testing (list-changed)
         id: list-changed

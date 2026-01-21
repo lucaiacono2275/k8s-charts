@@ -23,7 +23,7 @@ users:
 # -- tls
 tls:
 # -- spilo options
-spilo:  
+spilo:
   spiloFSGroup: 103
 # -- volume size
 volumeSize: 1Gi
