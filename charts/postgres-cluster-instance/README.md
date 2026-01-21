@@ -1,6 +1,6 @@
 # postgres-cluster-instance
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square)
 
 Helm chart for deploying Postgres cluster
 
