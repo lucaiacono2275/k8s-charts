@@ -1,0 +1,41 @@
+# -- labels
+labels:
+# -- name override
+nameOverride: postgresql
+# -- namespace
+namespace: database
+# -- annotations
+annotations:
+  example.com/annotation1: value1
+  example.com/annotation2: value2
+# -- databases
+databases:
+  user1: user1.ns1
+  user2: user2.ns2
+  user3: user3.ns3
+# -- enable Connection Pooler
+enableConnectionPooler: true
+# -- enable Master LoadBalancer
+enableMasterLoadBalancer: true
+# -- number Of Instances
+numberOfInstances: 2
+# -- patroni config
+patroni:
+  pg_hba:
+  - local     all  all  trust
+  - host      all  all  0.0.0.0   md5
+# -- postgresql version
+version: 16
+# -- users
+users:
+  user1.ns1: []
+  user2.ns2: []
+  user3.ns3:
+  - createdb
+tls:
+  secretName: "secret"
+spilo:
+  spiloFSGroup: 103
+# -- volume size
+volumeSize: 1Gi
+storageClass: local-path

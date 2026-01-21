@@ -29,3 +29,34 @@ tests:
       - equal:
           path: spec.spiloFSGroup
           value: 103
+  - it: should apply annotations when provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-2.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - equal:
+          path: metadata.annotations
+          value:
+            example.com/annotation1: value1
+            example.com/annotation2: value2
+  - it: should not have annotations when not provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-1.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - notExists:
+          path: metadata.annotations
