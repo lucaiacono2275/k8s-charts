@@ -84,6 +84,19 @@ cr:
   # -- enable velero config
   veleroEnabled: false
 
+  # -- vault pod resources
+  resources:
+    # A YAML representation of resource ResourceRequirements for vault container
+    # Detail can reference: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
+    vault:
+      limits:
+        memory: "512Mi"
+        cpu: "200m"
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+
+
   # -- External config for the vault
   externalConfig:
     policies:
