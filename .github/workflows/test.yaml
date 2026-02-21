@@ -12,6 +12,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   ARGOCD_VERSION: v2.9.3
   CERTMANAGER_VERSION: v1.13.1
+  VAULT_OPERATION_VERSION: v1.22.6
 
 
 jobs:
@@ -180,7 +181,7 @@ jobs:
       - name: Installs vault operator CRDs
         if: steps.vault-changed.outputs.install == 'true'
         run: |
-          kubectl apply -f https://raw.githubusercontent.com/bank-vaults/vault-operator/main/deploy/charts/vault-operator/crds/crd.yaml
+          kubectl apply -f https://raw.githubusercontent.com/bank-vaults/vault-operator/refs/tags/${{ env.VAULT_OPERATION_VERSION }}/deploy/charts/vault-operator/crds/crd.yaml
 
       - name: Installs postgres operator CRDs
         if: steps.postgres-changed.outputs.install == 'true'
