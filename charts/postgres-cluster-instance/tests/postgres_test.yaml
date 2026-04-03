@@ -60,3 +60,39 @@ tests:
           namespace: database
       - notExists:
           path: metadata.annotations
+  - it: should apply env variables when provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-3.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - equal:
+          path: spec.env
+          value:
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+  - it: should not have env when not provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-1.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - notExists:
+          path: spec.env
