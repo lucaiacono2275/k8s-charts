@@ -96,3 +96,27 @@ tests:
           namespace: database
       - notExists:
           path: spec.env
+  - it: should apply resources when provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-4.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - equal:
+          path: spec.resources.requests.cpu
+          value: 100m
+      - equal:
+          path: spec.resources.requests.memory
+          value: 256Mi
+      - equal:
+          path: spec.resources.limits.cpu
+          value: 500m
+      - equal:
+          path: spec.resources.limits.memory
+          value: 512Mi
