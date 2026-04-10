@@ -22,7 +22,7 @@ spec:
   postgresql:
     version: '{{ .Values.version }}'
   {{- with .Values.resources }}
-  resources: {{ .Values.resources | toYaml | nindent 4 }}
+  resources: {{ . | toYaml | nindent 4 }}
   {{- end }}
   teamId: acid
   {{- if .Values.users }}  
