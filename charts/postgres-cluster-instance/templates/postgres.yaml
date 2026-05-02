@@ -24,8 +24,8 @@ spec:
   {{- with .Values.resources }}
   resources: {{ . | toYaml | nindent 4 }}
   {{- end }}
-  {{- if .Values.podTemplate }}
-  podTemplate: {{ .Values.podTemplate | toYaml | nindent 4 }}
+  {{- if .Values.initContainers }}
+  initContainers: {{ .Values.initContainers | toYaml | nindent 4 }}
   {{- end }}
   teamId: acid
   {{- if .Values.users }}  

@@ -18,8 +18,8 @@ patroni:
 version: 16
 # -- resources
 resources:
-# -- podTemplate
-podTemplate:
+# -- initContainers
+initContainers:
 # -- users
 users:
 # -- tls

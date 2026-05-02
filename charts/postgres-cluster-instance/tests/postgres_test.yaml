@@ -120,12 +120,12 @@ tests:
       - equal:
           path: spec.resources.limits.memory
           value: 512Mi
-  - it: should apply podTemplate when provided
+  - it: should apply initContainers when provided
     release:
       name: myrelease
       namespace: mynamespace
     values:
-      - ./values/values-5.yaml
+      - ./values/values-6.yaml
     asserts:
       - containsDocument:
           kind: postgresql
@@ -133,15 +133,15 @@ tests:
           name: "postgresql"
           namespace: database
       - equal:
-          path: spec.podTemplate.spec.containers[0].name
-          value: postgres
+          path: spec.initContainers[0].name
+          value: init-myservice
       - equal:
-          path: spec.podTemplate.spec.containers[0].env[0].name
-          value: CUSTOM_ENV
+          path: spec.initContainers[0].image
+          value: busybox
       - equal:
-          path: spec.podTemplate.spec.containers[0].env[0].value
-          value: custom_value
-  - it: should not have podTemplate when not provided
+          path: spec.initContainers[0].command[0]
+          value: /bin/sh
+  - it: should not have initContainers when not provided
     release:
       name: myrelease
       namespace: mynamespace
@@ -154,4 +154,4 @@ tests:
           name: "postgresql"
           namespace: database
       - notExists:
-          path: spec.podTemplate
+          path: spec.initContainers
