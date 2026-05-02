@@ -1,11 +1,12 @@
 # -- labels
 labels:
 # -- name override
-# nameOverride: postgresql
+nameOverride: postgresql
 # -- namespace
-# namespace: database
+namespace: database
 # -- databases
 databases:
+  user1: user1.ns1
 # -- enable Connection Pooler
 enableConnectionPooler: false
 # -- enable Master LoadBalancer
@@ -14,16 +15,21 @@ enableMasterLoadBalancer: false
 numberOfInstances: 1
 # -- patroni config
 patroni:
+  pg_hba:
+  - local     all  all  trust
 # -- postgresql version
 version: 16
-# -- resources
-resources:
 # -- podTemplate
 podTemplate:
-# -- users
-users:
+  spec:
+    containers:
+    - name: postgres
+      env:
+      - name: CUSTOM_ENV
+        value: custom_value
 # -- tls
 tls:
+  secretName: "secret"
 # -- spilo options
 spilo:
   spiloFSGroup: 103

@@ -120,3 +120,38 @@ tests:
       - equal:
           path: spec.resources.limits.memory
           value: 512Mi
+  - it: should apply podTemplate when provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-5.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - equal:
+          path: spec.podTemplate.spec.containers[0].name
+          value: postgres
+      - equal:
+          path: spec.podTemplate.spec.containers[0].env[0].name
+          value: CUSTOM_ENV
+      - equal:
+          path: spec.podTemplate.spec.containers[0].env[0].value
+          value: custom_value
+  - it: should not have podTemplate when not provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-1.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - notExists:
+          path: spec.podTemplate
