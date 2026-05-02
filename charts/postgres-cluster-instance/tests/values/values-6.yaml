@@ -19,14 +19,14 @@ patroni:
   - local     all  all  trust
 # -- postgresql version
 version: 16
-# -- podTemplate
-podTemplate:
-  spec:
-    containers:
-    - name: postgres
-      env:
-      - name: CUSTOM_ENV
-        value: custom_value
+# -- initContainers
+initContainers:
+- name: init-myservice
+  image: busybox
+  command:
+    - /bin/sh
+    - -c
+    - echo init
 # -- tls
 tls:
   secretName: "secret"
