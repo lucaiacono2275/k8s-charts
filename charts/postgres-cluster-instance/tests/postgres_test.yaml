@@ -155,3 +155,47 @@ tests:
           namespace: database
       - notExists:
           path: spec.initContainers
+  - it: should apply podTemplate when provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-7.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - equal:
+          path: spec.podTemplate.metadata.labels.app
+          value: postgresql
+      - equal:
+          path: spec.podTemplate.metadata.labels.tier
+          value: database
+      - equal:
+          path: spec.podTemplate.spec.serviceAccountName
+          value: postgres-sa
+      - equal:
+          path: spec.podTemplate.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
+          value: node-type
+      - equal:
+          path: spec.podTemplate.spec.tolerations[0].key
+          value: dedicated
+      - equal:
+          path: spec.podTemplate.spec.securityContext.fsGroup
+          value: 103
+  - it: should not have podTemplate when not provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-1.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - notExists:
+          path: spec.podTemplate

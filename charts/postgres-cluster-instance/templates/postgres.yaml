@@ -41,6 +41,9 @@ spec:
   env:
   {{ .Values.env | toYaml | nindent 4 }}
   {{- end }}
+  {{- if .Values.podTemplate }}
+  podTemplate: {{ .Values.podTemplate | toYaml | nindent 4 }}
+  {{- end }}
   volume:
     iops: 3000
     size: {{ .Values.volumeSize }}
