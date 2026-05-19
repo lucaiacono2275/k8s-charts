@@ -41,8 +41,8 @@ spec:
   env:
   {{ .Values.env | toYaml | nindent 4 }}
   {{- end }}
-  {{- if .Values.podTemplate }}
-  podTemplate: {{ .Values.podTemplate | toYaml | nindent 4 }}
+  {{- if .Values.sidecars }}
+  sidecars: {{ .Values.sidecars | toYaml | nindent 4 }}
   {{- end }}
   volume:
     iops: 3000

@@ -24,8 +24,8 @@ initContainers:
 users:
 # -- tls
 tls:
-# -- podTemplate
-podTemplate:
+# -- sidecars
+sidecars:
 # -- spilo options
 spilo:
   spiloFSGroup: 103
