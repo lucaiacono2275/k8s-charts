@@ -155,7 +155,7 @@ tests:
           namespace: database
       - notExists:
           path: spec.initContainers
-  - it: should apply podTemplate when provided
+  - it: should apply sidecars when provided
     release:
       name: myrelease
       namespace: mynamespace
@@ -168,24 +168,15 @@ tests:
           name: "postgresql"
           namespace: database
       - equal:
-          path: spec.podTemplate.metadata.labels.app
-          value: postgresql
+          path: spec.sidecars[0].name
+          value: prometheus-exporter
       - equal:
-          path: spec.podTemplate.metadata.labels.tier
-          value: database
+          path: spec.sidecars[0].image
+          value: quay.io/prometheus/exporter:latest
       - equal:
-          path: spec.podTemplate.spec.serviceAccountName
-          value: postgres-sa
-      - equal:
-          path: spec.podTemplate.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
-          value: node-type
-      - equal:
-          path: spec.podTemplate.spec.tolerations[0].key
-          value: dedicated
-      - equal:
-          path: spec.podTemplate.spec.securityContext.fsGroup
-          value: 103
-  - it: should not have podTemplate when not provided
+          path: spec.sidecars[0].ports[0].containerPort
+          value: 9187
+  - it: should not have sidecars when not provided
     release:
       name: myrelease
       namespace: mynamespace
@@ -198,4 +189,4 @@ tests:
           name: "postgresql"
           namespace: database
       - notExists:
-          path: spec.podTemplate
+          path: spec.sidecars

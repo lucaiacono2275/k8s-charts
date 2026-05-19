@@ -15,30 +15,12 @@ enableMasterLoadBalancer: false
 numberOfInstances: 1
 # -- postgresql version
 version: 16
-# -- podTemplate
-podTemplate:
-  metadata:
-    labels:
-      app: postgresql
-      tier: database
-  spec:
-    serviceAccountName: postgres-sa
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: node-type
-              operator: In
-              values:
-              - database
-    tolerations:
-    - key: dedicated
-      operator: Equal
-      value: database
-      effect: NoSchedule
-    securityContext:
-      fsGroup: 103
+# -- sidecars
+sidecars:
+  - name: prometheus-exporter
+    image: quay.io/prometheus/exporter:latest
+    ports:
+      - containerPort: 9187
 # -- volume size
 volumeSize: 1Gi
 storageClass: local-path
