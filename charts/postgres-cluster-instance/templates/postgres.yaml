@@ -24,6 +24,9 @@ spec:
   {{- with .Values.resources }}
   resources: {{ . | toYaml | nindent 4 }}
   {{- end }}
+  {{- if .Values.clone }}
+  clone: {{ .Values.clone | toYaml | nindent 4 }}
+  {{- end }}
   {{- if .Values.initContainers }}
   initContainers: {{ .Values.initContainers | toYaml | nindent 4 }}
   {{- end }}

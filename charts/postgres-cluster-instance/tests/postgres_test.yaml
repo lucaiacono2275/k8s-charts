@@ -190,3 +190,35 @@ tests:
           namespace: database
       - notExists:
           path: spec.sidecars
+  - it: should not render clone when not provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-1.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - notExists:
+          path: spec.clone
+  - it: should render clone when provided
+    release:
+      name: myrelease
+      namespace: mynamespace
+    values:
+      - ./values/values-clone.yaml
+    asserts:
+      - containsDocument:
+          kind: postgresql
+          apiVersion: acid.zalan.do/v1
+          name: "postgresql"
+          namespace: database
+      - equal:
+          path: spec.clone.enabled
+          value: true
+      - equal:
+          path: spec.clone.clusterName
+          value: cloned-cluster

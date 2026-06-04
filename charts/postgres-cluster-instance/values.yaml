@@ -33,3 +33,7 @@ spilo:
 volumeSize: 1Gi
 # -- storage class
 storageClass: local-path
+# -- clone (optional)
+# clone:
+#   clusterName: my-cluster
+#   timestamp: "2026-01-01T00:00:00Z"
