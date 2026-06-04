@@ -1,0 +1,20 @@
+# Clone test values based on values-1.yaml
+nameOverride: postgresql
+namespace: database
+databases:
+  user1: user1.ns1
+enableConnectionPooler: true
+enableMasterLoadBalancer: true
+numberOfInstances: 1
+version: 16
+tls:
+  secretName: "secret"
+spilo:
+  spiloFSGroup: 103
+volumeSize: 1Gi
+storageClass: local-path
+
+clone:
+  enabled: true
+  clusterName: cloned-cluster
+  timestamp: "2026-01-01T00:00:00Z"
