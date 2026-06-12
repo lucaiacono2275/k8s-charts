@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.scriptConfigMap }}
+data:
+  pv-list-exporter.sh: | 
+{{ .Files.Get "files/pv-list-exporter.sh" | indent 4 }}

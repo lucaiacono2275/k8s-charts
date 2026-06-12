@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: cronjob test suite
+templates:
+  - cronjob.yaml
+tests:
+  - it: should render a CronJob with correct metadata and spec
+    values:
+      - ../values.yaml
+    release:
+      name: my-release
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "my-release-pv-list-exporter"
+      - equal:
+          path: spec.schedule
+          value: "0 0 * * *"
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].name
+          value: pv-list-exporter
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].image
+          value: bmauter/alpine-samba-client:latest
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].command[0]
+          value: /bin/sh
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].command[1]
+          value: -c
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].command[2]
+          value: /scripts/pv-list-exporter.sh
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env[0].name
+          value: TARGET_FILE
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env[0].value
+          value: "pv-list.txt"
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env[1].name
+          value: SAMBA_SERVER
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env[1].value
+          value: "//samba.example.com/share"
