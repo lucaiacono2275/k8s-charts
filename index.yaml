@@ -993,6 +993,18 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/postgres-cluster-instance-0.0.1/postgres-cluster-instance-0.0.1.tgz
     version: 0.0.1
+  pv-list-exporter:
+  - apiVersion: v2
+    created: "2026-06-12T20:29:49.786239941Z"
+    description: A Helm chart to deploy a Kubernetes CronJob that extracts a list
+      of PersistentVolumes every day at midnight.
+    digest: 421e0c1d630ecbdcd90b8b071eb56077b37086fa3b99bfac49a86fb682e5c355
+    maintainers:
+    - name: lucaiacono2275
+    name: pv-list-exporter
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/pv-list-exporter-0.0.1/pv-list-exporter-0.0.1.tgz
+    version: 0.0.1
   redis-ot-instance:
   - apiVersion: v2
     created: "2025-07-21T20:26:13.901645803Z"
@@ -1221,4 +1233,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-04T19:54:52.713701684Z"
+generated: "2026-06-12T20:29:49.78647873Z"
