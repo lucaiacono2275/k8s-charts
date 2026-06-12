@@ -1,6 +1,6 @@
 # pv-list-exporter
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square)
 
 A Helm chart to deploy a Kubernetes CronJob that extracts a list of PersistentVolumes every day at midnight.
 
@@ -14,7 +14,6 @@ A Helm chart to deploy a Kubernetes CronJob that extracts a list of PersistentVo
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| certificateSecret | string | `"certificate-secret"` |  |
 | image.repository | string | `"bmauter/alpine-samba-client"` |  |
 | image.tag | string | `"latest"` |  |
 | samba.server | string | `"//samba.example.com/share"` |  |
