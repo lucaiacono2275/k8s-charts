@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: configmap test suite
+templates:
+  - configmap.yaml
+tests:
+  - it: should render a ConfigMap with script data
+    values:
+      - ../values.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: sync-script
+      - isNotNullOrEmpty:
+          path: data["pv-list-exporter.sh"]

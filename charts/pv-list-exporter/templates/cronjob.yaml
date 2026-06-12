@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "pvListExporter.name" . }}
+spec:
+  schedule: {{ .Values.schedule }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ include "pvListExporter.name" . }}
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: pv-list-exporter
+              image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+              command: ["/bin/sh", "-c", "/scripts/pv-list-exporter.sh"]
+              volumeMounts:
+                - name: script-volume
+                  mountPath: /scripts
+                - name: data-volume
+                  mountPath: /data
+              env:
+                - name: TARGET_FILE
+                  value: "{{ .Values.targetFile }}"
+                - name: SAMBA_SERVER
+                  value: "{{ .Values.samba.server }}"
+          volumes:
+            - name: data-volume
+              emptyDir: {}
+            - name: script-volume
+              configMap:
+                name: {{ .Values.scriptConfigMap }}
+                defaultMode: 0555
+            - name: samba-secret
+              secret:
+                secretName: {{ .Values.sambaSecret }}
+
+
+

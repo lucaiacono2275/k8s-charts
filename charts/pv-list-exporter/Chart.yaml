@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pv-list-exporter
+version: 0.0.1
+description: A Helm chart to deploy a Kubernetes CronJob that extracts a list of PersistentVolumes every day at midnight.
+
+maintainers:
+  - name: lucaiacono2275
