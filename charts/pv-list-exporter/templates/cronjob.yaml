@@ -11,6 +11,7 @@ spec:
           labels:
             app: {{ include "pvListExporter.name" . }}
         spec:
+          serviceAccountName: pv-list-exporter
           restartPolicy: OnFailure
           containers:
             - name: pv-list-exporter
