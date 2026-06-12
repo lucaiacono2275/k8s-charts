@@ -1,7 +1,6 @@
 image:
   repository: bmauter/alpine-samba-client
   tag: latest
-certificateSecret: certificate-secret
 sambaSecret: samba-credentials
 scriptConfigMap: sync-script
 schedule: "0 0 * * *"
