@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: rbac test suite
+templates:
+  - clusterrole.yaml
+  - clusterrolebinding.yaml
+tests:
+  - it: should render ClusterRole when RBAC enabled and create is true
+    template: clusterrole.yaml
+    set:
+      rbac:
+        enabled: true
+        create: true
+        rules:
+          - apiGroups: [""]
+            resources: ["pods"]
+            verbs: ["get"]
+    release:
+      name: my-release
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: my-release-scheduled-script-job
+      - equal:
+          path: rules[0].resources[0]
+          value: pods
+  - it: should render ClusterRoleBinding when RBAC enabled
+    template: clusterrolebinding.yaml
+    set:
+      rbac:
+        enabled: true
+        create: true
+        rules:
+          - apiGroups: [""]
+            resources: ["pods"]
+            verbs: ["get"]
+    release:
+      name: my-release
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: my-release-scheduled-script-job-binding
+      - equal:
+          path: roleRef.name
+          value: my-release-scheduled-script-job
+  - it: should bind an existing ClusterRole when provided
+    template: clusterrolebinding.yaml
+    set:
+      rbac:
+        enabled: true
+        create: false
+        existingClusterRole: existing-role
+    release:
+      name: my-release
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: my-release-scheduled-script-job-binding
+      - equal:
+          path: roleRef.name
+          value: existing-role
