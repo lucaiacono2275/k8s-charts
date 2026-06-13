@@ -995,6 +995,17 @@ entries:
     version: 0.0.1
   pv-list-exporter:
   - apiVersion: v2
+    created: "2026-06-13T10:21:32.078097871Z"
+    description: A Helm chart to deploy a Kubernetes CronJob that extracts a list
+      of PersistentVolumes every day at midnight.
+    digest: d7f236932a111953b131f01bfad1ea957238639e802299107db4067f5e5c9e0d
+    maintainers:
+    - name: lucaiacono2275
+    name: pv-list-exporter
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/pv-list-exporter-0.0.4/pv-list-exporter-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-06-12T21:12:03.166283345Z"
     description: A Helm chart to deploy a Kubernetes CronJob that extracts a list
       of PersistentVolumes every day at midnight.
@@ -1255,4 +1266,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-12T21:12:03.16656809Z"
+generated: "2026-06-13T10:21:32.078252203Z"
