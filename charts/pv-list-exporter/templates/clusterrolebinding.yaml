@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: pv-list-exporter
-  namespace: scripts
+  namespace: {{ .Release.Namespace }}

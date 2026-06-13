@@ -22,6 +22,9 @@ spec:
                   mountPath: /scripts
                 - name: data-volume
                   mountPath: /data
+                - name: samba-secret
+                  mountPath: /secrets
+                  readOnly: true                  
               env:
                 - name: TARGET_FILE
                   value: "{{ .Values.targetFile }}"
