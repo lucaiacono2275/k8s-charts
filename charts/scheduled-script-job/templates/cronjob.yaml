@@ -1,0 +1,73 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "scheduledScriptJob.fullname" . }}
+spec:
+  schedule: {{ quote .Values.schedule }}
+  concurrencyPolicy: {{ quote .Values.concurrencyPolicy }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ include "scheduledScriptJob.fullname" . }}
+        spec:
+          {{- if .Values.serviceAccount.create }}
+          serviceAccountName: {{ include "scheduledScriptJob.serviceAccountName" . }}
+          {{- else if .Values.serviceAccount.name }}
+          serviceAccountName: {{ .Values.serviceAccount.name }}
+          {{- end }}
+          restartPolicy: {{ quote .Values.job.restartPolicy }}
+          containers:
+            - name: script-runner
+              image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: {{ toJson .Values.job.command }}
+              volumeMounts:
+                - name: script-volume
+                  mountPath: /scripts
+                  readOnly: true
+                {{- with .Values.job.volumeMounts }}
+                {{- toYaml . | nindent 16 }}
+                {{- end }}
+              {{- with .Values.job.env }}
+              env:
+              {{- toYaml . | nindent 16 }}
+              {{- end }}
+              {{- with .Values.job.envFrom }}
+              envFrom:
+              {{- toYaml . | nindent 16 }}
+              {{- end }}
+          volumes:
+            - name: script-volume
+              {{- if .Values.script.existingConfigMap }}
+              configMap:
+                name: {{ .Values.script.existingConfigMap }}
+                {{- if .Values.script.existingConfigMapKey }}
+                items:
+                  - key: {{ .Values.script.existingConfigMapKey }}
+                    path: {{ .Values.script.fileName }}
+                {{- end }}
+              {{- else }}
+              configMap:
+                name: {{ include "scheduledScriptJob.scriptConfigMapName" . }}
+                defaultMode: 0555
+              {{- end }}
+            {{- with .Values.job.volumes }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+      - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity: {{ toYaml . | nindent 8 }}
+      {{- end }}

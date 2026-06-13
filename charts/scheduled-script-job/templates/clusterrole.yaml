@@ -1,0 +1,12 @@
+{{- if and .Values.rbac.enabled .Values.rbac.create (not .Values.rbac.existingClusterRole) -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ default (include "scheduledScriptJob.fullname" .) .Values.rbac.clusterRoleName }}
+rules:
+{{- if .Values.rbac.rules }}
+{{ toYaml .Values.rbac.rules | indent 2 }}
+{{- else }}
+  []
+{{- end }}
+{{- end }}

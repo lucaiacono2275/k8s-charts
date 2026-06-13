@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: cronjob test suite
+templates:
+  - cronjob.yaml
+tests:
+  - it: should render a CronJob with expected metadata and script mount
+    values:
+      - ../values.yaml
+    release:
+      name: my-release
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: "my-release-scheduled-script-job"
+      - equal:
+          path: spec.schedule
+          value: "0 0 * * *"
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].name
+          value: script-runner
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].image
+          value: alpine:latest
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].command[0]
+          value: /bin/sh
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].command[2]
+          value: /scripts/job-script.sh
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.volumes[0].name
+          value: script-volume
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.volumes[0].configMap.name
+          value: my-release-scheduled-script-job-script

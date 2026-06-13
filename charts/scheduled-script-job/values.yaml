@@ -1,0 +1,49 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: alpine
+  tag: latest
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+schedule: "0 0 * * *"
+concurrencyPolicy: Forbid
+
+serviceAccount:
+  create: true
+  name: ""
+
+rbac:
+  enabled: false
+  create: true
+  existingClusterRole: ""
+  clusterRoleName: ""
+  clusterRoleBindingName: ""
+  rules: []
+
+scriptConfigMap: ""
+script:
+  fileName: job-script.sh
+  file: ""
+  content: |-
+    #!/bin/sh
+    echo "Hello from scheduled-script-job"
+  existingConfigMap: ""
+  existingConfigMapKey: ""
+
+job:
+  command:
+    - /bin/sh
+    - -c
+    - /scripts/job-script.sh
+  restartPolicy: OnFailure
+  env: []
+  envFrom: []
+  volumeMounts: []
+  volumes: []
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

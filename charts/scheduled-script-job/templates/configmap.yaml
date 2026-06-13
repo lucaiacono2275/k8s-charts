@@ -1,0 +1,9 @@
+{{- if not .Values.script.existingConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "scheduledScriptJob.scriptConfigMapName" . }}
+data:
+  {{ .Values.script.fileName }}: |-
+{{ .Values.script.content | indent 4 }}
+{{- end }}
