@@ -1223,6 +1223,19 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/samba-cert-sync-0.0.1/samba-cert-sync-0.0.1.tgz
     version: 0.0.1
+  scheduled-script-job:
+  - apiVersion: v2
+    created: "2026-06-13T19:43:34.297745736Z"
+    description: A Helm chart to deploy a parametrized Kubernetes CronJob that runs
+      a script on schedule, with script content provided via values, --set-file, or
+      an existing ConfigMap.
+    digest: 5e22f5afaf6aacd33b562ca8b308da5edfbd0a86e78164ccfd2a0b9c9c26beeb
+    maintainers:
+    - name: lucaiacono2275
+    name: scheduled-script-job
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/scheduled-script-job-0.0.1/scheduled-script-job-0.0.1.tgz
+    version: 0.0.1
   tekton-dashboard:
   - apiVersion: v1
     created: "2023-11-26T16:00:17.734765306Z"
@@ -1277,4 +1290,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-13T12:12:38.569227442Z"
+generated: "2026-06-13T19:43:34.298158874Z"
