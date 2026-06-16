@@ -1,6 +1,6 @@
 # postgres-cluster-instance
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square)
+![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square)
 
 Helm chart for deploying Postgres cluster
 
@@ -17,10 +17,12 @@ Helm chart for deploying Postgres cluster
 | databases | string | `nil` | databases |
 | enableConnectionPooler | bool | `false` | enable Connection Pooler |
 | enableMasterLoadBalancer | bool | `false` | enable Master LoadBalancer |
+| initContainers | string | `nil` | initContainers |
 | labels | string | `nil` | labels |
 | numberOfInstances | int | `1` | number Of Instances |
 | patroni | string | `nil` | patroni config |
 | resources | string | `nil` | resources |
+| sidecars | string | `nil` | sidecars |
 | spilo | object | `{"spiloFSGroup":103}` | spilo options |
 | storageClass | string | `"local-path"` | storage class |
 | tls | string | `nil` | tls |

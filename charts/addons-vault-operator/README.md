@@ -1,6 +1,6 @@
 # addons-vault-operator
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
 
 Helm chart for addon resources for vault operator
 
@@ -35,6 +35,7 @@ Helm chart for addon resources for vault operator
 | cr.ingress.traefik | bool | `false` | enable conmfiguration for traefik |
 | cr.label | string | `"vault"` | label for the vault |
 | cr.name | string | `"vault"` | name of the vault |
+| cr.resources | object | `{"vault":{"limits":{"cpu":"200m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}` | vault pod resources |
 | cr.size | int | `1` | number of instances of vault |
 | cr.vaultAnnotations | string | `"vault"` | annotation for the vault pod |
 | cr.vaultConfigurerAnnotations | string | `"vaultconfigurer"` | annotation for the vault configurer pod |
