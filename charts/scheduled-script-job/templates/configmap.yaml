@@ -6,4 +6,7 @@ metadata:
 data:
   {{ .Values.script.fileName }}: |-
 {{ .Values.script.content | indent 4 }}
+{{- with .Values.config.data }}
+{{ toYaml . | indent 2 }}
+{{- end }}
 {{- end }}

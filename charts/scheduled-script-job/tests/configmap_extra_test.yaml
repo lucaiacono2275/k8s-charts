@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: configmap extra config test suite
+templates:
+  - configmap.yaml
+tests:
+  - it: should include extra config data in the generated ConfigMap
+    set:
+      script:
+        fileName: job-script.sh
+        content: |-
+          #!/bin/sh
+          echo "Hello from scheduled-script-job"
+      config:
+        data:
+          app.conf: |-
+            foo=bar
+            baz=qux
+    release:
+      name: my-release
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: data["app.conf"]
+          value: |-
+            foo=bar
+            baz=qux
+      - equal:
+          path: data["job-script.sh"]
+          value: |-
+            #!/bin/sh
+            echo "Hello from scheduled-script-job"

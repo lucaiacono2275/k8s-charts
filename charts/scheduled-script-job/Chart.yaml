@@ -1,6 +1,6 @@
 apiVersion: v2
 name: scheduled-script-job
-version: 0.0.1
+version: 0.0.2
 description: A Helm chart to deploy a parametrized Kubernetes CronJob that runs a script on schedule, with script content provided via values, --set-file, or an existing ConfigMap.
 maintainers:
   - name: lucaiacono2275
