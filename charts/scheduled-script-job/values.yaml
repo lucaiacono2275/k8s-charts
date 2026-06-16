@@ -31,6 +31,8 @@ script:
     echo "Hello from scheduled-script-job"
   existingConfigMap: ""
   existingConfigMapKey: ""
+config:
+  data: {}
 
 job:
   command:

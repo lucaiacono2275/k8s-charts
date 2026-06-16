@@ -32,6 +32,7 @@ A Helm chart to deploy a parametrized Kubernetes CronJob that runs a script on s
 | rbac.rules | list | `[]` | ClusterRole rules; defaults to no permissions when empty. |
 | scriptConfigMap | string | `""` | Use an existing ConfigMap name for the script. |
 | script.fileName | string | `"job-script.sh"` | Script file name inside the ConfigMap. |
+| config.data | object | `{}` | Extra key/value entries to add to the generated ConfigMap. |
 | script.content | string | `"#!/bin/sh\necho \"Hello from scheduled-script-job\""` | Inline script content when no external ConfigMap is used. |
 | script.existingConfigMap | string | `""` | Existing ConfigMap containing the script. |
 | script.existingConfigMapKey | string | `""` | Key from the existing ConfigMap to mount as the script file. |
