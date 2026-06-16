@@ -1225,6 +1225,18 @@ entries:
     version: 0.0.1
   scheduled-script-job:
   - apiVersion: v2
+    created: "2026-06-16T19:46:52.314423914Z"
+    description: A Helm chart to deploy a parametrized Kubernetes CronJob that runs
+      a script on schedule, with script content provided via values, --set-file, or
+      an existing ConfigMap.
+    digest: 8a2b5de74927f15392be0e57c2063a209a07ee7c58fc54abffef773655099bec
+    maintainers:
+    - name: lucaiacono2275
+    name: scheduled-script-job
+    urls:
+    - https://github.com/lucaiacono2275/k8s-charts/releases/download/scheduled-script-job-0.0.2/scheduled-script-job-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-06-13T19:43:34.297745736Z"
     description: A Helm chart to deploy a parametrized Kubernetes CronJob that runs
       a script on schedule, with script content provided via values, --set-file, or
@@ -1290,4 +1302,4 @@ entries:
     urls:
     - https://github.com/lucaiacono2275/k8s-charts/releases/download/webfinger-chart-0.1.0/webfinger-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-13T19:43:34.298158874Z"
+generated: "2026-06-16T19:46:52.314630714Z"
