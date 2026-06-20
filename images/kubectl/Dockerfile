@@ -4,7 +4,7 @@ ARG KUBECTL_VERSION=v1.34.9
 ARG TARGETARCH=amd64
 ARG TARGETOS=linux
 
-RUN apk add --no-cache ca-certificates curl jq \
+RUN apk add --no-cache bash ca-certificates curl jq \
     && case "${TARGETARCH}" in \
         amd64) KUBECTL_ARCH=amd64 ;; \
         arm64) KUBECTL_ARCH=arm64 ;; \
